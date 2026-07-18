@@ -1,0 +1,4 @@
+Formal Phi terms in the reduced Delta quotient: 27
+Formal Phi terms remaining after subtracting the certificate: 0
+SUCCESS: the cocycle certificate for the Delta reduction is correct.
+Hence the first-adjoint coefficient equals Delta.
