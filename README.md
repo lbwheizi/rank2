@@ -1,8 +1,7 @@
 # rank2
 
 Computer-verifiable certificates and GAP programs accompanying the study of
-finite-dimensional rank-two Nichols algebras in
-$\mathcal Z(\operatorname{Vec}_G^\Phi)\simeq {}_G^G\mathcal{YD}^{\Phi}$.
+finite-dimensional rank-two Nichols algebras over coquasi-Hopf algebras.
 
 ## Certificates
 
