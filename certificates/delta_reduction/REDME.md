@@ -80,3 +80,29 @@ vectors agree exactly.
 The script does not assert that $\Delta$ is identically equal to $1$. The
 condition $\Delta=1$ arises from the proportionality condition characterizing
 the simplicity of $X_1$.
+
+## Run
+
+From the repository root:
+
+```sh
+gap -A -q certificates/delta_reduction/delta_certificate.g
+```
+
+Expected output:
+
+```text
+Formal Phi terms in the reduced Delta quotient: 27
+Formal Phi terms remaining after subtracting the certificate: 0
+SUCCESS: the cocycle certificate for the Delta reduction is correct.
+Hence the first-adjoint coefficient equals Delta.
+```
+
+The saved output of the verified run is in `delta_certificate.out`.
+
+## SHA-256
+
+```text
+dcb1fba0925c764d7887f55e9072d3f22f4832e11c8f0e37d22bead7f2c05b3a  delta_certificate.g
+3621e395782ac0a83e94d2555818d2eb9f78033940617dc4ee2123d1a0007443  delta_certificate.out
+```
