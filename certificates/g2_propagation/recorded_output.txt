@@ -1,0 +1,15 @@
+GAP version: 4.16.0
+Identity: mathcal K_3 = 1
+Target support: 32
+Target L1: 33
+Certificate relators: 13
+Certificate L1: 13
+Exact residual support: 0
+PASS: exact integral residual is zero.
+Identity: d_4 = lambda^3 kappa_4
+Target support: 22
+Target L1: 29
+Certificate relators: 18
+Certificate L1: 22
+Exact residual support: 0
+PASS: exact integral residual is zero.

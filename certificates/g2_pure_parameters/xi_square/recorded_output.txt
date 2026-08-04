@@ -1,0 +1,8 @@
+GAP version: 4.16.0
+Identity: Xi_Phi^2 = 1
+Target support: 49
+Target L1: 144
+Certificate relators: 37
+Certificate L1: 71
+Exact residual support: 0
+PASS: exact integral residual is zero.

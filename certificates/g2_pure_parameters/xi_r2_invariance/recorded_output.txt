@@ -1,0 +1,8 @@
+GAP version: 4.16.0
+Identity: Xi_Phi(hg,h^-1) = Xi_Phi(g,h)
+Target support: 98
+Target L1: 144
+Certificate relators: 101
+Certificate L1: 175
+Exact residual support: 0
+PASS: exact integral residual is zero.

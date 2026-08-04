@@ -1,0 +1,8 @@
+GAP version: 4.16.0
+Identity: Theta_Phi(hg,h^-1) = Theta_Phi(g,h)
+Target support: 68
+Target L1: 70
+Certificate relators: 94
+Certificate L1: 131
+Exact residual support: 0
+PASS: exact integral residual is zero.
