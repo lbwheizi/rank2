@@ -113,8 +113,8 @@ CertThetaVector := function(g,h)
     return out;
 end;;
 
-# CertSPhiVector is log(s_Phi) in the abstract Gamma2 normal form
-# locus.  It is the exact expansion of the compact third-string scalar.
+# CertSPhiVector is the exponent vector of s_Phi in the abstract
+# Gamma2 normal form.
 CertSPhiVector := function(g,h)
     local out,e,eg,gh,egh,g2,q,eq;
     out := [];
@@ -157,7 +157,7 @@ CertSPhiVector := function(g,h)
     CertAddUpper(out,g2,g,h,1);
     CertAddLocal(out,g,g,g,-2);
 
-    # zeta^4=lambda^4=1 substitutions and Delta=1.
+    # The remaining factor in the displayed definition of s_Phi.
     CertAddLocal(out,g,e,e,2);
     CertAddVector(out,CertDeltaCocVector(g,h),-1);
     return out;
