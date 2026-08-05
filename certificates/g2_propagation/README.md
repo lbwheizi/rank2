@@ -1,4 +1,7 @@
-# GAP certificates for two $G_2$ parameter calculations
+# GAP certificate for Lemma B.12
+
+This program corresponds to Lemma B.12 of the paper, with LaTeX label
+`lem:Gamma2-G2-cocycle-reductions`.
 
 The core-only script verifies the normalized-$3$-cocycle reductions
 
@@ -25,8 +28,9 @@ $\ell^1$-norm 13; the second has 18 relators and coefficient $\ell^1$-norm
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract certificate.g
+gap --bare -A -r -q --nointeract lemma_B12_K3_and_d4_cocycle_reductions.g
 ```
 
-The checked output is in `recorded_output.txt`; file hashes are in
+The checked output is in
+`lemma_B12_K3_and_d4_cocycle_reductions.out`; file hashes are in
 `CHECKSUMS.sha256`.

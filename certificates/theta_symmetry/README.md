@@ -1,4 +1,7 @@
-# GAP certificate: `theta_symmetry`
+# GAP certificate for Lemma B.19
+
+This program corresponds to Lemma B.19 of the paper, with LaTeX label
+`lem:Theta-opposite-symmetry`.
 
 This directory gives a self-contained, core-only GAP verification of
 
@@ -29,11 +32,11 @@ $\ell^1$-norm **14**.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract certificate.g
+gap --bare -A -r -q --nointeract lemma_B19_theta_symmetry.g
 ```
 
-The checked output is saved in `recorded_output.txt`. File hashes are in
-`CHECKSUMS.sha256`.
+The checked output is saved in `lemma_B19_theta_symmetry.out`. File hashes
+are in `CHECKSUMS.sha256`.
 
 
 ## Reduced target used by the certificate

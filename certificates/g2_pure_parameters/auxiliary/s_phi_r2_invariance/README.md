@@ -8,7 +8,8 @@ $$
 
 This is an auxiliary consistency check; the parameter classification uses
 the stronger identity $s_\Phi=\Theta_\Phi^2$ together with the corresponding
-reflection identity for $\Theta_\Phi$.
+reflection identity for $\Theta_\Phi$.  It is not cited as a separate lemma
+in the paper.
 
 Group elements are represented by `[e,a,b]`, meaning
 $\varepsilon^e g^a h^b$, and the calculation uses only
@@ -23,8 +24,8 @@ relators and coefficient $\ell^1$-norm 175.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract certificate.g
+gap --bare -A -r -q --nointeract auxiliary_s_phi_R2_invariance.g
 ```
 
-The checked output is in `recorded_output.txt`; file hashes are in
-`CHECKSUMS.sha256`.
+The checked output is in `auxiliary_s_phi_R2_invariance.out`; file hashes are
+in `CHECKSUMS.sha256`.

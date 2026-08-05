@@ -1,4 +1,5 @@
-# delta_certificate.g
+# Paper correspondence: Lemma B.1, label lem:first-coefficient-reduction.
+# File: lemma_B1_first_coefficient_reduction.g
 #
 # Formal verification of the cocycle reduction appearing in the
 # simplicity criterion for the first adjoint object X_1.

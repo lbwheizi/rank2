@@ -7,7 +7,8 @@ s_\Phi(g,h)^2=1.
 $$
 
 This is an auxiliary consequence and is not an additional condition in the
-$G_2$ parameter classification.
+$G_2$ parameter classification.  It is not cited as a separate lemma in the
+paper.
 
 Group elements are represented by `[e,a,b]`, meaning
 $\varepsilon^e g^a h^b$, and the calculation uses only
@@ -22,8 +23,8 @@ relators and coefficient $\ell^1$-norm 71.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract certificate.g
+gap --bare -A -r -q --nointeract auxiliary_s_phi_square.g
 ```
 
-The checked output is in `recorded_output.txt`; file hashes are in
+The checked output is in `auxiliary_s_phi_square.out`; file hashes are in
 `CHECKSUMS.sha256`.

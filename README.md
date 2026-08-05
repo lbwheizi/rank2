@@ -7,17 +7,23 @@ package is loaded.
 
 ## Certificate index
 
-| Directory | Identity or finite check |
-|---|---|
-| [`delta_reduction`](certificates/delta_reduction/) | first-adjoint $\Delta$ reduction |
-| [`omegaV`](certificates/omegaV/) | $\Omega_V=1$ |
-| [`theta_symmetry`](certificates/theta_symmetry/) | $\Theta_\Phi(h,g)=\Theta_\Phi(g,h)$ |
-| [`g2_propagation`](certificates/g2_propagation/) | $\mathcal K_3=1$ and $d_4=\lambda^3\kappa_4$ |
-| [`g2_pure_parameters/s_phi_equals_theta_squared`](certificates/g2_pure_parameters/s_phi_equals_theta_squared/) | $s_\Phi=\Theta_\Phi^2$ |
-| [`g2_pure_parameters/theta_r2_invariance`](certificates/g2_pure_parameters/theta_r2_invariance/) | $\Theta_\Phi(hg,h^{-1})=\Theta_\Phi(g,h)$ |
-| [`g2_pure_parameters/auxiliary/s_phi_r2_invariance`](certificates/g2_pure_parameters/auxiliary/s_phi_r2_invariance/) | auxiliary check $s_\Phi(hg,h^{-1})=s_\Phi(g,h)$ |
-| [`g2_pure_parameters/auxiliary/s_phi_square`](certificates/g2_pure_parameters/auxiliary/s_phi_square/) | auxiliary check $s_\Phi^2=1$ |
-| [`order16_G2`](certificates/order16_G2/) | finite-data checks for the order-$16$ $G_2$ example |
+The program names reproduce the numbered statement in Appendix B of the
+paper.  The LaTeX labels are included so that the correspondence remains
+unambiguous if the printed numbers change in a later version.
+
+| Paper reference and LaTeX label | Program | Identity or finite check |
+|---|---|---|
+| Lemma B.1, `lem:first-coefficient-reduction` | [`lemma_B1_first_coefficient_reduction.g`](certificates/delta_reduction/lemma_B1_first_coefficient_reduction.g) | first-adjoint $\Delta$ reduction |
+| Lemma B.4, `lem:Omega-V-one` | [`lemma_B4_Omega_V_equals_one.g`](certificates/omegaV/lemma_B4_Omega_V_equals_one.g) | $\Omega_V=1$ |
+| Lemma B.12, `lem:Gamma2-G2-cocycle-reductions` | [`lemma_B12_K3_and_d4_cocycle_reductions.g`](certificates/g2_propagation/lemma_B12_K3_and_d4_cocycle_reductions.g) | $\mathcal K_3=1$ and $d_4=\lambda^3\kappa_4$ |
+| Lemma B.14, `lem:Gamma2-third-string-theta-square-cocycle` | [`lemma_B14_s_phi_equals_theta_squared.g`](certificates/g2_pure_parameters/s_phi_equals_theta_squared/lemma_B14_s_phi_equals_theta_squared.g) | $s_\Phi=\Theta_\Phi^2$ |
+| Lemma B.15, `lem:Gamma2-R2-Theta-cocycle` | [`lemma_B15_theta_after_second_reflection.g`](certificates/g2_pure_parameters/theta_r2_invariance/lemma_B15_theta_after_second_reflection.g) | $\Theta_\Phi(hg,h^{-1})=\Theta_\Phi(g,h)$ |
+| Lemma B.19, `lem:Theta-opposite-symmetry` | [`lemma_B19_theta_symmetry.g`](certificates/theta_symmetry/lemma_B19_theta_symmetry.g) | $\Theta_\Phi(h,g)=\Theta_\Phi(g,h)$ |
+| Remark B.21, `rem:order16-G2-certificate` | [`remark_B21_order16_G2_verifier.g`](certificates/order16_G2/remark_B21_order16_G2_verifier.g) | finite-data checks for the order-$16$ $G_2$ example |
+
+Two additional consistency checks, which are not cited as independent
+statements in the paper, are stored under
+[`g2_pure_parameters/auxiliary`](certificates/g2_pure_parameters/auxiliary/).
 
 The identity $s_\Phi=\Theta_\Phi^2$ holds in the abstract $\Gamma_2$
 setting, without imposing the $G_2$ parameter conditions.  It is the

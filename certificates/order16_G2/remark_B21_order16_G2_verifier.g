@@ -1,3 +1,5 @@
+# Paper correspondence: Remark B.21, label rem:order16-G2-certificate.
+# File: remark_B21_order16_G2_verifier.g
 # Core-only exact verifier for the explicit order-16 Gamma_2 example.
 #
 # Scalars are represented by exponents modulo 4: e means i^e.  The

@@ -1,3 +1,5 @@
+# Auxiliary consistency check; not cited as a separate lemma in the paper.
+# File: auxiliary_s_phi_R2_invariance.g
 # This file is generated from an exact integer certificate.
 # It uses only the GAP core library; no optional package is loaded.
 #

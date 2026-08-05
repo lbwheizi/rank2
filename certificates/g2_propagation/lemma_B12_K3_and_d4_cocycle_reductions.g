@@ -1,4 +1,6 @@
-# This file is generated from an exact integer certificate.
+# Paper correspondence: Lemma B.12, label lem:Gamma2-G2-cocycle-reductions.
+# File: lemma_B12_K3_and_d4_cocycle_reductions.g
+# This file is generated from exact integer certificates.
 # It uses only the GAP core library; no optional package is loaded.
 #
 # An element [e,a,b] denotes epsilon^e g^a h^b in the abstract group

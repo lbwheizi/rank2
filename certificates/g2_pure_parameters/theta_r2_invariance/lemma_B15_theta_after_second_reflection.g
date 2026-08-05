@@ -1,3 +1,5 @@
+# Paper correspondence: Lemma B.15, label lem:Gamma2-R2-Theta-cocycle.
+# File: lemma_B15_theta_after_second_reflection.g
 # This file is generated from an exact integer certificate.
 # It uses only the GAP core library; no optional package is loaded.
 #

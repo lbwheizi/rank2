@@ -1,6 +1,8 @@
 # GAP certificate for $\Omega_V=1$
 
-The script `omegaV_certificate.g` verifies the formal $3$-cocycle identity
+This program corresponds to Lemma B.4 of the paper, with LaTeX label
+`lem:Omega-V-one`.  The script `lemma_B4_Omega_V_equals_one.g` verifies the
+formal $3$-cocycle identity
 used in the computation of the second adjoint object in the $\Gamma_2$
 setting. Group elements are written in the normal form
 $\varepsilon^e g^a h^b$, subject to
@@ -47,9 +49,8 @@ no optional GAP package.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract omegaV_certificate.g
+gap --bare -A -r -q --nointeract lemma_B4_Omega_V_equals_one.g
 ```
 
-The checked output is in `omegaV_certificate.out`; file hashes are in
-`CHECKSUMS.sha256`.  The legacy filenames are retained for compatibility
-with earlier links to this certificate.
+The checked output is in `lemma_B4_Omega_V_equals_one.out`; file hashes are
+in `CHECKSUMS.sha256`.

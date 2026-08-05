@@ -1,4 +1,5 @@
-# omegaV_certificate.g
+# Paper correspondence: Lemma B.4, label lem:Omega-V-one.
+# File: lemma_B4_Omega_V_equals_one.g
 #
 # Formal verification of the cocycle certificate for Omega_V = 1.
 #

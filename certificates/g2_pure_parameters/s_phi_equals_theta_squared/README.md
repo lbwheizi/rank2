@@ -1,4 +1,7 @@
-# GAP certificate: `s_phi_equals_theta_squared`
+# GAP certificate for Lemma B.14
+
+This program corresponds to Lemma B.14 of the paper, with LaTeX label
+`lem:Gamma2-third-string-theta-square-cocycle`.
 
 This self-contained, core-only script verifies
 
@@ -34,8 +37,8 @@ condition $s_\Phi=1$ follows automatically.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract certificate.g
+gap --bare -A -r -q --nointeract lemma_B14_s_phi_equals_theta_squared.g
 ```
 
-The checked output is in `recorded_output.txt`; file hashes are in
-`CHECKSUMS.sha256`.
+The checked output is in `lemma_B14_s_phi_equals_theta_squared.out`; file
+hashes are in `CHECKSUMS.sha256`.

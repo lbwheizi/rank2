@@ -1,6 +1,8 @@
 # GAP certificate for the first-adjoint $\Delta$ reduction
 
-The script `delta_certificate.g` verifies the formal $3$-cocycle reduction
+This program corresponds to Lemma B.1 of the paper, with LaTeX label
+`lem:first-coefficient-reduction`.  The script
+`lemma_B1_first_coefficient_reduction.g` verifies the formal $3$-cocycle reduction
 used in the simplicity calculation for the first adjoint object $X_1$ in the
 $\Gamma_2$ setting. Group elements are written in the normal form
 $\varepsilon^e g^a h^b$, subject to
@@ -86,7 +88,7 @@ the simplicity of $X_1$.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract delta_certificate.g
+gap --bare -A -r -q --nointeract lemma_B1_first_coefficient_reduction.g
 ```
 
 Expected output:
@@ -98,6 +100,5 @@ SUCCESS: the cocycle certificate for the Delta reduction is correct.
 Hence the first-adjoint coefficient equals Delta.
 ```
 
-The checked output is in `delta_certificate.out`; file hashes are in
-`CHECKSUMS.sha256`.  The legacy filenames are retained for compatibility
-with earlier links to this certificate.
+The checked output is in `lemma_B1_first_coefficient_reduction.out`; file
+hashes are in `CHECKSUMS.sha256`.

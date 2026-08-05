@@ -1,5 +1,9 @@
 # Core-only verifier for the order-16 $G_2$ example
 
+This program corresponds to Remark B.21 of the paper, with LaTeX label
+`rem:order16-G2-certificate`.  It is a finite-data verifier rather than a
+certificate for a separate lemma.
+
 This directory contains a self-contained GAP 4.16 verifier for the finite
 data displayed in the manuscript's order-16 example. It uses only the GAP
 core library and exact exponents modulo four: the exponent `e` represents
@@ -50,8 +54,8 @@ reflection graph is exact and internally closed.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract certificate.g
+gap --bare -A -r -q --nointeract remark_B21_order16_G2_verifier.g
 ```
 
-The checked output is in `recorded_output.txt`; SHA-256 hashes are in
-`CHECKSUMS.sha256`.
+The checked output is in `remark_B21_order16_G2_verifier.out`; SHA-256 hashes
+are in `CHECKSUMS.sha256`.
