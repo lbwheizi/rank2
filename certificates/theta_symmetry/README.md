@@ -29,13 +29,7 @@ $\ell^1$-norm **14**.
 From this directory:
 
 ```sh
-gap -A -q --nointeract certificate.g
-```
-
-With the bundled workspace installation, the equivalent command is:
-
-```sh
-../../../../tools/bin/gap -A -q --nointeract certificate.g
+gap --bare -A -r -q --nointeract certificate.g
 ```
 
 The checked output is saved in `recorded_output.txt`. File hashes are in

@@ -1,7 +1,6 @@
-# GAP certificates for the $G_2$ propagation formulas
+# GAP certificates for two $G_2$ parameter calculations
 
-This core-only GAP script verifies the two pure normalized-$3$-cocycle
-reductions
+The core-only script verifies the normalized-$3$-cocycle reductions
 
 $$
 \mathcal K_3=1,
@@ -9,28 +8,25 @@ $$
 d_4=\lambda^3\kappa_4.
 $$
 
-The targets are reconstructed directly from the displayed definitions of
-$\mathcal K_3$, $d_4$, $\kappa_3$, and $\kappa_4$.  In the second target the
-script uses only the projective-character identity
-$\zeta^2=\Phi_g(\varepsilon,\varepsilon)$, exactly as in the paper.
+The targets are reconstructed from the displayed definitions of
+$\mathcal K_3$, $d_4$, $\kappa_3$, and $\kappa_4$.  For the second identity,
+the only projective-character relation used is
+$\zeta^2=\Phi_g(\varepsilon,\varepsilon)$.
 
-The rebuilt exact certificates are shorter than the lost earlier lists:
-
-- $\mathcal K_3=1$: 13 relators,
-  coefficient $\ell^1$-norm 13;
-- $d_4=\lambda^3\kappa_4$: 18 relators,
-  coefficient $\ell^1$-norm 22.
-
-The previous workspace's 36- and 38-relator lists were not present after
-the reset.  These new certificates verify the same two Laurent exponent
-targets exactly and do not depend on those missing lists.
+The calculation uses the abstract normal form $\varepsilon^e g^a h^b$ and
+only the relations $hg=\varepsilon gh$, $\varepsilon^2=1$, and centrality of
+$\varepsilon$.  It neither chooses a finite quotient nor evaluates a
+particular cocycle.  The first certificate has 13 relators and coefficient
+$\ell^1$-norm 13; the second has 18 relators and coefficient $\ell^1$-norm
+22.
 
 ## Run
 
+From this directory:
+
 ```sh
-../../../../tools/bin/gap -A -q --nointeract certificate.g
+gap --bare -A -r -q --nointeract certificate.g
 ```
 
-No optional GAP package, floating-point calculation, or finite quotient is
-used.  The actual checked output is in `recorded_output.txt`; hashes are in
+The checked output is in `recorded_output.txt`; file hashes are in
 `CHECKSUMS.sha256`.

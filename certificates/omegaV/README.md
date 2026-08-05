@@ -36,20 +36,20 @@ and an explicit product of eleven normalized $3$-cocycle relators, then checks
 that their exponent vectors agree exactly. It therefore does not select,
 enumerate, or numerically evaluate a particular cocycle.
 
+## Scope
+
+The calculation is formal in the abstract $\Gamma_2$ normal form.  It does
+not choose a finite quotient or numerically evaluate a cocycle, and it uses
+no optional GAP package.
+
 ## Run
 
-From the repository root:
+From this directory:
 
 ```sh
-gap -A -q certificates/omegaV/omegaV_certificate.g
+gap --bare -A -r -q --nointeract omegaV_certificate.g
 ```
 
-The saved output of the verified run is in `omegaV_certificate.out`.
-
-## SHA-256
-
-```text
-1f218041d51124a78626941b0825eec8c1df86f7b5ad026eacb8a77ea59fbf28  omegaV_certificate.g
-321bbd76bfeea04dd13a8e725e3241ce28a799874f8417194f1b5c69c6f66e4f  omegaV_certificate.out
-```
-
+The checked output is in `omegaV_certificate.out`; file hashes are in
+`CHECKSUMS.sha256`.  The legacy filenames are retained for compatibility
+with earlier links to this certificate.

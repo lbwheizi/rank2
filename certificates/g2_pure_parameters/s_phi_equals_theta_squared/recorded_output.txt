@@ -1,5 +1,5 @@
 GAP version: 4.16.0
-Identity: Xi_Phi = Theta_Phi^2
+Identity: s_Phi = Theta_Phi^2
 Target support: 69
 Target L1: 142
 Certificate relators: 63

@@ -83,10 +83,10 @@ the simplicity of $X_1$.
 
 ## Run
 
-From the repository root:
+From this directory:
 
 ```sh
-gap -A -q certificates/delta_reduction/delta_certificate.g
+gap --bare -A -r -q --nointeract delta_certificate.g
 ```
 
 Expected output:
@@ -98,11 +98,6 @@ SUCCESS: the cocycle certificate for the Delta reduction is correct.
 Hence the first-adjoint coefficient equals Delta.
 ```
 
-The saved output of the verified run is in `delta_certificate.out`.
-
-## SHA-256
-
-```text
-dcb1fba0925c764d7887f55e9072d3f22f4832e11c8f0e37d22bead7f2c05b3a  delta_certificate.g
-3621e395782ac0a83e94d2555818d2eb9f78033940617dc4ee2123d1a0007443  delta_certificate.out
-```
+The checked output is in `delta_certificate.out`; file hashes are in
+`CHECKSUMS.sha256`.  The legacy filenames are retained for compatibility
+with earlier links to this certificate.

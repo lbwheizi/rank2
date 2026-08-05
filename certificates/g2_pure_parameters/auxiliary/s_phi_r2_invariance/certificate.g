@@ -113,9 +113,9 @@ CertThetaVector := function(g,h)
     return out;
 end;;
 
-# CertXiVector is log(Xi_Phi), after the substitutions used on the G2 base
+# CertSPhiVector is log(s_Phi) in the abstract Gamma2 normal form
 # locus.  It is the exact expansion of the compact third-string scalar.
-CertXiVector := function(g,h)
+CertSPhiVector := function(g,h)
     local out,e,eg,gh,egh,g2,q,eq;
     out := [];
     e := eps;
@@ -173,9 +173,9 @@ end;;
 
 hg := CertMulElt(hh,gg);;
 hinv := CertInvElt(hh);;
-target := CertXiVector(hg,hinv);;
-CertAddVector(target,CertXiVector(gg,hh),-1);;
-identityText := "Xi_Phi(hg,h^-1) = Xi_Phi(g,h)";;
+target := CertSPhiVector(hg,hinv);;
+CertAddVector(target,CertSPhiVector(gg,hh),-1);;
+identityText := "s_Phi(hg,h^-1) = s_Phi(g,h)";;
 
 CertificateTerms := [
     rec(coefficient := -1, quadruple := [[0, 0, -1], [0, 1, 1], [1, 1, 0], [1, 1, 1]]),

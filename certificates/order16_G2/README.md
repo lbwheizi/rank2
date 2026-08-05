@@ -47,11 +47,10 @@ reflection graph is exact and internally closed.
 
 ## Run
 
-From the workspace root:
+From this directory:
 
 ```sh
-tools/bin/gap -A -q --nointeract \
-  work/gap_supplement/certificates/order16_G2/certificate.g
+gap --bare -A -r -q --nointeract certificate.g
 ```
 
 The checked output is in `recorded_output.txt`; SHA-256 hashes are in

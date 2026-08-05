@@ -113,9 +113,9 @@ CertThetaVector := function(g,h)
     return out;
 end;;
 
-# CertXiVector is log(Xi_Phi), after the substitutions used on the G2 base
+# CertSPhiVector is log(s_Phi) in the abstract Gamma2 normal form
 # locus.  It is the exact expansion of the compact third-string scalar.
-CertXiVector := function(g,h)
+CertSPhiVector := function(g,h)
     local out,e,eg,gh,egh,g2,q,eq;
     out := [];
     e := eps;
@@ -171,48 +171,74 @@ CertL1Norm := function(vec)
     return Sum(vec,pair -> AbsInt(pair[2]));
 end;;
 
-target := CertXiVector(gg,hh);;
-target := List(target,pair -> [pair[1],2*pair[2]]);;
-identityText := "Xi_Phi^2 = 1";;
+target := CertSPhiVector(gg,hh);;
+CertAddVector(target,CertThetaVector(gg,hh),-2);;
+identityText := "s_Phi = Theta_Phi^2";;
 
 CertificateTerms := [
+    rec(coefficient := 1, quadruple := [[0, 0, 1], [0, 1, 0], [0, 1, 0], [0, 0, 1]]),
+    rec(coefficient := 1, quadruple := [[0, 0, 1], [0, 1, 0], [0, 1, 0], [1, 0, 0]]),
     rec(coefficient := -4, quadruple := [[0, 0, 1], [0, 1, 0], [1, 0, 0], [0, 1, 0]]),
-    rec(coefficient := 2, quadruple := [[0, 0, 1], [0, 1, 0], [1, 1, 0], [1, 1, 1]]),
-    rec(coefficient := -2, quadruple := [[0, 0, 1], [0, 1, 0], [1, 1, 1], [0, 1, 0]]),
-    rec(coefficient := -2, quadruple := [[0, 0, 1], [1, 1, 0], [0, 1, 0], [1, 1, 1]]),
-    rec(coefficient := 2, quadruple := [[0, 1, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]]),
-    rec(coefficient := 2, quadruple := [[0, 1, 0], [0, 0, 1], [0, 1, 0], [1, 1, 1]]),
-    rec(coefficient := -2, quadruple := [[0, 1, 0], [0, 1, 0], [0, 1, 0], [0, 0, 1]]),
-    rec(coefficient := -2, quadruple := [[0, 1, 0], [0, 1, 0], [0, 1, 0], [0, 1, 1]]),
-    rec(coefficient := -2, quadruple := [[0, 1, 0], [0, 1, 1], [0, 1, 0], [0, 1, 0]]),
-    rec(coefficient := -2, quadruple := [[0, 1, 0], [1, 0, 0], [0, 1, 1], [1, 0, 0]]),
+    rec(coefficient := 1, quadruple := [[0, 0, 1], [0, 1, 0], [1, 1, 0], [1, 0, 1]]),
+    rec(coefficient := 1, quadruple := [[0, 0, 1], [0, 1, 0], [1, 1, 0], [1, 1, 1]]),
+    rec(coefficient := -1, quadruple := [[0, 0, 1], [0, 1, 0], [1, 1, 1], [0, 1, 0]]),
+    rec(coefficient := 1, quadruple := [[0, 0, 1], [1, 0, 0], [0, 0, 1], [0, 1, 0]]),
+    rec(coefficient := 1, quadruple := [[0, 0, 1], [1, 0, 0], [0, 1, 0], [0, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[0, 0, 1], [1, 0, 0], [0, 1, 0], [1, 0, 1]]),
+    rec(coefficient := 1, quadruple := [[0, 0, 1], [1, 0, 0], [0, 2, 0], [1, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[0, 0, 1], [1, 0, 0], [1, 0, 0], [0, 2, 1]]),
+    rec(coefficient := -2, quadruple := [[0, 0, 1], [1, 1, 0], [0, 1, 0], [1, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[0, 0, 1], [1, 1, 0], [0, 1, 0], [1, 1, 1]]),
+    rec(coefficient := 1, quadruple := [[0, 1, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]]),
+    rec(coefficient := 1, quadruple := [[0, 1, 0], [0, 0, 1], [0, 1, 0], [1, 0, 1]]),
+    rec(coefficient := 1, quadruple := [[0, 1, 0], [0, 0, 1], [0, 1, 0], [1, 1, 1]]),
+    rec(coefficient := 1, quadruple := [[0, 1, 0], [0, 0, 1], [1, 1, 0], [0, 0, 1]]),
+    rec(coefficient := 1, quadruple := [[0, 1, 0], [0, 1, 0], [0, 0, 1], [1, 0, 0]]),
+    rec(coefficient := -1, quadruple := [[0, 1, 0], [0, 1, 0], [0, 1, 0], [0, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[0, 1, 0], [0, 1, 0], [0, 1, 0], [0, 1, 1]]),
+    rec(coefficient := -1, quadruple := [[0, 1, 0], [0, 1, 1], [0, 1, 0], [0, 1, 0]]),
+    rec(coefficient := 1, quadruple := [[0, 1, 0], [1, 0, 0], [0, 1, 0], [0, 1, 1]]),
+    rec(coefficient := -1, quadruple := [[0, 1, 0], [1, 0, 0], [0, 1, 1], [1, 0, 1]]),
     rec(coefficient := 1, quadruple := [[0, 1, 0], [1, 0, 0], [1, 0, 0], [0, 1, 0]]),
     rec(coefficient := 1, quadruple := [[0, 1, 0], [1, 0, 0], [1, 0, 0], [1, 1, 0]]),
-    rec(coefficient := 2, quadruple := [[0, 1, 0], [1, 0, 0], [1, 0, 0], [1, 2, 1]]),
-    rec(coefficient := 2, quadruple := [[0, 1, 0], [1, 0, 0], [1, 1, 0], [0, 0, 1]]),
-    rec(coefficient := -2, quadruple := [[0, 1, 0], [1, 1, 0], [0, 0, 1], [0, 1, 0]]),
-    rec(coefficient := -2, quadruple := [[0, 1, 0], [1, 1, 0], [0, 0, 1], [1, 1, 0]]),
-    rec(coefficient := -2, quadruple := [[0, 1, 0], [1, 1, 0], [0, 1, 1], [0, 1, 0]]),
-    rec(coefficient := 2, quadruple := [[0, 1, 0], [1, 1, 1], [1, 1, 0], [0, 0, 1]]),
-    rec(coefficient := 2, quadruple := [[1, 0, 0], [0, 1, 0], [0, 0, 1], [1, 0, 0]]),
-    rec(coefficient := 2, quadruple := [[1, 0, 0], [0, 1, 0], [0, 1, 1], [1, 0, 0]]),
-    rec(coefficient := -2, quadruple := [[1, 0, 0], [0, 1, 0], [1, 0, 0], [0, 0, 1]]),
-    rec(coefficient := -1, quadruple := [[1, 0, 0], [0, 1, 0], [1, 0, 0], [1, 1, 0]]),
-    rec(coefficient := 2, quadruple := [[1, 0, 0], [1, 0, 0], [0, 1, 0], [1, 1, 1]]),
+    rec(coefficient := 1, quadruple := [[0, 1, 0], [1, 0, 0], [1, 1, 0], [0, 0, 1]]),
+    rec(coefficient := 1, quadruple := [[0, 1, 0], [1, 0, 0], [1, 1, 1], [0, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[0, 1, 0], [1, 1, 0], [0, 0, 1], [0, 1, 0]]),
+    rec(coefficient := -1, quadruple := [[0, 1, 0], [1, 1, 0], [0, 0, 1], [1, 0, 0]]),
+    rec(coefficient := -1, quadruple := [[0, 1, 0], [1, 1, 0], [0, 1, 1], [0, 1, 0]]),
+    rec(coefficient := 1, quadruple := [[0, 1, 0], [1, 1, 1], [0, 1, 0], [1, 0, 0]]),
+    rec(coefficient := 1, quadruple := [[0, 1, 0], [1, 1, 1], [1, 1, 0], [0, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[1, 0, 0], [0, 0, 1], [0, 1, 0], [0, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[1, 0, 0], [0, 0, 1], [0, 2, 0], [1, 0, 0]]),
+    rec(coefficient := 1, quadruple := [[1, 0, 0], [0, 0, 1], [1, 0, 0], [0, 2, 0]]),
+    rec(coefficient := -1, quadruple := [[1, 0, 0], [0, 1, 0], [1, 0, 0], [0, 0, 1]]),
+    rec(coefficient := 1, quadruple := [[1, 0, 0], [0, 2, 0], [0, 0, 1], [1, 0, 0]]),
+    rec(coefficient := -1, quadruple := [[1, 0, 0], [1, 0, 0], [0, 0, 1], [0, 2, 0]]),
     rec(coefficient := -1, quadruple := [[1, 0, 0], [1, 0, 0], [1, 1, 0], [1, 0, 0]]),
+    rec(coefficient := 1, quadruple := [[1, 0, 0], [1, 0, 1], [0, 1, 0], [1, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[1, 0, 0], [1, 0, 1], [1, 0, 0], [0, 1, 1]]),
+    rec(coefficient := 1, quadruple := [[1, 0, 0], [1, 0, 1], [1, 0, 0], [1, 0, 0]]),
+    rec(coefficient := -1, quadruple := [[1, 0, 0], [1, 1, 0], [0, 0, 1], [0, 1, 0]]),
     rec(coefficient := 1, quadruple := [[1, 0, 0], [1, 1, 0], [1, 0, 0], [0, 1, 0]]),
-    rec(coefficient := 2, quadruple := [[1, 0, 0], [1, 1, 0], [1, 1, 0], [0, 0, 1]]),
-    rec(coefficient := 2, quadruple := [[1, 1, 0], [0, 0, 1], [1, 0, 0], [0, 1, 0]]),
-    rec(coefficient := 2, quadruple := [[1, 1, 0], [0, 0, 1], [1, 0, 0], [0, 2, 0]]),
-    rec(coefficient := -2, quadruple := [[1, 1, 0], [0, 0, 1], [1, 1, 0], [0, 1, 0]]),
-    rec(coefficient := 2, quadruple := [[1, 1, 0], [0, 1, 0], [0, 0, 1], [0, 1, 0]]),
-    rec(coefficient := 2, quadruple := [[1, 1, 0], [0, 1, 0], [0, 0, 1], [1, 1, 0]]),
-    rec(coefficient := 2, quadruple := [[1, 1, 0], [0, 1, 0], [0, 1, 1], [0, 1, 0]]),
-    rec(coefficient := 2, quadruple := [[1, 1, 0], [0, 1, 1], [0, 1, 0], [1, 0, 0]]),
-    rec(coefficient := -2, quadruple := [[1, 1, 0], [1, 0, 0], [0, 0, 1], [0, 2, 0]]),
-    rec(coefficient := -2, quadruple := [[1, 1, 0], [1, 0, 0], [0, 2, 1], [1, 0, 0]]),
-    rec(coefficient := -2, quadruple := [[1, 1, 1], [1, 0, 0], [0, 1, 0], [0, 1, 0]]),
-    rec(coefficient := -2, quadruple := [[1, 1, 1], [1, 1, 0], [0, 0, 1], [0, 1, 0]])
+    rec(coefficient := 1, quadruple := [[1, 0, 0], [1, 1, 0], [1, 1, 0], [0, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[1, 0, 1], [0, 1, 0], [0, 1, 0], [1, 0, 0]]),
+    rec(coefficient := 1, quadruple := [[1, 0, 1], [0, 1, 0], [0, 1, 0], [1, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[1, 0, 1], [0, 1, 0], [1, 1, 0], [0, 0, 1]]),
+    rec(coefficient := 1, quadruple := [[1, 0, 1], [1, 0, 0], [0, 2, 0], [0, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[1, 0, 1], [1, 0, 0], [1, 0, 0], [0, 0, 1]]),
+    rec(coefficient := -1, quadruple := [[1, 0, 1], [1, 0, 0], [1, 0, 1], [0, 1, 0]]),
+    rec(coefficient := -1, quadruple := [[1, 1, 0], [0, 0, 1], [0, 1, 0], [0, 0, 1]]),
+    rec(coefficient := 3, quadruple := [[1, 1, 0], [0, 0, 1], [1, 0, 0], [0, 1, 0]]),
+    rec(coefficient := 1, quadruple := [[1, 1, 0], [0, 0, 1], [1, 0, 0], [0, 2, 0]]),
+    rec(coefficient := -1, quadruple := [[1, 1, 0], [0, 0, 1], [1, 1, 0], [0, 1, 0]]),
+    rec(coefficient := -1, quadruple := [[1, 1, 0], [0, 0, 1], [1, 1, 0], [1, 0, 1]]),
+    rec(coefficient := 1, quadruple := [[1, 1, 0], [0, 1, 0], [0, 0, 1], [0, 1, 0]]),
+    rec(coefficient := 1, quadruple := [[1, 1, 0], [0, 1, 0], [0, 1, 1], [0, 1, 0]]),
+    rec(coefficient := -1, quadruple := [[1, 1, 0], [1, 0, 0], [0, 0, 1], [0, 2, 0]]),
+    rec(coefficient := 1, quadruple := [[1, 1, 0], [1, 0, 0], [1, 1, 0], [0, 0, 1]]),
+    rec(coefficient := 1, quadruple := [[1, 1, 0], [1, 0, 0], [1, 1, 1], [0, 1, 0]]),
+    rec(coefficient := -1, quadruple := [[1, 1, 1], [1, 0, 0], [0, 1, 0], [0, 1, 0]]),
+    rec(coefficient := -1, quadruple := [[1, 1, 1], [1, 1, 0], [0, 0, 1], [0, 1, 0]])
 ];;
 
 certificate := [];;
