@@ -1,8 +1,12 @@
-Gamma4 Xi3 direct-cancellation certificate
+Gamma4 Xi3 source-to-target cancellation certificate
 Arithmetic: exact integers in a formal sparse Laurent lattice
 External GAP packages loaded: none
-Relation check: (epsilon*g)h = hg = h*g
+Corrected recursive operators reconstructed: phi_1, phi_2, phi_3
+Y2 nonzero recursive coordinates: 8
+Common Y3 coordinate (zero-based): 45
+Common-coordinate Laurent terms: 2
+Source-to-eight-atom-target residual: 0
 Direct Xi3 Laurent atoms: 8
 Certificate: +d[h|g|ug|g] - d[epsilon*g|h|ug|g]
-Residual Laurent atoms: 0
-PASS: Xi3 = D(h,g,ug,g)/D(epsilon*g,h,ug,g) = 1
+Final residual Laurent atoms: 0
+PASS: recursive coordinate quotient equals the stated Xi3 and Xi3=1

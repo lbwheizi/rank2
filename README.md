@@ -37,7 +37,7 @@ Two additional consistency checks are stored under
 
 ## Gamma_4 certificate index
 
-The following four directories accompany Appendix C.
+The following five directories accompany Appendix C.
 
 | Paper reference and LaTeX label | Program | Identity or coefficient check |
 |---|---|---|
@@ -45,6 +45,7 @@ The following four directories accompany Appendix C.
 | Remark C.8, `rem:Gamma4-local-Delta-certificate` | [`gamma4_local_delta_certificate.g`](certificates/Gamma_4/local_delta/gamma4_local_delta_certificate.g) | corrected phi_3 recursion and Y_3 = 0 implies both local Delta identities for W |
 | Remark C.10, `rem:Gamma4-Omega-certificate` | [`gamma4_delta_transport_certificate.g`](certificates/Gamma_4/delta_transport/gamma4_delta_transport_certificate.g) | transport of the four local Gamma_2 constants |
 | Remark C.12, `rem:Gamma4-terminal-certificate` | [`gamma4_terminal_character_certificate.g`](certificates/Gamma_4/terminal_character/gamma4_terminal_character_certificate.g) | terminal-root self-character cancellation |
+| Reflected-Y2 lemma, `lem:Gamma4-R1-reflected-parameter-reduction` | [`gamma4_reflected_y2_certificate.g`](certificates/Gamma_4/reflected_y2/gamma4_reflected_y2_certificate.g) | source reconstruction and seven integral parameter identities proving the reflected second adjoint simple after (R_1) |
 
 The local-Delta verifier reconstructs the homogeneous objects, twisted
 tensor actions, braidings, and the corrected third-adjoint recursion inside

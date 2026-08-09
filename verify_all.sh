@@ -74,5 +74,6 @@ run_certificate certificates/Gamma_4/xi3 gamma4_xi3_certificate.g gamma4_xi3_cer
 run_certificate certificates/Gamma_4/local_delta gamma4_local_delta_certificate.g gamma4_local_delta_certificate.out
 run_certificate certificates/Gamma_4/delta_transport gamma4_delta_transport_certificate.g gamma4_delta_transport_certificate.out
 run_certificate certificates/Gamma_4/terminal_character gamma4_terminal_character_certificate.g gamma4_terminal_character_certificate.out
+run_certificate certificates/Gamma_4/reflected_y2 gamma4_reflected_y2_certificate.g gamma4_reflected_y2_certificate.out
 
 printf '%s\n' 'PASS: all exact certificate suites'

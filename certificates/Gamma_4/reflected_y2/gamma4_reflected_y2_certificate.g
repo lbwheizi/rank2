@@ -1,0 +1,268 @@
+#############################################################################
+## R1-reflected Gamma4 Y2 simplicity certificate (core GAP only)
+##
+## This verifier checks two exact integral bridges for each of the seven
+## reflected line-stability equations T_j:
+##
+##   (A) T_j + sum_i C[j][i] packet_i = B_j(Phi)
+##       in the free Laurent exponent lattice; and
+##   (B) B_j(Phi) is an integral combination of normalized 3-cocycle
+##       defects.
+##
+## Before checking those bridges, the companion source engine independently
+## reconstructs the initial induced objects V,W, the first-root character on
+## X1, the dual object V*, the reflected induced pair, both phi_1 and phi_2,
+## and the two sets of eight nonzero Y2 coordinates.  Its seven initial and
+## reflected base-coordinate ratios are expanded canonically and checked
+## coefficient by coefficient against the supplied packet and target rows.
+## The recursive phi_2 construction uses the right-associated convention
+##
+##   c_12 = a (c_{W,W} tensor id) a^{-1},
+##   coefficient = Phi(x,y,l)/Phi(x*y*x^-1,x,l).
+##
+## Group elements are abstract normal forms epsilon^i h^j g^k: only i is
+## reduced modulo four; j,k remain arbitrary integers.  No finite h- or
+## g-order relation, external package, floating point, or random sample is
+## used.  Thus the expanded target rows are certificate data, not trusted
+## source input.
+#############################################################################
+
+Read("gamma4_reflected_y2_certificate_data.g");
+SizeScreen([1000, 1000]);
+
+AddExponent := function(v, key, exponent)
+    local i;
+    if exponent = 0 then
+        return;
+    fi;
+    for i in [1 .. Length(v)] do
+        if v[i][1] = key then
+            v[i][2] := v[i][2] + exponent;
+            if v[i][2] = 0 then
+                Remove(v, i);
+            fi;
+            return;
+        fi;
+    od;
+    Add(v, [key, exponent]);
+end;
+
+CanonicalSparse := function(v)
+    local answer, term;
+    answer := [];
+    for term in v do
+        AddExponent(answer, term[1], term[2]);
+    od;
+    Sort(answer, function(left, right)
+        return left[1] < right[1];
+    end);
+    return answer;
+end;
+
+AddSparse := function(left, right)
+    local answer, term;
+    answer := List(left, ShallowCopy);
+    for term in right do
+        AddExponent(answer, term[1], term[2]);
+    od;
+    return CanonicalSparse(answer);
+end;
+
+ScaleSparse := function(v, scalar)
+    return CanonicalSparse(List(v, term -> [term[1], scalar * term[2]]));
+end;
+
+IdentityElt := [0, 0, 0];
+
+Multiply := function(a, b)
+    local i, j, k, ii, jj, kk, first;
+    i := a[1]; j := a[2]; k := a[3];
+    ii := b[1]; jj := b[2]; kk := b[3];
+    if (k mod 2) = 0 then
+        first := i + ii;
+    else
+        first := i - ii - jj;
+    fi;
+    return [first mod 4, j + jj, k + kk];
+end;
+
+InverseElt := function(a)
+    local i, j, k;
+    i := a[1]; j := a[2]; k := a[3];
+    if (k mod 2) = 0 then
+        return [(-i) mod 4, -j, -k];
+    fi;
+    return [(i + j) mod 4, -j, -k];
+end;
+
+Conjugate := function(a, x)
+    return Multiply(Multiply(a, x), InverseElt(a));
+end;
+
+PhiKey := function(a, b, c)
+    return Concatenation("P(", String(a), ",", String(b), ",", String(c), ")");
+end;
+
+PhiAtom := function(a, b, c)
+    if a = IdentityElt or b = IdentityElt or c = IdentityElt then
+        return [];
+    fi;
+    return [[PhiKey(a, b, c), 1]];
+end;
+
+CocycleDefect := function(a, b, c, d)
+    local answer;
+    answer := [];
+    answer := AddSparse(answer, PhiAtom(b, c, d));
+    answer := AddSparse(answer, PhiAtom(a, Multiply(b, c), d));
+    answer := AddSparse(answer, PhiAtom(a, b, c));
+    answer := AddSparse(answer, ScaleSparse(PhiAtom(Multiply(a, b), c, d), -1));
+    answer := AddSparse(answer, ScaleSparse(PhiAtom(a, b, Multiply(c, d)), -1));
+    return answer;
+end;
+
+## This records, at exponent-vector level, the associator quotient used in
+## the source construction of the T_j rows.  It is included explicitly to
+## make the corrected c_12 orientation auditable.
+C12Coefficient := function(x, y, ell)
+    return AddSparse(
+        PhiAtom(x, y, ell),
+        ScaleSparse(PhiAtom(Conjugate(x, y), x, ell), -1)
+    );
+end;
+
+## Reconstruct the initial and reflected induced actions, phi_1, phi_2,
+## the eight nonzero Y2 coordinates, and the seven base-coordinate ratios.
+## This source engine does not read any of the expanded packet/target rows.
+Read("gamma4_reflected_y2_source.g");
+
+VerifySourceReconstruction := function()
+    local source, index, expectedInitial, expectedReflected;
+    source := SRC_ReconstructRows();
+    if source.initial.degree <> [1, 1, 2] then
+        Error("FAIL: wrong initial terminal degree: ", source.initial.degree);
+    fi;
+    if source.reflected.degree <> [2, 1, 2] then
+        Error("FAIL: wrong reflected terminal degree: ",
+              source.reflected.degree);
+    fi;
+    for index in [1 .. 7] do
+        expectedInitial := CanonicalSparse(ReflectedY2PacketRows[index + 6]);
+        expectedReflected := CanonicalSparse(ReflectedY2TargetRows[index]);
+        if source.initialRows[index] <> expectedInitial then
+            Error("FAIL: reconstructed initial Y2 row at index ", index);
+        fi;
+        if source.reflectedRows[index] <> expectedReflected then
+            Error("FAIL: reconstructed reflected Y2 row at index ", index);
+        fi;
+    od;
+    Print("Source recursion: initial/reflected phi2 coordinates=8/8, ",
+          "line-stability rows checked=7/7, terminal degrees=",
+          [source.initial.degree, source.reflected.degree], "\n");
+end;
+
+VerifyStageA := function(index)
+    local row, i, residual, nonPhi;
+    row := ReflectedY2TargetRows[index];
+    for i in [1 .. Length(ReflectedY2PacketRows)] do
+        row := AddSparse(
+            row,
+            ScaleSparse(
+                ReflectedY2PacketRows[i],
+                ReflectedY2StageACoefficients[index][i]
+            )
+        );
+    od;
+    residual := AddSparse(
+        row,
+        ScaleSparse(ReflectedY2ResidualRows[index], -1)
+    );
+    if Length(residual) <> 0 then
+        Error("FAIL: Stage-A source-to-target identity at index ", index);
+    fi;
+    nonPhi := Filtered(row, term -> PositionSublist(term[1], "P(") <> 1);
+    if Length(nonPhi) <> 0 then
+        Error("FAIL: Stage-A row still has character/sign atoms at index ", index);
+    fi;
+    Print("ThetaPrime_", ReflectedY2RootIndices[index],
+          ": source atoms=", Length(ReflectedY2TargetRows[index]),
+          ", packet residual atoms=", Length(row),
+          ", packet coefficient l1=",
+          Sum(ReflectedY2StageACoefficients[index], AbsInt),
+          "\n");
+end;
+
+VerifyBarCertificate := function(index)
+    local entry, target, combination, term, quad, residual,
+          maxEntryH, maxEntryG, maxProductH, maxProductG,
+          x, position, product;
+    entry := ReflectedY2Certificates[index];
+    target := ReflectedY2ResidualRows[index];
+    combination := [];
+    maxEntryH := 0; maxEntryG := 0;
+    maxProductH := 0; maxProductG := 0;
+    for term in entry.certificate do
+        if not IsInt(term[2]) then
+            Error("FAIL: nonintegral certificate coefficient in ", entry.name);
+        fi;
+        quad := term[1];
+        combination := AddSparse(
+            combination,
+            ScaleSparse(
+                CocycleDefect(quad[1], quad[2], quad[3], quad[4]),
+                term[2]
+            )
+        );
+        for x in quad do
+            maxEntryH := Maximum(maxEntryH, AbsInt(x[2]));
+            maxEntryG := Maximum(maxEntryG, AbsInt(x[3]));
+        od;
+        for position in [1 .. 3] do
+            product := Multiply(quad[position], quad[position + 1]);
+            maxProductH := Maximum(maxProductH, AbsInt(product[2]));
+            maxProductG := Maximum(maxProductG, AbsInt(product[3]));
+        od;
+    od;
+    residual := AddSparse(target, ScaleSparse(combination, -1));
+    if Length(residual) <> 0 then
+        Error("FAIL: nonzero abstract bar residual for ", entry.name);
+    fi;
+    Print(entry.name,
+          ": certificate terms=", Length(entry.certificate),
+          ", coefficient l1=", Sum(entry.certificate, term -> AbsInt(term[2])),
+          ", residual atoms=", Length(residual),
+          ", max |h,g| in entries=", [maxEntryH, maxEntryG],
+          ", max |h,g| in adjacent products=", [maxProductH, maxProductG],
+          "\n");
+end;
+
+if Length(ReflectedY2PacketRows) <> 13 then
+    Error("FAIL: expected thirteen packet rows");
+fi;
+if Length(ReflectedY2TargetRows) <> 7 or
+   Length(ReflectedY2ResidualRows) <> 7 or
+   Length(ReflectedY2Certificates) <> 7 then
+    Error("FAIL: expected seven reflected equations");
+fi;
+
+## A nontrivial orientation check for the displayed c_12 quotient.
+if Length(C12Coefficient([0,0,1], [0,1,0], [0,0,1])) = 0 then
+    Error("FAIL: degenerate c_12 orientation check");
+fi;
+
+VerifySourceReconstruction();
+
+for index in [1 .. 7] do
+    VerifyStageA(index);
+    VerifyBarCertificate(index);
+od;
+
+Print("Gamma4 R1-reflected Y2 simplicity certificate\n");
+Print("Arithmetic: exact integers in the Laurent lattice and normalized bar complex\n");
+Print("c12 convention: Phi(x,y,l)/Phi(x*y*x^-1,x,l)\n");
+Print("External GAP packages loaded: none\n");
+Print("Group model: epsilon exponent modulo 4; h,g exponents integral\n");
+Print("No h- or g-order relation used\n");
+Print("PASS: all seven reflected Y2 line-stability scalars equal one\n");
+
+QUIT_GAP(0);
