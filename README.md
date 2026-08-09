@@ -1,36 +1,55 @@
-# Exact GAP certificates for the rank-two coquasi Nichols algebra project
+# Exact GAP certificates for rank-two coquasi Nichols algebras
 
-This repository contains the GAP certificates accompanying the rank-two
-classification in the paper.  All calculations use exact integer or
-finite-ring arithmetic.  The scripts require only GAP core; no optional GAP
-package is loaded.
+This repository contains the exact GAP certificates accompanying the
+rank-two classification.  Certificates are grouped first by the ambient
+support group, so that every calculation can be located from its group case:
 
-## Certificate index
+```text
+certificates/
+├── Gamma_2/
+├── Gamma_3/
+├── Gamma_4/
+└── T/
+```
 
-The program names reproduce the numbered statement in Appendix B of the
-paper.  The LaTeX labels are included so that the correspondence remains
-unambiguous if the printed numbers change in a later version.
+All calculations use exact integer or finite-ring arithmetic and require
+only GAP core; no optional GAP package is loaded.  `Gamma_3/` and `T/` are
+currently index placeholders for future certificates.
+
+## Gamma_2 certificate index
+
+The program names reproduce the numbered statements in Appendix B.  Stable
+LaTeX labels are included so that the correspondence remains unambiguous if
+printed numbering changes.
 
 | Paper reference and LaTeX label | Program | Identity or finite check |
 |---|---|---|
-| Lemma B.1, `lem:first-coefficient-reduction` | [`lemma_B1_first_coefficient_reduction.g`](certificates/delta_reduction/lemma_B1_first_coefficient_reduction.g) | first-adjoint $\Delta$ reduction |
-| Lemma B.4, `lem:Omega-V-one` | [`lemma_B4_Omega_V_equals_one.g`](certificates/omegaV/lemma_B4_Omega_V_equals_one.g) | $\Omega_V=1$ |
-| Lemma B.12, `lem:Gamma2-G2-cocycle-reductions` | [`lemma_B12_K3_and_d4_cocycle_reductions.g`](certificates/g2_propagation/lemma_B12_K3_and_d4_cocycle_reductions.g) | $\mathcal K_3=1$ and $d_4=\lambda^3\kappa_4$ |
-| Lemma B.14, `lem:Gamma2-third-string-theta-square-cocycle` | [`lemma_B14_s_phi_equals_theta_squared.g`](certificates/g2_pure_parameters/s_phi_equals_theta_squared/lemma_B14_s_phi_equals_theta_squared.g) | $s_\Phi=\Theta_\Phi^2$ |
-| Lemma B.15, `lem:Gamma2-R2-Theta-cocycle` | [`lemma_B15_theta_after_second_reflection.g`](certificates/g2_pure_parameters/theta_r2_invariance/lemma_B15_theta_after_second_reflection.g) | $\Theta_\Phi(hg,h^{-1})=\Theta_\Phi(g,h)$ |
-| Lemma B.19, `lem:Theta-opposite-symmetry` | [`lemma_B19_theta_symmetry.g`](certificates/theta_symmetry/lemma_B19_theta_symmetry.g) | $\Theta_\Phi(h,g)=\Theta_\Phi(g,h)$ |
-| Remark B.21, `rem:order16-G2-certificate` | [`remark_B21_order16_G2_verifier.g`](certificates/order16_G2/remark_B21_order16_G2_verifier.g) | finite-data checks for the order-$16$ $G_2$ example |
+| Lemma B.1, `lem:first-coefficient-reduction` | [`lemma_B1_first_coefficient_reduction.g`](certificates/Gamma_2/delta_reduction/lemma_B1_first_coefficient_reduction.g) | first-adjoint Delta reduction |
+| Lemma B.4, `lem:Omega-V-one` | [`lemma_B4_Omega_V_equals_one.g`](certificates/Gamma_2/omegaV/lemma_B4_Omega_V_equals_one.g) | Omega_V = 1 |
+| Lemma B.12, `lem:Gamma2-G2-cocycle-reductions` | [`lemma_B12_K3_and_d4_cocycle_reductions.g`](certificates/Gamma_2/g2_propagation/lemma_B12_K3_and_d4_cocycle_reductions.g) | K_3 = 1 and d_4 = lambda^3 kappa_4 |
+| Lemma B.14, `lem:Gamma2-third-string-theta-square-cocycle` | [`lemma_B14_s_phi_equals_theta_squared.g`](certificates/Gamma_2/g2_pure_parameters/s_phi_equals_theta_squared/lemma_B14_s_phi_equals_theta_squared.g) | s_Phi = Theta_Phi^2 |
+| Lemma B.15, `lem:Gamma2-R2-Theta-cocycle` | [`lemma_B15_theta_after_second_reflection.g`](certificates/Gamma_2/g2_pure_parameters/theta_r2_invariance/lemma_B15_theta_after_second_reflection.g) | reflected Theta invariance |
+| Lemma B.19, `lem:Theta-opposite-symmetry` | [`lemma_B19_theta_symmetry.g`](certificates/Gamma_2/theta_symmetry/lemma_B19_theta_symmetry.g) | opposite symmetry of Theta_Phi |
+| Remark B.21, `rem:order16-G2-certificate` | [`remark_B21_order16_G2_verifier.g`](certificates/Gamma_2/order16_G2/remark_B21_order16_G2_verifier.g) | finite-data checks for the order-16 G_2 example |
 
-Two additional consistency checks, which are not cited as independent
-statements in the paper, are stored under
-[`g2_pure_parameters/auxiliary`](certificates/g2_pure_parameters/auxiliary/).
+Two additional consistency checks are stored under
+[`Gamma_2/g2_pure_parameters/auxiliary`](certificates/Gamma_2/g2_pure_parameters/auxiliary/).
 
-The identity $s_\Phi=\Theta_\Phi^2$ holds in the abstract $\Gamma_2$
-setting, without imposing the $G_2$ parameter conditions.  It is the
-calculation used to remove $s_\Phi=1$ from the list of independent
-conditions on the oriented $G_2$ parameter locus.  The two directories
-under `g2_pure_parameters/auxiliary` contain consistency checks not used as
-additional assumptions in the paper.
+## Gamma_4 certificate index
+
+The following four directories accompany Appendix C.
+
+| Paper reference and LaTeX label | Program | Identity or coefficient check |
+|---|---|---|
+| Remark C.5, `rem:Gamma4-Xi3-certificate` | [`gamma4_xi3_certificate.g`](certificates/Gamma_4/xi3/gamma4_xi3_certificate.g) | final two-defect cancellation in Xi_3 = 1 |
+| Remark C.8, `rem:Gamma4-local-Delta-certificate` | [`gamma4_local_delta_certificate.g`](certificates/Gamma_4/local_delta/gamma4_local_delta_certificate.g) | corrected phi_3 recursion and Y_3 = 0 implies both local Delta identities for W |
+| Remark C.10, `rem:Gamma4-Omega-certificate` | [`gamma4_delta_transport_certificate.g`](certificates/Gamma_4/delta_transport/gamma4_delta_transport_certificate.g) | transport of the four local Gamma_2 constants |
+| Remark C.12, `rem:Gamma4-terminal-certificate` | [`gamma4_terminal_character_certificate.g`](certificates/Gamma_4/terminal_character/gamma4_terminal_character_certificate.g) | terminal-root self-character cancellation |
+
+The local-Delta verifier reconstructs the homogeneous objects, twisted
+tensor actions, braidings, and the corrected third-adjoint recursion inside
+GAP.  It obtains all 192 nonzero binomial coordinates before checking the 19
+rows used by the exact Laurent eliminations.
 
 ## Requirements
 
@@ -40,7 +59,7 @@ additional assumptions in the paper.
 
 ## Reproduce all checks
 
-From the repository root, run
+From the repository root, run:
 
 ```sh
 ./verify_all.sh
@@ -53,21 +72,19 @@ not detected automatically, set `GAP_ROOT` as well:
 GAP_BIN=/path/to/gap GAP_ROOT=/path/to/gap-root ./verify_all.sh
 ```
 
-The verifier checks `SHA256SUMS`, checks every directory's
-`CHECKSUMS.sha256`, runs each program with
-`--bare -A -r -q --nointeract`, and compares the fresh output byte-for-byte
-with the recorded output.
+The verifier checks the root `SHA256SUMS`, every topic-level
+`CHECKSUMS.sha256`, executes each program with
+`--bare -A -r -q --nointeract`, and compares fresh output byte-for-byte with
+the recorded output.
 
 ## Scope
 
-The cocycle certificates work in the abstract normal form
-$\varepsilon^e g^a h^b$ subject only to
-$hg=\varepsilon gh$, $\varepsilon^2=1$, and centrality of $\varepsilon$.
-They expand products of normalized $3$-cocycle values into exact integral
-exponent vectors and reduce them by explicitly listed cocycle relators.
+The Gamma_2 cocycle certificates work in the abstract normal form subject to
+the Gamma_2 relations stated in the paper.  The order-16 script instead
+checks the explicit finite data of that quotient.
 
-The `order16_G2` script instead checks the explicit finite data of one
-order-$16$ quotient: the group and cocycle identities, the stated projective
-characters, the twelve printed support states and their transitions, and the
-root-label arithmetic.  As its directory README explains, it does not
-replace the recursive adjoint calculations proved in the paper.
+The Gamma_4 certificates use abstract normal forms
+`epsilon^i h^j g^k`, reducing only `i` modulo four and keeping `j,k` integral.
+They use neither quotient-specific orders nor sampled cocycles.  Each topic
+README states exactly which coefficient or cocycle reduction is verified and
+which categorical arguments remain in the text.

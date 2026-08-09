@@ -1,0 +1,9 @@
+Gamma4 terminal-root self-character certificate
+Arithmetic: exact integers in a formal sparse Laurent lattice
+External GAP packages loaded: none
+Target Laurent atoms: 76
+Target l1 norm: 76
+Certificate cocycle defects: 146
+Certificate coefficient l1 norm: 245
+Residual Laurent atoms: 0
+PASS: Q is the stated product of normalized 3-cocycle defects, hence Q=1

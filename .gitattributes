@@ -1,0 +1,7 @@
+* text=auto
+*.g text eol=lf
+*.out text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.sha256 text eol=lf
+SHA256SUMS text eol=lf

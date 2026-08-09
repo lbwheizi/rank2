@@ -1,0 +1,9 @@
+W01_over_W10: certificate terms=134, coefficient l1=136, residual atoms=0, max |h,g| in entries=[ 1, 2 ], max |h,g| in adjacent products=[ 1, 3 ]
+Y01_over_W01: certificate terms=810, coefficient l1=1011, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
+Y10_over_W10: certificate terms=770, coefficient l1=931, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
+Gamma4 Omega-transport bar-boundary certificate
+Arithmetic: exact integers in the normalized bar complex
+External GAP packages loaded: none
+Group model: epsilon exponent modulo 4; h,g exponents integral
+No h- or g-order relation used
+PASS: Omega_01(g,h)=Omega_10(g,h)=Omega_01(hg,h)=Omega_10(hg,h)

@@ -1,0 +1,8 @@
+Gamma4 Xi3 direct-cancellation certificate
+Arithmetic: exact integers in a formal sparse Laurent lattice
+External GAP packages loaded: none
+Relation check: (epsilon*g)h = hg = h*g
+Direct Xi3 Laurent atoms: 8
+Certificate: +d[h|g|ug|g] - d[epsilon*g|h|ug|g]
+Residual Laurent atoms: 0
+PASS: Xi3 = D(h,g,ug,g)/D(epsilon*g,h,ug,g) = 1
