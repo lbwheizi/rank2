@@ -13,8 +13,8 @@ certificates/
 ```
 
 All calculations use exact integer or finite-ring arithmetic and require
-only GAP core; no optional GAP package is loaded.  `Gamma_3/` and `T/` are
-currently index placeholders for future certificates.
+only GAP core; no optional GAP package is loaded.  `Gamma_3/` is currently
+an index placeholder for future certificates.
 
 ## Gamma_2 certificate index
 
@@ -51,6 +51,14 @@ The local-Delta verifier reconstructs the homogeneous objects, twisted
 tensor actions, braidings, and the corrected third-adjoint recursion inside
 GAP.  It obtains all 192 nonzero binomial coordinates before checking the 19
 rows used by the exact Laurent eliminations.
+
+## T certificate index
+
+The following consolidated verifier accompanies Appendix D.
+
+| Paper reference and LaTeX label | Program | Identity or coefficient check |
+|---|---|---|
+| Remark D.8, `rem:T-tetrahedral-certificate` | [`verify_T_case.g`](certificates/T/verify_T_case.g) | tetrahedral rack and braid checks; complete strict `phi_2` and `phi_3` tables; unreduced `phi_4=(p^2-p+1)Z_1`; four second-reflection monodromy cycles |
 
 ## Requirements
 
@@ -89,3 +97,9 @@ The Gamma_4 certificates use abstract normal forms
 They use neither quotient-specific orders nor sampled cocycles.  Each topic
 README states exactly which coefficient or cocycle reduction is verified and
 which categorical arguments remain in the text.
+
+The T verifier reconstructs the tetrahedral rack from its four conjugation
+permutations and derives all left-hand sides from one strict recursive
+operator.  Its fourth-adjoint identity is checked coefficientwise in the
+unreduced polynomial ring before imposing `p^2-p+1=0`; the reflected
+monodromy cycles are generated from eight adjacent braids.
