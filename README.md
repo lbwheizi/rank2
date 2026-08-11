@@ -13,8 +13,9 @@ certificates/
 ```
 
 All calculations use exact integer or finite-ring arithmetic and require
-only GAP core; no optional GAP package is loaded.  `Gamma_3/` is currently
-an index placeholder for future certificates.
+only GAP core; no optional GAP package is loaded.  The `Gamma_3/` directory
+contains one consolidated exact bar-complex suite for its three support and
+projective-dimension branches.
 
 ## Gamma_2 certificate index
 
@@ -34,6 +35,21 @@ printed numbering changes.
 
 Two additional consistency checks are stored under
 [`Gamma_2/g2_pure_parameters/auxiliary`](certificates/Gamma_2/g2_pure_parameters/auxiliary/).
+
+## Gamma_3 certificate index
+
+The following flat certificate suite accompanies Appendix E.
+
+| Paper reference and LaTeX label | Program | Identity or coefficient check |
+|---|---|---|
+| Remark E.8, `rem:Gamma3-32-certificate` | [`verify_gamma3_32.g`](certificates/Gamma_3/verify_gamma3_32.g) | exact normalized-bar reductions for the `(3,2)` second-adjoint obstruction |
+| Remark E.11, `rem:Gamma3-dim2-certificate` | [`verify_gamma3_31_dim2.g`](certificates/Gamma_3/verify_gamma3_31_dim2.g) | exact reductions for the central two-dimensional `(3,1)_2` branch |
+| Remark E.14, `rem:Gamma3-dim1-certificate` | [`verify_gamma3_31_dim1.g`](certificates/Gamma_3/verify_gamma3_31_dim1.g) | shared bar certificates and exact scalar-branch checks for `(3,1)_1` |
+
+[`verify_all_gamma3.g`](certificates/Gamma_3/verify_all_gamma3.g) runs the
+three branch verifiers together with the finite `S_3` cocycle detector.
+Its complete recorded stdout is
+[`EXPECTED_OUTPUT.txt`](certificates/Gamma_3/EXPECTED_OUTPUT.txt).
 
 ## Gamma_4 certificate index
 
@@ -91,6 +107,12 @@ the recorded output.
 The Gamma_2 cocycle certificates work in the abstract normal form subject to
 the Gamma_2 relations stated in the paper.  The order-16 script instead
 checks the explicit finite data of that quotient.
+
+The Gamma_3 suite checks exact normalized bar differentials, explicit
+integral four-chain residuals after projection to `S_3`, the three
+second-adjoint obstruction branches, and the finite `S_3` detector.  The
+homological injectivity and the categorical lift/untwist arguments remain in
+the written proof, as stated precisely in the topic README.
 
 The Gamma_4 certificates use abstract normal forms
 `epsilon^i h^j g^k`, reducing only `i` modulo four and keeping `j,k` integral.

@@ -1,0 +1,14 @@
+Gamma_3 exact certificate suite (GAP core only)
+================================================
+[PASS] (3,2): Cs, Clambda, Cr have zero Gamma_3 differential.
+[PASS] (3,2): explicit S_3 four-chain residuals are zero.
+       Gamma terms: 25, 44, 53; S3 four-chain terms: 5, 24, 22.
+[PASS] (3,1)_2: all Gamma_3 differentials and reductions agree.
+[PASS] (3,1)_2: explicit S_3 four-chain residuals are zero.
+       C02/Cpow Gamma terms: 38, 20; S3 four-chain terms: 8, 9.
+[PASS] (3,1)_1: shared C02/Cpow bar certificates were rechecked.
+[PASS] (3,1)_1: all three m_i ratios and branch polynomials agree exactly.
+[PASS] S3 detector: all 1296 normalized 3-cocycle equations hold.
+[PASS] S3 detector: support = 32 and kappa exponent = 1 in F_3.
+================================================
+ALL GAMMA_3 CERTIFICATE CHECKS PASSED.
