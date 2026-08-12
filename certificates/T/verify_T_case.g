@@ -3,7 +3,7 @@
 # verify_T_case.g
 #
 # Exact GAP-core verifier for the finite coefficient calculations in
-# Appendix D of coquasirank2ver17_Gamma4_final.tex.
+# Section 6 and Appendix D of the accompanying manuscript.
 #
 # No external GAP package and no floating-point arithmetic are used.
 # A polynomial a_0 + a_1*p + ... + a_d*p^d is stored as
@@ -275,7 +275,7 @@ T_ok := T_ok and
     (-1) * T_BRAID_COEFFS[2][3] * T_BRAID_COEFFS[4][2] *
     T_BRAID_COEFFS[3][4] = 1;;
 T_Check(T_ok,
-    "tetrahedral rack table and all 64 constant-(-1) braid instances");;
+    "lem:T-tetrahedral-braiding: tetrahedral rack table and all 64 constant-(-1) braid instances");;
 
 #############################################################################
 # Adjacent label braids and the h_m braid loop.
@@ -320,10 +320,11 @@ for T_i in [1 .. 4] do
             [T_RackOp(T_RackOp(T_i, T_j), T_i), T_RackOp(T_i, T_j)];
     od;
 od;
-T_Check(T_ok, "the displayed h_m braid-loop direction (all h_2 words)");;
+T_Check(T_ok,
+    "eq:T-adjoint-recursion: displayed h_m braid-loop direction (all h_2 words)");;
 
 #############################################################################
-# Strict recursion (D.16).
+# Strict recursion eq:T-adjoint-recursion (D.6).
 #############################################################################
 
 T_StrictPhiWord := fail;;
@@ -363,7 +364,8 @@ T_PhiOnPrefixedVector := function(prefix, a)
 end;;
 
 #############################################################################
-# D.17 and D.18: u_i and the complete phi_2 table, modulo f(p).
+# eq:T-Y2-basis and eq:T-phi2-table (D.7--D.8):
+# u_i and the complete phi_2 table, modulo f(p).
 #############################################################################
 
 T_u := [];;
@@ -399,15 +401,17 @@ for T_i in [1 .. 4] do
                 T_VecScale(T_u[T_spec[1]], T_spec[2]));;
         fi;
         if not T_VecEqual(T_actual, T_expected) then
-            Error(Concatenation("FAIL: D.18 at cell (",
+            Error(Concatenation("FAIL: eq:T-phi2-table at cell (",
                 String(T_i), ",", String(T_j), ")"));
         fi;
     od;
 od;
-T_Check(true, "D.18 complete phi_2 table modulo p^2-p+1");;
+T_Check(true,
+    "eq:T-phi2-table: complete phi_2 table modulo p^2-p+1");;
 
 #############################################################################
-# D.19 and D.20: y and the complete phi_3 table, modulo f(p).
+# eq:T-y3-generator and eq:T-phi3-table (D.9--D.10):
+# y and the complete phi_3 table, modulo f(p).
 #############################################################################
 
 T_y := T_VecFromTerms(3, [
@@ -436,15 +440,17 @@ for T_i in [1 .. 4] do
             T_expected := T_VecZero(3);;
         fi;
         if not T_VecEqual(T_actual, T_expected) then
-            Error(Concatenation("FAIL: D.20 at cell (",
+            Error(Concatenation("FAIL: eq:T-phi3-table at cell (",
                 String(T_i), ",", String(T_j), ")"));
         fi;
     od;
 od;
-T_Check(true, "D.20 complete phi_3 table modulo p^2-p+1");;
+T_Check(true,
+    "eq:T-phi3-table: complete phi_3 table modulo p^2-p+1");;
 
 #############################################################################
-# D.21--D.22: exact, unreduced identity phi_4(w_1 tensor y)=f(p) Z_1.
+# eq:T-Y4-homogeneous-components and eq:T-Y4-Z1 (D.11--D.12):
+# exact, unreduced identity phi_4(w_1 tensor y)=f(p) Z_1.
 #############################################################################
 
 T_Z1 := T_VecFromTerms(4, [
@@ -468,14 +474,15 @@ T_Z1 := T_VecFromTerms(4, [
 T_actual4 := T_PhiOnPrefixedVector(1, T_y);;
 T_expected4 := T_VecScale(T_Z1, T_F);;
 T_Check(Length(T_VecSupport(T_Z1)) = 15,
-    "D.22 has fifteen pairwise distinct ordered words");;
+    "eq:T-Y4-Z1: fifteen pairwise distinct ordered words");;
 T_Check(T_VecEqual(T_actual4, T_expected4),
-    "D.21--D.22 exact factorization in unreduced Z[p]");;
+    "eq:T-Y4-homogeneous-components and eq:T-Y4-Z1: exact factorization in unreduced Z[p]");;
 T_Check(T_VecIsZero(T_VecReduceF(T_actual4)),
-    "D.21 vanishes only after the exact factorization is reduced modulo f");;
+    "eq:T-Y4-homogeneous-components: vanishing after exact factorization is reduced modulo f");;
 
 #############################################################################
-# D.29--D.30: derive the four monodromy cycles from adjacent braids.
+# eq:T-R2-monodromy-cycles and eq:T-R2-mixed-monodromy
+# (6.21--6.22): derive the four monodromy cycles from adjacent braids.
 #############################################################################
 
 # signature = [sign, exponent of r, exponent of ell].
@@ -542,7 +549,8 @@ for T_start in T_CYCLE_STARTS do
 od;
 T_ok := T_ok and T_cycles = T_EXPECTED_CYCLES;
 T_ok := T_ok and Set(Concatenation(T_cycles)) = Set(T_VecSupport(T_y));
-T_Check(T_ok, "D.29 four cycles derived from the eight adjacent braids");;
+T_Check(T_ok,
+    "eq:T-R2-monodromy-cycles: four cycles derived from the eight adjacent braids");;
 
 T_EXPECTED_TRIPLES := [
     [T_ONE, T_P_MINUS_ONE, T_MINUS_P],
@@ -555,7 +563,7 @@ T_coeff_triples := List(T_cycles, function(cycle)
     return List(cycle, word -> T_VecCoefficient(T_y, word));
 end);;
 T_Check(T_coeff_triples = T_EXPECTED_TRIPLES,
-    "the four displayed coefficient triples of y");;
+    "eq:T-y3-generator and eq:T-R2-monodromy-cycles: four displayed coefficient triples of y");;
 
 T_ok := true;;
 for T_coeffs in T_coeff_triples do
@@ -572,7 +580,8 @@ for T_coeffs in T_coeff_triples do
     T_target_coeffs := List(T_target_coeffs, T_PolyReduceF);;
     T_ok := T_ok and T_image_coeffs = T_target_coeffs;
 od;
-T_Check(T_ok, "D.30 monodromy eigenvalue (1-p) on all four cycles");;
+T_Check(T_ok,
+    "eq:T-R2-mixed-monodromy: eigenvalue (1-p) on all four cycles");;
 
 Print("PASS: ", T_CHECKS, " exact checks completed.\n");
 QUIT_GAP(0);

@@ -1,7 +1,7 @@
-# GAP certificate for Lemma B.14
+# GAP certificate for Lemma B.11
 
-This program corresponds to Lemma B.14 of the paper, with LaTeX label
-`lem:Gamma2-third-string-theta-square-cocycle`.
+This program corresponds to Lemma B.11 of the paper, with LaTeX label
+`lem:Gamma2-X3-cocycle-factor-identity`.
 
 This self-contained, core-only script verifies
 

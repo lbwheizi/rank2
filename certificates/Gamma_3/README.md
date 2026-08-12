@@ -20,13 +20,17 @@ their complete integer boundary residuals.
 ## Files
 
 - `bar_complex.g`: normalized inhomogeneous bar-chain arithmetic.
-- `verify_gamma3_32.g`: the \((3,2)\) obstruction.
+- `verify_gamma3_32.g`: the \((3,2)\) obstruction in Lemma E.3
+  (`lem:Gamma3-32-bar-reduction`).
 - `verify_gamma3_31_dim2.g`: the \((3,1)_2\) central two-dimensional
-  obstruction.
+  obstruction in Proposition 7.8
+  (`prop:Gamma3-dim2-X2-obstruction`).
 - `verify_gamma3_31_dim1.g`: the \((3,1)_1\) central one-dimensional
-  obstruction.  It first reruns the shared bar certificate from the
-  preceding file and then verifies the three scalar-ratio reductions
-  and the branch polynomial identities.
+  obstruction in Proposition 7.9
+  (`prop:Gamma3-dim1-X2-obstruction`).  It first reruns the shared bar
+  certificate from the preceding file and then verifies the three
+  scalar-ratio reductions in (7.34)
+  (`eq:Gamma3-dim1-m-ratios`) and the branch polynomial identities.
 - `verify_s3_cocycle_mod3.g`: an independent normalized
   \(\mathbb F_3\)-valued \(3\)-cocycle on \(S_3\), with kappa exponent
   one.
@@ -147,10 +151,10 @@ The GAP programs deliberately do **not** prove any of the following:
   homological lemmas justify the inference back on \(\Gamma _3\);
 - the alternating-tricharacter and projective-dimension arguments;
 - simplicity or non-simplicity of any Yetter--Drinfeld object;
-- the universal lift, the \(J\)-untwisting equivalence, or the raw
-  parameter translation;
+- the inflation along the epimorphism, the braided monoidal equivalence
+  determined by \(J\), or the parameter comparison;
 - existence of reflections, standardness of the Cartan graph, root
-  factorization, finite-dimensionality, or Hilbert series.
+  factorization, or finite-dimensionality.
 
 Thus the machine-verifiable claim is precisely the exact integer
 bar-chain and scalar-polynomial residual computation.  The surrounding
@@ -168,6 +172,7 @@ their boundaries over \(\mathbb Z\).
 
 The one-dimensional and two-dimensional central-support calculations
 have identical bar-chain definitions; this equality is stated and
-proved in the accompanying mathematical text.  The one-dimensional
-GAP entry point reruns the shared certificate and separately verifies
-its own scalar-ratio consequences.
+proved in Lemma E.7 (`lem:Gamma3-dim1-chain-identification`) of the
+accompanying mathematical text.  The one-dimensional GAP entry point
+reruns the shared certificate and separately verifies its own
+scalar-ratio consequences.

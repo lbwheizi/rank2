@@ -1,6 +1,6 @@
-# GAP certificate for Lemma B.15
+# GAP certificate for Lemma B.12
 
-This program corresponds to Lemma B.15 of the paper, with LaTeX label
+This program corresponds to Lemma B.12 of the paper, with LaTeX label
 `lem:Gamma2-R2-Theta-cocycle`.
 
 This self-contained, core-only script verifies

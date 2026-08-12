@@ -1,14 +1,20 @@
 T-case exact core verifier (Appendix D)
 Arithmetic: exact coefficient lists in Z[p].
 Dependencies: GAP core only; no packages or floating point.
-[OK] tetrahedral rack table and all 64 constant-(-1) braid instances
-[OK] the displayed h_m braid-loop direction (all h_2 words)
-[OK] D.18 complete phi_2 table modulo p^2-p+1
-[OK] D.20 complete phi_3 table modulo p^2-p+1
-[OK] D.22 has fifteen pairwise distinct ordered words
-[OK] D.21--D.22 exact factorization in unreduced Z[p]
-[OK] D.21 vanishes only after the exact factorization is reduced modulo f
-[OK] D.29 four cycles derived from the eight adjacent braids
-[OK] the four displayed coefficient triples of y
-[OK] D.30 monodromy eigenvalue (1-p) on all four cycles
+[OK] lem:T-tetrahedral-braiding: tetrahedral rack table and all 64 constant-(-\
+1) braid instances
+[OK] eq:T-adjoint-recursion: displayed h_m braid-loop direction (all h_2 words\
+)
+[OK] eq:T-phi2-table: complete phi_2 table modulo p^2-p+1
+[OK] eq:T-phi3-table: complete phi_3 table modulo p^2-p+1
+[OK] eq:T-Y4-Z1: fifteen pairwise distinct ordered words
+[OK] eq:T-Y4-homogeneous-components and eq:T-Y4-Z1: exact factorization in unr\
+educed Z[p]
+[OK] eq:T-Y4-homogeneous-components: vanishing after exact factorization is re\
+duced modulo f
+[OK] eq:T-R2-monodromy-cycles: four cycles derived from the eight adjacent bra\
+ids
+[OK] eq:T-y3-generator and eq:T-R2-monodromy-cycles: four displayed coefficien\
+t triples of y
+[OK] eq:T-R2-mixed-monodromy: eigenvalue (1-p) on all four cycles
 PASS: 10 exact checks completed.

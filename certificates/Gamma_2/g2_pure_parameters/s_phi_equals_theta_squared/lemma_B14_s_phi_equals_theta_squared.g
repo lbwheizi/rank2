@@ -1,5 +1,5 @@
-# Paper correspondence: Lemma B.14, label
-# lem:Gamma2-third-string-theta-square-cocycle.
+# Paper correspondence: Lemma B.11, label
+# lem:Gamma2-X3-cocycle-factor-identity.
 # File: lemma_B14_s_phi_equals_theta_squared.g
 # This file is generated from an exact integer certificate.
 # It uses only the GAP core library; no optional package is loaded.

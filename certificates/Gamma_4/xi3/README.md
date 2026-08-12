@@ -1,7 +1,11 @@
 # Gamma4 Xi3 cocycle-reduction certificate
 
 `gamma4_xi3_certificate.g` is a core-only GAP 4.16 source-to-target
-verifier for the coefficient comparison used in Remark C.5 of the paper.
+verifier for the cocycle reduction and coefficient cancellation recorded
+in Lemmas C.5 and C.6 and equation (C.12) of the paper
+(`lem:Gamma4-Xi3-cocycle-reduction`,
+`lem:Gamma4-Y3-coefficient-cancellation`, and
+`eq:Gamma4-Xi3-direct`).
 It first reconstructs the corrected recursive maps
 \(\varphi_1^\Phi,\varphi_2^\Phi,\varphi_3^\Phi\), including
 \(c_{12}=a(c_{W,W}\otimes\mathrm{id})a^{-1}\), constructs the eight

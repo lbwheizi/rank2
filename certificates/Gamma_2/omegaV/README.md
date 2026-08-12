@@ -1,6 +1,6 @@
 # GAP certificate for $\Omega_V=1$
 
-This program corresponds to Lemma B.4 of the paper, with LaTeX label
+This program corresponds to Lemma B.3 of the paper, with LaTeX label
 `lem:Omega-V-one`.  The script `lemma_B4_Omega_V_equals_one.g` verifies the
 formal $3$-cocycle identity
 used in the computation of the second adjoint object in the $\Gamma_2$

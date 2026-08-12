@@ -1,7 +1,8 @@
 # Gamma4 reflected-Y2 certificate
 
-This directory closes the off-axis simplicity check after the first
-reflection
+This directory directly verifies the second-adjoint simplicity statement
+after the first reflection used in Lemma C.4
+(`lem:Gamma4-R1-reflected-parameter-reduction`):
 
 \[
 R_1(V,W)=(V^*,X_1),\qquad
@@ -10,7 +11,7 @@ R_1(V,W)=(V^*,X_1),\qquad
 
 The seven reflected line-stability scalars compare the base coordinate `5`
 with the coordinate indices `6, 8, 15, 17, 18, 27, 28`.  The verifier proves
-that each is one from the initial scalar packet.  It first reconstructs their
+that each is one from the initial scalar rows.  It first reconstructs their
 source and then performs two exact integral certificate stages.
 
 0. `gamma4_reflected_y2_source.g` independently builds, from the abstract
@@ -34,14 +35,14 @@ source and then performs two exact integral certificate stages.
    and the homogeneous terminal degrees are respectively
    `epsilon*h*g^2` and `epsilon^2*h*g^2`.  The seven source ratios are then
    canonically expanded using only the one-dimensional projective-character
-   law.  GAP checks them atom by atom against the initial packet rows and the
-   seven reflected target rows in the data file.  Thus those expanded rows
-   are not accepted as unverified source input.
+   law.  GAP checks them atom by atom against the thirteen initial scalar
+   rows and the seven reflected target rows in the data file.  Thus those
+   expanded rows are not accepted as unverified source input.
 
-1. The data file contains the 13 fully expanded packet rows and the seven
-   fully expanded reflected target rows.  These are the Laurent monomial
-   rows obtained directly from the recursive `phi_2` construction, with the
-   corrected right-associated convention
+1. The data file contains the 13 fully expanded initial scalar rows and the
+   seven fully expanded reflected target rows.  These are the Laurent
+   monomial rows obtained directly from the recursive `phi_2` construction,
+   with the corrected right-associated convention
 
    ```text
    c12 = a (c_WW tensor id) a^-1,
@@ -55,7 +56,7 @@ source and then performs two exact integral certificate stages.
    T_j\prod_{i=0}^{12}P_i^{C_{ji}}=B_j(\Phi),
    \]
 
-   where the packet order is
+   where the order of the initial scalar rows is
 
    ```text
    R(h)/(-1), S(g)/(-1), Delta4, Delta4_reflected,

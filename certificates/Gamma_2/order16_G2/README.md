@@ -1,7 +1,10 @@
 # Core-only verifier for the order-16 $G_2$ example
 
-This program corresponds to Remark B.21 of the paper, with LaTeX label
-`rem:order16-G2-certificate`.  It is a finite-data verifier rather than a
+This program corresponds to Subsection 4.11, with LaTeX label
+`subsec:order16-G2-example`, including Lemma 4.41, with label
+`lem:order16-G2-cocycle`, and to Subsection B.9, with label
+`app:order16-G2-reflections`, including Table 2, with label
+`tab:order16-G2-reflections`.  It is a finite-data verifier rather than a
 certificate for a separate lemma.
 
 This directory contains a self-contained GAP 4.16 verifier for the finite

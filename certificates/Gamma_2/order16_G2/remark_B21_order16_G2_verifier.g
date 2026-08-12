@@ -1,4 +1,7 @@
-# Paper correspondence: Remark B.21, label rem:order16-G2-certificate.
+# Paper correspondence: Subsection 4.11 (subsec:order16-G2-example),
+# Lemma 4.41 (lem:order16-G2-cocycle), Subsection B.9
+# (app:order16-G2-reflections), and Table 2
+# (tab:order16-G2-reflections).
 # File: remark_B21_order16_G2_verifier.g
 # Core-only exact verifier for the explicit order-16 Gamma_2 example.
 #

@@ -1,6 +1,6 @@
-# GAP certificate for Lemma B.12
+# GAP certificate for Lemma B.10
 
-This program corresponds to Lemma B.12 of the paper, with LaTeX label
+This program corresponds to Lemma B.10 of the paper, with LaTeX label
 `lem:Gamma2-G2-cocycle-reductions`.
 
 The core-only script verifies the normalized-$3$-cocycle reductions

@@ -1,6 +1,6 @@
-# GAP certificate for Lemma B.19
+# GAP certificate for Lemma B.15
 
-This program corresponds to Lemma B.19 of the paper, with LaTeX label
+This program corresponds to Lemma B.15 of the paper, with LaTeX label
 `lem:Theta-opposite-symmetry`.
 
 This directory gives a self-contained, core-only GAP verification of

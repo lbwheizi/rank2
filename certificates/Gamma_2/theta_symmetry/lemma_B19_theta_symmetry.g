@@ -1,4 +1,4 @@
-# Paper correspondence: Lemma B.19, label lem:Theta-opposite-symmetry.
+# Paper correspondence: Lemma B.15, label lem:Theta-opposite-symmetry.
 # File: lemma_B19_theta_symmetry.g
 # This file is generated from an exact integer certificate.
 # It uses only the GAP core library; no optional package is loaded.
