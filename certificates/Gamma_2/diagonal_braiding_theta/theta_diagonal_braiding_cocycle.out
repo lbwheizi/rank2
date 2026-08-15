@@ -1,0 +1,10 @@
+GAP version: 4.16.0
+Identity: Theta diagonal-braiding cocycle reduction
+Target support: 34
+Target L1: 34
+Certificate relators: 20
+Certificate coefficient L1: 20
+Expanded certificate support: 34
+Expanded certificate L1: 34
+Exact residual support: 0
+PASS: exact integral residual is zero.

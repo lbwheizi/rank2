@@ -8,6 +8,8 @@ the calculation they verify:
 - `omegaV/` — the identity Omega_V = 1;
 - `g2_propagation/` — the G_2 propagation identities;
 - `g2_pure_parameters/` — the pure-parameter identities and auxiliary checks;
+- `diagonal_braiding_theta/` — the cocycle identity relating `Theta_Phi` to
+  the diagonal braiding coefficients;
 - `theta_symmetry/` — opposite symmetry of Theta_Phi;
 - `order16_G2/` — the finite order-16 G_2 example.
 
