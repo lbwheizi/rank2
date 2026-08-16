@@ -12,6 +12,5 @@ the calculation they verify:
   the diagonal braiding coefficients;
 - `theta_symmetry/` — opposite symmetry of Theta_Phi.
 
-
 From the repository root, run `./verify_all.sh` to verify this group together
 with the other groups.
