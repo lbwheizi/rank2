@@ -12,9 +12,11 @@
 ## Before checking those bridges, the companion source engine independently
 ## reconstructs the initial induced objects V,W, the first-root character on
 ## X1, the dual object V*, the reflected induced pair, both phi_1 and phi_2,
-## and the two sets of eight nonzero Y2 coordinates.  Its seven initial and
-## reflected base-coordinate ratios are expanded canonically and checked
-## coefficient by coefficient against the supplied packet and target rows.
+## and the two sets of eight nonzero Y2 coordinates.  In each set the
+## coordinates are numbered 0,...,7, with h acting as
+## (0 1 2 3)(4 5 6 7).  The seven scalars Theta_2_j, 1 <= j <= 7, are
+## expanded canonically and checked coefficient by coefficient against the
+## supplied packet and target rows.
 ## The recursive phi_2 construction uses the right-associated convention
 ##
 ##   c_12 = a (c_{W,W} tensor id) a^{-1},
@@ -131,8 +133,125 @@ C12Coefficient := function(x, y, ell)
     );
 end;
 
+#############################################################################
+## Convert the seven base-coordinate ratios in the generated data to the
+## seven scalars used in the paper.
+##
+## Put R_0=1 and R_j=L_0/L_j for 1<=j<=7, where L_j is the coefficient
+## by which h acts on the j-th coordinate line.  For
+##
+##   pi=(0 1 2 3)(4 5 6 7),
+##
+## the scalar in the paper is
+##
+##   Theta_2_j = L_pi(j)/L_1 = R_1/R_pi(j).
+##
+## Thus, in the Laurent exponent lattice,
+##
+##   (Theta_2_1,...,Theta_2_7)
+##   =(R_1-R_2, R_1-R_3, R_1,
+##     R_1-R_5, R_1-R_6, R_1-R_7, R_1-R_4).
+##
+## The same integral change of basis is applied to the initial packet rows,
+## target rows, residual rows, and bar certificates.  The last seven columns
+## of the Stage-A matrix are conjugated by this change of basis.
+#############################################################################
+
+ReflectedY2ThetaTransform := [
+    [ 1, -1,  0,  0,  0,  0,  0 ],
+    [ 1,  0, -1,  0,  0,  0,  0 ],
+    [ 1,  0,  0,  0,  0,  0,  0 ],
+    [ 1,  0,  0,  0, -1,  0,  0 ],
+    [ 1,  0,  0,  0,  0, -1,  0 ],
+    [ 1,  0,  0,  0,  0,  0, -1 ],
+    [ 1,  0,  0, -1,  0,  0,  0 ]
+];
+
+ReflectedY2ThetaTransformInverse := [
+    [  0,  0, 1,  0,  0,  0,  0 ],
+    [ -1,  0, 1,  0,  0,  0,  0 ],
+    [  0, -1, 1,  0,  0,  0,  0 ],
+    [  0,  0, 1,  0,  0,  0, -1 ],
+    [  0,  0, 1, -1,  0,  0,  0 ],
+    [  0,  0, 1,  0, -1,  0,  0 ],
+    [  0,  0, 1,  0,  0, -1,  0 ]
+];
+
+IntegralLinearCombination := function(coefficients, rows)
+    local answer, i;
+    answer := [];
+    for i in [1 .. Length(rows)] do
+        answer := AddSparse(answer,
+            ScaleSparse(rows[i], coefficients[i]));
+    od;
+    return answer;
+end;
+
+TransformRows := function(matrix, rows)
+    return List(matrix,
+        coefficients -> IntegralLinearCombination(coefficients, rows));
+end;
+
+IntegerMatrixProduct := function(left, right)
+    return List(left, row ->
+        List([1 .. Length(right[1])], column ->
+            Sum([1 .. Length(right)],
+                i -> row[i] * right[i][column])));
+end;
+
+ReflectedY2PacketNames := Concatenation(
+    ReflectedY2BasePacketNames{[1 .. 6]},
+    List([1 .. 7], j -> Concatenation("initial_Theta_2_", String(j)))
+);
+ReflectedY2PacketRows := Concatenation(
+    ReflectedY2BasePacketRows{[1 .. 6]},
+    TransformRows(ReflectedY2ThetaTransform,
+                  ReflectedY2BasePacketRows{[7 .. 13]})
+);
+ReflectedY2TargetRows := TransformRows(
+    ReflectedY2ThetaTransform, ReflectedY2BaseTargetRows);
+ReflectedY2ResidualRows := TransformRows(
+    ReflectedY2ThetaTransform, ReflectedY2BaseResidualRows);
+ReflectedY2Certificates := List([1 .. 7], j -> rec(
+    name := Concatenation("Theta_2_", String(j)),
+    certificate := IntegralLinearCombination(
+        ReflectedY2ThetaTransform[j],
+        List(ReflectedY2BaseCertificates, entry -> entry.certificate)
+    )
+));
+
+ReflectedY2StageACoefficients := List(
+    [1 .. 7], i -> Concatenation(
+        IntegerMatrixProduct(
+            ReflectedY2ThetaTransform,
+            List(ReflectedY2BaseStageACoefficients, row -> row{[1 .. 6]}))
+        [i],
+        IntegerMatrixProduct(
+            IntegerMatrixProduct(
+                ReflectedY2ThetaTransform,
+                List(ReflectedY2BaseStageACoefficients,
+                     row -> row{[7 .. 13]})),
+            ReflectedY2ThetaTransformInverse
+        )[i]
+    )
+);
+
+ReflectedY2ExpectedStageACoefficients := [
+    [  0, 3, 0, 0, 0, -3, -1, 0,  0, 0, 0, 1, 0 ],
+    [  0, 0, 0, 0, 0,  0,  0, 0,  0, 0, 0, 0, 0 ],
+    [  0, 1, 0, 0, 0, -1,  0, 0, -1, 0, 0, 0, 0 ],
+    [  0, 0, 0, 0, 0,  0,  0, 0,  0, 0, 0, 0, 0 ],
+    [  2, 1, 0, 0, 0, -1, -1, 0, -1, 0, 0, 1, 1 ],
+    [  0, 0, 0, 0, 0,  0,  0, 0,  0, 0, 0, 0, 0 ],
+    [  0, 1, 0, 1, 0, -1,  0, 0, -1, 0, 0, 1, 0 ]
+];
+if ReflectedY2StageACoefficients <>
+   ReflectedY2ExpectedStageACoefficients then
+    Error("FAIL: incorrect transformed Stage-A coefficient matrix");
+fi;
+
 ## Reconstruct the initial and reflected induced actions, phi_1, phi_2,
-## the eight nonzero Y2 coordinates, and the seven base-coordinate ratios.
+## the eight nonzero Y2 coordinates, and Theta_2_j for 1 <= j <= 7.
 ## This source engine does not read any of the expanded packet/target rows.
 Read("gamma4_reflected_y2_source.g");
 
@@ -145,6 +264,10 @@ VerifySourceReconstruction := function()
     if source.reflected.degree <> [2, 1, 2] then
         Error("FAIL: wrong reflected terminal degree: ",
               source.reflected.degree);
+    fi;
+    if source.initial.coordinateLabels <> [0 .. 7] or
+       source.reflected.coordinateLabels <> [0 .. 7] then
+        Error("FAIL: the Y2 coordinates are not numbered 0,...,7");
     fi;
     for index in [1 .. 7] do
         expectedInitial := CanonicalSparse(ReflectedY2PacketRows[index + 6]);
@@ -184,7 +307,7 @@ VerifyStageA := function(index)
     if Length(nonPhi) <> 0 then
         Error("FAIL: Stage-A row still has character/sign atoms at index ", index);
     fi;
-    Print("ThetaPrime_", ReflectedY2RootIndices[index],
+    Print("Theta_2_", ReflectedY2ThetaIndices[index],
           ": source atoms=", Length(ReflectedY2TargetRows[index]),
           ", packet residual atoms=", Length(row),
           ", packet coefficient l1=",
@@ -263,6 +386,6 @@ Print("c12 convention: Phi(x,y,l)/Phi(x*y*x^-1,x,l)\n");
 Print("External GAP packages loaded: none\n");
 Print("Group model: epsilon exponent modulo 4; h,g exponents integral\n");
 Print("No h- or g-order relation used\n");
-Print("PASS: all seven reflected Y2 line-stability scalars equal one\n");
+Print("PASS: Theta_2_j=1 for j=1,...,7 after the first reflection\n");
 
 QUIT_GAP(0);

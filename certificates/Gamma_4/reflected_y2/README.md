@@ -9,10 +9,22 @@ R_1(V,W)=(V^*,X_1),\qquad
 (\varepsilon',h',g')=(\varepsilon^{-1},h^{-1},hg).
 \]
 
-The seven reflected line-stability scalars compare the base coordinate `5`
-with the coordinate indices `6, 8, 15, 17, 18, 27, 28`.  The verifier proves
-that each is one from the initial scalar rows.  It first reconstructs their
-source and then performs two exact integral certificate stages.
+Write the eight nonzero coordinates as `E_0,...,E_7`, with coefficients
+`calA_0,...,calA_7`.  They are numbered so that conjugation by `h` acts as
+
+```text
+(0 1 2 3)(4 5 6 7).
+```
+
+If `h.E_j=H_j E_pi(j)`, the seven scalars are
+
+```text
+Theta_2_j = H_j calA_j calA_1 / (H_0 calA_0 calA_pi(j)),  1 <= j <= 7.
+```
+
+The verifier proves that all seven scalars are one.  It first reconstructs
+them from the initial data and then performs two exact integral certificate
+checks.
 
 0. `gamma4_reflected_y2_source.g` independently builds, from the abstract
    Gamma4 group law and the displayed transversals, the induced actions on
@@ -25,24 +37,30 @@ source and then performs two exact integral certificate stages.
    \]
 
    For both the initial and reflected pairs it reconstructs `phi_1`, the
-   corrected `phi_2`, and all eight nonzero coordinates.  The supports are
-   checked to be exactly
+   corrected `phi_2`, and all eight nonzero coordinates.  It checks directly
+   from the action matrix that the coordinates form the two cycles displayed
+   above.  The homogeneous terminal degrees are respectively
+   `epsilon*h*g^2` and `epsilon^2*h*g^2`.  The seven scalars in the displayed
+   formula are then expanded using only the one-dimensional
+   projective-character law.  GAP checks them atom by atom against the
+   thirteen initial scalar rows and the seven reflected target rows.  Thus
+   the expanded rows are not accepted as unverified source input.
+
+1. The generated data first records seven base-coordinate ratios
+   `R_j=L_0/L_j`.  The verifier applies the exact integral identities
 
    ```text
-   5, 6, 8, 15, 17, 18, 27, 28
+   Theta_2_1 = R_1/R_2,  Theta_2_2 = R_1/R_3,
+   Theta_2_3 = R_1,      Theta_2_4 = R_1/R_5,
+   Theta_2_5 = R_1/R_6,  Theta_2_6 = R_1/R_7,
+   Theta_2_7 = R_1/R_4.
    ```
 
-   and the homogeneous terminal degrees are respectively
-   `epsilon*h*g^2` and `epsilon^2*h*g^2`.  The seven source ratios are then
-   canonically expanded using only the one-dimensional projective-character
-   law.  GAP checks them atom by atom against the thirteen initial scalar
-   rows and the seven reflected target rows in the data file.  Thus those
-   expanded rows are not accepted as unverified source input.
-
-1. The data file contains the 13 fully expanded initial scalar rows and the
-   seven fully expanded reflected target rows.  These are the Laurent
-   monomial rows obtained directly from the recursive `phi_2` construction,
-   with the corrected right-associated convention
+   It applies the same change of basis to the initial rows, reflected target
+   rows, pure-cocycle residuals, and bar certificates.  The Stage-A matrix is
+   transformed on both its rows and its last seven columns.  All these rows
+   come from the recursive `phi_2` construction with the corrected
+   right-associated convention
 
    ```text
    c12 = a (c_WW tensor id) a^-1,
@@ -60,14 +78,14 @@ source and then performs two exact integral certificate stages.
 
    ```text
    R(h)/(-1), S(g)/(-1), Delta4, Delta4_reflected,
-   self_Vdual, self_X1, initial_E0, ..., initial_E6.
+   self_Vdual, self_X1, initial_Theta_2_1, ..., initial_Theta_2_7.
    ```
 
-   The integer matrix `C` is embedded in the data file.  No rational powers
-   are used.  The seven pure-cocycle residual rows have respectively
+   The resulting integer matrix `C` is embedded in the verifier.  No rational
+   powers are used.  The seven pure-cocycle residual rows have respectively
 
    ```text
-   92, 114, 152, 99, 149, 145, 142
+   136, 24, 152, 86, 141, 49, 156
    ```
 
    nonzero Laurent atoms.
@@ -76,13 +94,13 @@ source and then performs two exact integral certificate stages.
    normalized bar-boundary certificate.  The seven certificates contain
 
    ```text
-   499, 1085, 1173, 813, 1121, 1137, 1079
+   1561, 276, 1173, 1623, 1095, 516, 1306
    ```
 
    nonzero 4-simplices.  Their coefficient `l1` norms are
 
    ```text
-   571, 1800, 1952, 1296, 2003, 1862, 1738.
+   2706, 278, 1952, 2802, 1599, 540, 1999.
    ```
 
 Group elements are represented throughout by abstract normal forms

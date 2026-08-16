@@ -1,22 +1,22 @@
 Source recursion: initial/reflected phi2 coordinates=8/8, line-stability rows checked=7/7, terminal degrees=[ [ 1, 1, 2 ], [ 2, 1, 2 ] ]
-ThetaPrime_6: source atoms=56, packet residual atoms=92, packet coefficient l1=3
-ThetaPrime_6: certificate terms=499, coefficient l1=571, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
-ThetaPrime_8: source atoms=80, packet residual atoms=114, packet coefficient l1=3
-ThetaPrime_8: certificate terms=1085, coefficient l1=1800, residual atoms=0, max |h,g| in entries=[ 2, 1 ], max |h,g| in adjacent products=[ 2, 2 ]
-ThetaPrime_15: source atoms=116, packet residual atoms=152, packet coefficient l1=3
-ThetaPrime_15: certificate terms=1173, coefficient l1=1952, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
-ThetaPrime_17: source atoms=57, packet residual atoms=99, packet coefficient l1=7
-ThetaPrime_17: certificate terms=813, coefficient l1=1296, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
-ThetaPrime_18: source atoms=124, packet residual atoms=149, packet coefficient l1=6
-ThetaPrime_18: certificate terms=1121, coefficient l1=2003, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
-ThetaPrime_27: source atoms=109, packet residual atoms=145, packet coefficient l1=3
-ThetaPrime_27: certificate terms=1137, coefficient l1=1862, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
-ThetaPrime_28: source atoms=103, packet residual atoms=142, packet coefficient l1=3
-ThetaPrime_28: certificate terms=1079, coefficient l1=1738, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
+Theta_2_1: source atoms=113, packet residual atoms=136, packet coefficient l1=8
+Theta_2_1: certificate terms=1561, coefficient l1=2706, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
+Theta_2_2: source atoms=24, packet residual atoms=24, packet coefficient l1=0
+Theta_2_2: certificate terms=276, coefficient l1=278, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 2, 2 ]
+Theta_2_3: source atoms=116, packet residual atoms=152, packet coefficient l1=3
+Theta_2_3: certificate terms=1173, coefficient l1=1952, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
+Theta_2_4: source atoms=86, packet residual atoms=86, packet coefficient l1=0
+Theta_2_4: certificate terms=1623, coefficient l1=2802, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
+Theta_2_5: source atoms=108, packet residual atoms=141, packet coefficient l1=8
+Theta_2_5: certificate terms=1095, coefficient l1=1599, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
+Theta_2_6: source atoms=49, packet residual atoms=49, packet coefficient l1=0
+Theta_2_6: certificate terms=516, coefficient l1=540, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 2 ]
+Theta_2_7: source atoms=123, packet residual atoms=156, packet coefficient l1=5
+Theta_2_7: certificate terms=1306, coefficient l1=1999, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
 Gamma4 R1-reflected Y2 simplicity certificate
 Arithmetic: exact integers in the Laurent lattice and normalized bar complex
 c12 convention: Phi(x,y,l)/Phi(x*y*x^-1,x,l)
 External GAP packages loaded: none
 Group model: epsilon exponent modulo 4; h,g exponents integral
 No h- or g-order relation used
-PASS: all seven reflected Y2 line-stability scalars equal one
+PASS: Theta_2_j=1 for j=1,...,7 after the first reflection

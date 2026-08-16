@@ -7,8 +7,9 @@
 ## the initial pair (V,W), the first-root character on X1, the rigid-dual
 ## action on V*, and the induced actions on the reflected pair (V*,X1).
 ## It then constructs phi_1 and phi_2 with the corrected right-associated
-## c_12 convention and returns the seven line-stability ratios based at the
-## first of the eight nonzero Y2 coordinates.
+## c_12 convention and returns the seven line-stability ratios
+## Theta_2_j, 1 <= j <= 7.  The eight nonzero coordinates are numbered
+## 0,...,7 so that conjugation by h acts as (0 1 2 3)(4 5 6 7).
 #############################################################################
 
 SRC_One := [0, 0, 0];
@@ -532,8 +533,10 @@ end;
 SRC_Y2Source := function(marking)
     local epsilon, h, g, u, v, w, d1, f1, wi, vi, y1, d2, double,
           associatorMonomials, associatorIn, associatorOut, c12, w2,
-          inputY2, j, term0, term1, term2, y2, hy2, support,
-          supportZeroBased, degrees, base, target, ratios, numerator,
+          inputY2, j, term0, term1, term2, y2, hy2, actionMatrix,
+          support, nextCoordinate, firstCycle, secondCycle, remaining,
+          coordinateOrder, coordinateCoefficients, actionCoefficients,
+          permutation, coordinateIndex, degrees, ratios, numerator,
           denominator;
     epsilon := marking.epsilon;
     h := marking.h;
@@ -582,12 +585,12 @@ SRC_Y2Source := function(marking)
         SRC_Kronecker(SRC_IdentityMatrix(w.dim), f1),
         SRC_MatrixApply(c12, inputY2));
     y2 := SRC_VectorAdd(SRC_VectorAdd(term0, term1, -1), term2, 1);
-    hy2 := SRC_MatrixApply(SRC_ActionMatrix(d2, h), y2);
+    actionMatrix := SRC_ActionMatrix(d2, h);
+    hy2 := SRC_MatrixApply(actionMatrix, y2);
 
     support := Filtered([1 .. Length(y2)], i -> Length(y2[i]) > 0);
-    supportZeroBased := List(support, i -> i - 1);
-    if supportZeroBased <> [5, 6, 8, 15, 17, 18, 27, 28] then
-        Error("unexpected Y2 coordinate support: ", supportZeroBased);
+    if Length(support) <> 8 then
+        Error("Y2 must have exactly eight nonzero coordinates");
     fi;
     if ForAny(support,
               i -> Length(y2[i]) <> 1 or Length(hy2[i]) <> 1) then
@@ -598,13 +601,73 @@ SRC_Y2Source := function(marking)
         Error("the eight Y2 coordinates do not have one homogeneous degree");
     fi;
 
-    base := support[1];
+    ## Recover the two h-orbits directly from the action matrix.  Number the
+    ## first orbit 0,1,2,3 and the second orbit 4,5,6,7.  Thus the coordinate
+    ## permutation is (0 1 2 3)(4 5 6 7), independently of the ambient
+    ## tensor-basis positions used by GAP.
+    nextCoordinate := function(coordinate)
+        local images;
+        images := Filtered([1 .. Length(y2)],
+            i -> Length(actionMatrix[i][coordinate]) > 0);
+        if Length(images) <> 1 then
+            Error("the h-action is not monomial at coordinate ", coordinate);
+        fi;
+        return images[1];
+    end;
+
+    firstCycle := [support[1]];
+    for j in [1 .. 3] do
+        Add(firstCycle, nextCoordinate(firstCycle[Length(firstCycle)]));
+    od;
+    if nextCoordinate(firstCycle[4]) <> firstCycle[1] or
+       Length(Set(firstCycle)) <> 4 then
+        Error("the first coordinate orbit is not a 4-cycle");
+    fi;
+
+    remaining := Difference(support, firstCycle);
+    if Length(remaining) <> 4 then
+        Error("the eight coordinates do not split into two 4-cycles");
+    fi;
+    secondCycle := [remaining[1]];
+    for j in [1 .. 3] do
+        Add(secondCycle, nextCoordinate(secondCycle[Length(secondCycle)]));
+    od;
+    if nextCoordinate(secondCycle[4]) <> secondCycle[1] or
+       Set(Concatenation(firstCycle, secondCycle)) <> Set(support) then
+        Error("the second coordinate orbit is not a disjoint 4-cycle");
+    fi;
+
+    coordinateOrder := Concatenation(firstCycle, secondCycle);
+    permutation := [2, 3, 4, 1, 6, 7, 8, 5];
+    coordinateCoefficients := List(coordinateOrder,
+        coordinate -> SRC_SignedMonomial(y2[coordinate]));
+    actionCoefficients := List([1 .. 8], coordinate ->
+        SRC_SignedMonomial(
+            actionMatrix[
+                coordinateOrder[permutation[coordinate]]
+            ][
+                coordinateOrder[coordinate]
+            ]
+        ));
+
+    ## If calA_j is the coefficient of coordinate j and
+    ## h.E_j=H_j E_pi(j), compute exactly
+    ##
+    ##   Theta_2_j=H_j calA_j calA_1
+    ##             /(H_0 calA_0 calA_pi(j)),  1<=j<=7.
     ratios := [];
-    for target in support{[2 .. 8]} do
+    for j in [1 .. 7] do
+        coordinateIndex := j + 1;
         numerator := SRC_MultiplyMonomials(
-            SRC_SignedMonomial(hy2[base]), SRC_SignedMonomial(y2[target]));
+            actionCoefficients[coordinateIndex],
+            coordinateCoefficients[coordinateIndex]);
+        numerator := SRC_MultiplyMonomials(
+            numerator, coordinateCoefficients[2]);
         denominator := SRC_MultiplyMonomials(
-            SRC_SignedMonomial(hy2[target]), SRC_SignedMonomial(y2[base]));
+            actionCoefficients[1], coordinateCoefficients[1]);
+        denominator := SRC_MultiplyMonomials(
+            denominator,
+            coordinateCoefficients[permutation[coordinateIndex]]);
         Add(ratios, SRC_MultiplyMonomials(numerator,
                                          SRC_InverseMonomial(denominator)));
     od;
@@ -612,7 +675,7 @@ SRC_Y2Source := function(marking)
         y1 := y1,
         y2 := y2,
         actedY2 := hy2,
-        support := supportZeroBased,
+        coordinateLabels := [0 .. 7],
         degree := degrees[1],
         ratios := ratios
     );
