@@ -30,13 +30,9 @@ as the current numbering of the paper.
 | Lemma B.12, `lem:Gamma2-R2-Theta-cocycle` | [`lemma_B15_theta_after_second_reflection.g`](certificates/Gamma_2/g2_pure_parameters/theta_r2_invariance/lemma_B15_theta_after_second_reflection.g) | reflected `Theta` identity |
 | Lemma B.14, `lem:Theta-diagonal-braiding-cocycle` | [`theta_diagonal_braiding_cocycle.g`](certificates/Gamma_2/diagonal_braiding_theta/theta_diagonal_braiding_cocycle.g) | verification of the cocycle identity relating `Theta_Phi` to the diagonal braiding coefficients |
 | Lemma B.15, `lem:Theta-opposite-symmetry` | [`lemma_B19_theta_symmetry.g`](certificates/Gamma_2/theta_symmetry/lemma_B19_theta_symmetry.g) | opposite symmetry of `Theta_Phi` |
-| Subsection 4.11 and Lemma 4.41, `subsec:order16-G2-example` and `lem:order16-G2-cocycle`; Subsection B.9 and Table 2, `app:order16-G2-reflections` and `tab:order16-G2-reflections` | [`remark_B21_order16_G2_verifier.g`](certificates/Gamma_2/order16_G2/remark_B21_order16_G2_verifier.g) | displayed finite group, cocycle, projective-character, and support-transition data for the order-16 example |
 
 Two auxiliary consistency checks are stored under
 [`Gamma_2/g2_pure_parameters/auxiliary`](certificates/Gamma_2/g2_pure_parameters/auxiliary/).
-The order-16 program verifies the displayed finite data; it does not replace
-the recursive adjoint calculations or independently prove the classification
-statement for that example.
 
 ## Gamma_3 index
 
@@ -117,7 +113,7 @@ GAP_BIN=/path/to/gap GAP_ROOT=/path/to/gap-root ./verify_all.sh
 ```
 
 The script checks the root `SHA256SUMS`, every topic-level
-`CHECKSUMS.sha256`, runs all 17 suites with
+`CHECKSUMS.sha256`, runs all 16 suites with
 `--bare -A -r -q --nointeract`, and compares fresh output byte-for-byte with
 the recorded output. A successful run ends with:
 
@@ -128,8 +124,7 @@ PASS: all exact certificate suites
 ## Scope
 
 The Gamma_2 cocycle calculations use the abstract normal form subject to the
-Gamma_2 relations in the paper. The order-16 program instead checks the
-displayed finite data of that quotient.
+Gamma_2 relations in the paper.
 
 The Gamma_3 suite checks normalized bar differentials, explicit integral
 four-chain residuals after projection to `S_3`, the three second-adjoint
