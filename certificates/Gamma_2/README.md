@@ -10,8 +10,8 @@ the calculation they verify:
 - `g2_pure_parameters/` — the pure-parameter identities and auxiliary checks;
 - `diagonal_braiding_theta/` — the cocycle identity relating `Theta_Phi` to
   the diagonal braiding coefficients;
-- `theta_symmetry/` — opposite symmetry of Theta_Phi;
-- `order16_G2/` — the finite order-16 G_2 example.
+- `theta_symmetry/` — opposite symmetry of Theta_Phi.
+
 
 From the repository root, run `./verify_all.sh` to verify this group together
 with the other groups.
