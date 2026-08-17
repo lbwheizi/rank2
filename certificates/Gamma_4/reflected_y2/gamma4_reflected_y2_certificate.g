@@ -1,10 +1,10 @@
 #############################################################################
-## R1-reflected Gamma4 Y2 simplicity certificate (core GAP only)
+## R1-reflected Gamma4 Y2 parameter certificate (core GAP only)
 ##
 ## This verifier checks two exact integral bridges for each of the seven
-## reflected line-stability equations T_j:
+## reflected parameter identities Theta_2_j:
 ##
-##   (A) T_j + sum_i C[j][i] packet_i = B_j(Phi)
+##   (A) Theta_2_j + sum_{i=1}^{13} C[j][i] P_i = B_j(Phi)
 ##       in the free Laurent exponent lattice; and
 ##   (B) B_j(Phi) is an integral combination of normalized 3-cocycle
 ##       defects.
@@ -280,7 +280,7 @@ VerifySourceReconstruction := function()
         fi;
     od;
     Print("Source recursion: initial/reflected phi2 coordinates=8/8, ",
-          "line-stability rows checked=7/7, terminal degrees=",
+          "Theta rows checked=7/7, terminal degrees=",
           [source.initial.degree, source.reflected.degree], "\n");
 end;
 
@@ -380,12 +380,12 @@ for index in [1 .. 7] do
     VerifyBarCertificate(index);
 od;
 
-Print("Gamma4 R1-reflected Y2 simplicity certificate\n");
+Print("Gamma4 R1-reflected Y2 parameter certificate\n");
 Print("Arithmetic: exact integers in the Laurent lattice and normalized bar complex\n");
 Print("c12 convention: Phi(x,y,l)/Phi(x*y*x^-1,x,l)\n");
-Print("External GAP packages loaded: none\n");
+Print("External GAP packages required: none\n");
 Print("Group model: epsilon exponent modulo 4; h,g exponents integral\n");
 Print("No h- or g-order relation used\n");
-Print("PASS: Theta_2_j=1 for j=1,...,7 after the first reflection\n");
+Print("PASS: seven reflected Theta_2_j exponent identities verified\n");
 
 QUIT_GAP(0);

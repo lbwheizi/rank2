@@ -86,7 +86,12 @@ listed. It does **not** prove the theoretical passage from the original
 right-associated coquasi category to the canonical strictification, the
 normal-form lemma for arbitrary b_ij, simplicity of the adjoint objects,
 existence or involutivity of reflections, standardness of the Cartan graph,
-root factorization, or finite-dimensionality of a Nichols algebra. Those
-are mathematical arguments in the manuscript. In particular, the
-cocycle reductions surrounding Lemmas D.1--D.3 and
-`lem:T-reflection-cocycle-reductions` are not independently verified here.
+the tensor decomposition indexed by the positive roots, or
+finite-dimensionality of a Nichols algebra. Those
+are mathematical arguments in the manuscript. For
+`lem:T-reflection-cocycle-reductions`, the program checks only
+`eq:T-R2-monodromy-cycles` and the coefficient calculation in
+`eq:T-R2-mixed-monodromy`. It does not check the first-reflection formulas,
+the full-twist scalar, `eq:T-R2-central-coefficient`,
+`eq:T-R2-cross-coefficient`, or the rigid-dual calculation of `s_2` and
+`epsilon_2`. These parts are proved in the manuscript.

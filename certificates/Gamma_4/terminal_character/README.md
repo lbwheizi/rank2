@@ -23,7 +23,7 @@ argument in the main text.
 Run from this directory with GAP 4.16:
 
 ```text
-gap -A -q gamma4_terminal_character_certificate.g
+gap --bare -A -r -q --nointeract gamma4_terminal_character_certificate.g
 ```
 
 The checked standard output is stored in

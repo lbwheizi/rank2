@@ -4,12 +4,12 @@
 ## PURPOSE
 ##   Verify the two exact Laurent identities extracted from Y3=0:
 ##
-##       L_01(W)^(-1) = product E_l^(m_l),
-##       L_10(W)^(-1) = product E_l^(n_l),
+##       (Delta_01^W)^(-1) = product E_l^(m_l),
+##       (Delta_10^W)^(-1) = product E_l^(n_l),
 ##
 ##   where every displayed Y3 coordinate equation is E_l=-1 and the sums
 ##   of the two sets of certificate exponents are zero.  Hence
-##   L_01(W)=L_10(W)=1.
+##   Delta_01^W=Delta_10^W=1.
 ##
 ## ASSOCIATOR CONVENTION
 ##   For right-associated tensors the corrected operator is
@@ -25,7 +25,7 @@
 ##   braidings, phi_1, phi_2, phi_3, y_2 and g acting on y_2 from the Gamma4
 ##   normal-form group law and the formal coefficients R,S,F,P.  It obtains
 ##   all 192 nonzero Y3 coordinate binomials, checks the 19 rows used by the
-##   certificate (up to harmless inversion), and then verifies the exact
+##   certificate in the same quotient orientation, and then verifies the exact
 ##   Laurent elimination.  It does not numerically sample a cocycle and does
 ##   not assume finite-dimensionality.  The data file contains only the 19
 ##   expected rows and two integer certificate vectors; it is not trusted
@@ -33,7 +33,7 @@
 ##   package is used.
 ##
 ## REPRODUCTION (from this directory)
-##   gap -A -q gamma4_local_delta_certificate.g
+##   gap --bare -A -r -q --nointeract gamma4_local_delta_certificate.g
 #############################################################################
 
 Read("gamma4_local_delta_certificate_data.g");
@@ -554,13 +554,12 @@ G4ThirdAdjointRelations := function()
 end;
 
 VerifyReconstructedRows := function()
-    local actual, expected, matches, row, inverseMatches;
+    local actual, expected, matches, row;
     actual := G4ThirdAdjointRelations();
     if Length(actual) <> 192 then
         Error("FAIL: expected 192 nonzero reconstructed Y3 binomials, got ",
               Length(actual));
     fi;
-    inverseMatches := 0;
     for expected in LocalRelations do
         matches := Filtered(actual, row -> row.label = expected.label);
         if Length(matches) <> 1 then
@@ -571,17 +570,13 @@ VerifyReconstructedRows := function()
         if row.sign <> expected.sign then
             Error("FAIL: reconstructed binomial sign differs at ", expected.label);
         fi;
-        if row.ratio = CanonicalSparse(expected.terms) then
-            # Same orientation.
-        elif G4MonomialInverse(row.ratio) = CanonicalSparse(expected.terms) then
-            inverseMatches := inverseMatches + 1;
-        else
+        if row.ratio <> CanonicalSparse(expected.terms) then
             Error("FAIL: reconstructed Laurent row differs at ", expected.label);
         fi;
     od;
     Print("Actual phi3 recursion: nonzero binomial coordinates=", Length(actual),
-          ", certificate rows checked=", Length(LocalRelations),
-          ", inverse-orientation matches=", inverseMatches, "\n");
+          ", certificate rows checked in the same orientation=",
+          Length(LocalRelations), "\n");
 end;
 
 RelationRow := function(relation)
@@ -612,8 +607,9 @@ VerifyCertificate := function(targetName, target, certificate)
         );
         signExponent := signExponent + item[2] * relation.sign;
     od;
-    ## The printed holonomy target is L_ij, whereas the certificate is the
-    ## exponent vector of L_ij^(-1).  Thus target + combination must vanish.
+    ## The printed target is Delta_ij^W, whereas the certificate is the
+    ## exponent vector of (Delta_ij^W)^(-1).  Thus target + combination
+    ## must vanish.
     residual := AddSparse(CanonicalSparse(target), combination);
     if Length(residual) <> 0 then
         Error("FAIL: nonzero Laurent residual for ", targetName);
@@ -628,15 +624,15 @@ VerifyCertificate := function(targetName, target, certificate)
 end;
 
 VerifyReconstructedRows();
-VerifyCertificate("L_01(W)^(-1)", W01Target, W01Certificate);
-VerifyCertificate("L_10(W)^(-1)", W10Target, W10Certificate);
+VerifyCertificate("(Delta_01^W)^(-1)", W01Target, W01Certificate);
+VerifyCertificate("(Delta_10^W)^(-1)", W10Target, W10Certificate);
 
 Print("Gamma4 local-Delta Laurent certificate\n");
 Print("Arithmetic: exact integers in the free Laurent exponent lattice\n");
-Print("External GAP packages loaded: none\n");
+Print("External GAP packages required: none\n");
 Print("c12 associator direction: input Phi, output Phi^-1\n");
 Print("Corrected Y3 certificate rows independently checked: ",
       Length(LocalRelations), "\n");
-Print("PASS: Y3=0 forces L_01(W)=L_10(W)=1\n");
+Print("PASS: Y3=0 forces Delta_01^W=Delta_10^W=1\n");
 
 QUIT_GAP(0);

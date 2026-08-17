@@ -1,30 +1,32 @@
 # Gamma4 local-Delta certificate
 
-`gamma4_local_delta_certificate.g` is a core-only GAP 4.16 verifier for the
-corrected \(Y_3=0\) coordinate calculation.  Starting from the abstract
-\(\Gamma _4\) normal-form multiplication, it reconstructs the homogeneous
-objects, twisted tensor actions, braidings, \(\varphi _1^\Phi\),
-\(\varphi _2^\Phi\), \(\varphi _3^\Phi\), \(y_2\), and
-\(g\rhd y_2\).  It obtains all 192 nonzero third-adjoint coordinate
-binomials and independently checks the 19 rows used in the two Laurent
-certificates.  It then verifies that these relations imply
+`gamma4_local_delta_certificate.g` uses only core GAP 4.16 functions.  It
+reconstructs the calculation of \(Y_3\) from the \(\Gamma _4\) group law,
+the twisted tensor actions, the braidings, and the definitions of
+\(\varphi _1^\Phi,\varphi _2^\Phi,\varphi _3^\Phi\).  The program obtains
+all 192 nonzero binomial coordinates of \(Y_3\).  It then compares, in the
+same quotient orientation, the 19 coordinates used in the two integer
+certificates.  Finally, it verifies that these coordinates imply
 
 \[
-L_{01}(W)=L_{10}(W)=1.
+\Delta_{01}^W=\Delta_{10}^W=1.
 \]
 
-The accompanying data file is GAP syntax and contains the expected 19 rows
-and the two integer elimination vectors.  Those rows are not merely assumed:
-the main verifier reconstructs and compares them individually.  The entire
-recursion uses
+The data file contains the expected Laurent quotient for each of the 19
+coordinates and the two integer coefficient vectors.  The main program
+reconstructs every listed quotient and requires exact equality in the stated
+orientation; equality only after inversion is rejected.  It also checks that
+each coefficient vector gives the inverse of the corresponding \(\Delta\)
+and that all signs cancel.
+
+The calculation uses
 
 \[
 c_{1,2}^{\Phi}=a\,(c\otimes\operatorname{id})\,a^{-1},
 \]
 
 so the input diagonal associator factor is \(\Phi\), and the output factor is
-\(\Phi^{-1}\).  This corrects the reversed convention in the earlier Python
-prototype.  The exact integer certificate is unchanged after that correction.
+\(\Phi^{-1}\).
 
 The calculation takes place in the free Laurent group on the formal symbols
 `R`, `S`, `F`, and `P`.  Group elements are represented as
@@ -35,7 +37,7 @@ special finite quotient, and it does not assume finite-dimensionality.
 Run from this directory with GAP 4.16:
 
 ```text
-gap -A -q gamma4_local_delta_certificate.g
+gap --bare -A -r -q --nointeract gamma4_local_delta_certificate.g
 ```
 
 The checked standard output is stored in

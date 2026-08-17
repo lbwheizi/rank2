@@ -30,7 +30,7 @@
 ##   integers in a formal sparse Laurent lattice.
 ##
 ## REPRODUCTION
-##   gap --bare -A -q gamma4_xi3_certificate.g
+##   gap --bare -A -r -q --nointeract gamma4_xi3_certificate.g
 #############################################################################
 
 ## Sparse Laurent monomials are sorted lists [ [key, exponent], ... ].
@@ -540,7 +540,7 @@ fi;
 
 Print("Gamma4 Xi3 source-to-target cancellation certificate\n");
 Print("Arithmetic: exact integers in a formal sparse Laurent lattice\n");
-Print("External GAP packages loaded: none\n");
+Print("External GAP packages required: none\n");
 Print("Corrected recursive operators reconstructed: phi_1, phi_2, phi_3\n");
 Print("Y2 nonzero recursive coordinates: ", Length(Y2SupportPositions), "\n");
 Print("Common Y3 coordinate (zero-based): 45\n");

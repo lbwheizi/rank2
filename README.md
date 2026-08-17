@@ -57,10 +57,10 @@ detector. Its recorded output is
 
 | Current paper reference and stable label | Program | Verified calculation |
 |---|---|---|
-| Lemma C.4, `lem:Gamma4-R1-reflected-parameter-reduction` | [`gamma4_reflected_y2_certificate.g`](certificates/Gamma_4/reflected_y2/gamma4_reflected_y2_certificate.g) | source reconstruction and seven integral identities for the second adjoint after the first reflection |
+| Lemma C.4, `lem:Gamma4-R1-reflected-parameter-reduction` | [`gamma4_reflected_y2_certificate.g`](certificates/Gamma_4/reflected_y2/gamma4_reflected_y2_certificate.g) | source reconstruction and the seven reflected `Theta_2,j` identities |
 | Lemma C.5, `lem:Gamma4-Xi3-cocycle-reduction`; Lemma C.6, `lem:Gamma4-Y3-coefficient-cancellation`; (C.12), `eq:Gamma4-Xi3-direct` | [`gamma4_xi3_certificate.g`](certificates/Gamma_4/xi3/gamma4_xi3_certificate.g) | the `Xi_3` source-to-target reduction and the final coefficient cancellation |
 | Lemma C.7, `lem:Gamma4-W-local-Deltas` | [`gamma4_local_delta_certificate.g`](certificates/Gamma_4/local_delta/gamma4_local_delta_certificate.g) | the corrected third-adjoint recursion and the two local Delta identities for `W` |
-| Lemma C.8, `lem:Gamma4-local-Delta-transport` | [`gamma4_delta_transport_certificate.g`](certificates/Gamma_4/delta_transport/gamma4_delta_transport_certificate.g) | transport of the local Gamma_2 constants |
+| Lemma C.8, `lem:Gamma4-local-Delta-transport` | [`gamma4_delta_transport_certificate.g`](certificates/Gamma_4/delta_transport/gamma4_delta_transport_certificate.g) | the three displayed identities for quotients involving `Omega_01` and `Omega_10` |
 | Lemma C.9, `lem:Gamma4-Y2-support-value` | [`gamma4_terminal_character_certificate.g`](certificates/Gamma_4/terminal_character/gamma4_terminal_character_certificate.g) | terminal-root inducing-character calculation |
 
 The local-Delta verifier reconstructs the homogeneous objects, twisted tensor
@@ -85,6 +85,10 @@ calculations in Lemma 6.17:
 | (D.12) | `eq:T-Y4-Z1` |
 | (6.21) | `eq:T-R2-monodromy-cycles` |
 | (6.22) | `eq:T-R2-mixed-monodromy` |
+
+For Lemma 6.17, the program checks only the two displayed calculations
+listed above. The remaining reflected-parameter calculations are proved in
+the manuscript and are not part of the program.
 
 The program reconstructs the tetrahedral quandle from its four conjugation
 permutations, derives the complete strict `phi_2` and `phi_3` tables, verifies

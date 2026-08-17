@@ -1,8 +1,8 @@
-# Gamma4 reflected-Y2 certificate
+# Gamma4 reflected-Y2 parameter certificate
 
-This directory directly verifies the second-adjoint simplicity statement
-after the first reflection used in Lemma C.4
-(`lem:Gamma4-R1-reflected-parameter-reduction`):
+This directory verifies the seven parameter identities after the first
+reflection used in
+`lem:Gamma4-R1-reflected-parameter-reduction`:
 
 \[
 R_1(V,W)=(V^*,X_1),\qquad
@@ -22,9 +22,12 @@ If `h.E_j=H_j E_pi(j)`, the seven scalars are
 Theta_2_j = H_j calA_j calA_1 / (H_0 calA_0 calA_pi(j)),  1 <= j <= 7.
 ```
 
-The verifier proves that all seven scalars are one.  It first reconstructs
-them from the initial data and then performs two exact integral certificate
-checks.
+The verifier reconstructs the seven scalars from the initial data and then
+performs two exact integral certificate checks.  Together with the thirteen
+identities \(\mathcal P_i=1\) proved in the manuscript, these calculations give
+\(\Theta^{(1)}_{2,j}=1\) for \(1\leq j\leq7\).  They do not by themselves
+prove that the reflected second adjoint object is simple; that conclusion
+also uses the mathematical argument in the manuscript.
 
 0. `gamma4_reflected_y2_source.g` independently builds, from the abstract
    Gamma4 group law and the displayed transversals, the induced actions on
@@ -71,7 +74,9 @@ checks.
    by coefficient the seven identities
 
    \[
-   T_j\prod_{i=0}^{12}P_i^{C_{ji}}=B_j(\Phi),
+   \Theta^{(1)}_{2,j}
+   \prod_{i=1}^{13}\mathcal P_i^{c_{ji}}
+   =\mathcal R_j(\Phi),
    \]
 
    where the order of the initial scalar rows is
@@ -117,7 +122,7 @@ both part of the checksum manifest.
 Run from this directory with GAP 4.16:
 
 ```text
-gap -A -q gamma4_reflected_y2_certificate.g
+gap --bare -A -r -q --nointeract gamma4_reflected_y2_certificate.g
 ```
 
 The expected standard output is stored in

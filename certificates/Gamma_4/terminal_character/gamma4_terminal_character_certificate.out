@@ -1,6 +1,6 @@
 Gamma4 terminal-root self-character certificate
 Arithmetic: exact integers in a formal sparse Laurent lattice
-External GAP packages loaded: none
+External GAP packages required: none
 Source action coefficients reconstructed: 6
 Source scalars reconstructed: K_q, lambda_1, lambda_2
 Source-to-recorded-target residual atoms: 0

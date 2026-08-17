@@ -20,7 +20,7 @@
 ##   package, floating-point arithmetic, or sampled cocycle is used.
 ##
 ## REPRODUCTION (from this directory)
-##   gap -A -q gamma4_delta_transport_certificate.g
+##   gap --bare -A -r -q --nointeract gamma4_delta_transport_certificate.g
 #############################################################################
 
 Read("gamma4_delta_transport_certificate_data.g");
@@ -226,7 +226,7 @@ VerifyCertificate(OmegaCertificates[3], Targets[3]);
 
 Print("Gamma4 Omega-transport bar-boundary certificate\n");
 Print("Arithmetic: exact integers in the normalized bar complex\n");
-Print("External GAP packages loaded: none\n");
+Print("External GAP packages required: none\n");
 Print("Group model: epsilon exponent modulo 4; h,g exponents integral\n");
 Print("No h- or g-order relation used\n");
 Print("PASS: Omega_01(g,h)=Omega_10(g,h)=Omega_01(hg,h)=Omega_10(hg,h)\n");

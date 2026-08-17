@@ -1,6 +1,6 @@
 Gamma4 Xi3 source-to-target cancellation certificate
 Arithmetic: exact integers in a formal sparse Laurent lattice
-External GAP packages loaded: none
+External GAP packages required: none
 Corrected recursive operators reconstructed: phi_1, phi_2, phi_3
 Y2 nonzero recursive coordinates: 8
 Common Y3 coordinate (zero-based): 45

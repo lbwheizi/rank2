@@ -1,9 +1,9 @@
-Actual phi3 recursion: nonzero binomial coordinates=192, certificate rows checked=19, inverse-orientation matches=9
-L_01(W)^(-1): relations=12, coefficient sum=0, sign exponent=0, residual atoms=0
-L_10(W)^(-1): relations=9, coefficient sum=0, sign exponent=0, residual atoms=0
+Actual phi3 recursion: nonzero binomial coordinates=192, certificate rows checked in the same orientation=19
+(Delta_01^W)^(-1): relations=12, coefficient sum=0, sign exponent=0, residual atoms=0
+(Delta_10^W)^(-1): relations=9, coefficient sum=0, sign exponent=0, residual atoms=0
 Gamma4 local-Delta Laurent certificate
 Arithmetic: exact integers in the free Laurent exponent lattice
-External GAP packages loaded: none
+External GAP packages required: none
 c12 associator direction: input Phi, output Phi^-1
 Corrected Y3 certificate rows independently checked: 19
-PASS: Y3=0 forces L_01(W)=L_10(W)=1
+PASS: Y3=0 forces Delta_01^W=Delta_10^W=1

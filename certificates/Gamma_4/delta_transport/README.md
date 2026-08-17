@@ -26,7 +26,7 @@ used.
 Run from this directory with GAP 4.16:
 
 ```text
-gap -A -q gamma4_delta_transport_certificate.g
+gap --bare -A -r -q --nointeract gamma4_delta_transport_certificate.g
 ```
 
 The checked standard output is stored in

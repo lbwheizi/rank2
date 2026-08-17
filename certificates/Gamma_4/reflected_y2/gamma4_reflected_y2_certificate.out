@@ -1,4 +1,4 @@
-Source recursion: initial/reflected phi2 coordinates=8/8, line-stability rows checked=7/7, terminal degrees=[ [ 1, 1, 2 ], [ 2, 1, 2 ] ]
+Source recursion: initial/reflected phi2 coordinates=8/8, Theta rows checked=7/7, terminal degrees=[ [ 1, 1, 2 ], [ 2, 1, 2 ] ]
 Theta_2_1: source atoms=113, packet residual atoms=136, packet coefficient l1=8
 Theta_2_1: certificate terms=1561, coefficient l1=2706, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
 Theta_2_2: source atoms=24, packet residual atoms=24, packet coefficient l1=0
@@ -13,10 +13,10 @@ Theta_2_6: source atoms=49, packet residual atoms=49, packet coefficient l1=0
 Theta_2_6: certificate terms=516, coefficient l1=540, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 2 ]
 Theta_2_7: source atoms=123, packet residual atoms=156, packet coefficient l1=5
 Theta_2_7: certificate terms=1306, coefficient l1=1999, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
-Gamma4 R1-reflected Y2 simplicity certificate
+Gamma4 R1-reflected Y2 parameter certificate
 Arithmetic: exact integers in the Laurent lattice and normalized bar complex
 c12 convention: Phi(x,y,l)/Phi(x*y*x^-1,x,l)
-External GAP packages loaded: none
+External GAP packages required: none
 Group model: epsilon exponent modulo 4; h,g exponents integral
 No h- or g-order relation used
-PASS: Theta_2_j=1 for j=1,...,7 after the first reflection
+PASS: seven reflected Theta_2_j exponent identities verified

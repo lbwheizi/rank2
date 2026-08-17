@@ -30,7 +30,7 @@
 ##   exact in the free Laurent exponent lattice on formal Phi(a,b,c).
 ##
 ## REPRODUCTION
-##   gap -q gamma4_terminal_character_certificate.g
+##   gap --bare -A -r -q --nointeract gamma4_terminal_character_certificate.g
 #############################################################################
 
 AddExponent := function(v, key, exponent)
@@ -684,7 +684,7 @@ fi;
 
 Print("Gamma4 terminal-root self-character certificate\n");
 Print("Arithmetic: exact integers in a formal sparse Laurent lattice\n");
-Print("External GAP packages loaded: none\n");
+Print("External GAP packages required: none\n");
 Print("Source action coefficients reconstructed: 6\n");
 Print("Source scalars reconstructed: K_q, lambda_1, lambda_2\n");
 Print("Source-to-recorded-target residual atoms: ",
