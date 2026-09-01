@@ -267,7 +267,7 @@ if Length(difference) = 0 then
     Print("PASS: exact integral residual is zero.\n");
 else
     Print("FAIL: nonzero exact residual: ",difference,"\n");
-    Error("integer cocycle certificate failed");
+    QUIT_GAP(1);
 fi;
 
-quit;
+QUIT_GAP(0);

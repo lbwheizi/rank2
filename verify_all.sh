@@ -39,22 +39,82 @@ run_gap() {
     fi
 }
 
+version_source=$(mktemp "${TMPDIR:-/tmp}/rank2-gap-version-source.XXXXXX")
+version_stdout=$(mktemp "${TMPDIR:-/tmp}/rank2-gap-version-stdout.XXXXXX")
+version_stderr=$(mktemp "${TMPDIR:-/tmp}/rank2-gap-version-stderr.XXXXXX")
+certificate_stdout=$(mktemp "${TMPDIR:-/tmp}/rank2-gap-output.XXXXXX")
+certificate_stderr=$(mktemp "${TMPDIR:-/tmp}/rank2-gap-error.XXXXXX")
+
+cleanup() {
+    rm -f "$version_source" "$version_stdout" "$version_stderr" \
+        "$certificate_stdout" "$certificate_stderr"
+}
+trap cleanup EXIT HUP INT TERM
+
+printf '%s\n' \
+    'Print(GAPInfo.Version, "\n");' \
+    'QUIT_GAP(0);' > "$version_source"
+
+if run_gap "$version_source" > "$version_stdout" 2> "$version_stderr"; then
+    version_status=0
+else
+    version_status=$?
+fi
+
+if [ "$version_status" -ne 0 ]; then
+    printf '%s\n' "ERROR: GAP version probe exited with status $version_status" >&2
+    if [ -s "$version_stderr" ]; then
+        cat "$version_stderr" >&2
+    fi
+    exit 1
+fi
+if [ -s "$version_stderr" ]; then
+    printf '%s\n' 'ERROR: GAP version probe wrote to standard error' >&2
+    cat "$version_stderr" >&2
+    exit 1
+fi
+
+gap_version=$(tr -d '\r' < "$version_stdout")
+if [ "$gap_version" != '4.16.0' ]; then
+    printf '%s\n' \
+        "ERROR: GAP 4.16.0 is required; detected: $gap_version" >&2
+    exit 1
+fi
+
 run_certificate() {
     directory=$1
     script=$2
     recorded=$3
-    temporary=$(mktemp "${TMPDIR:-/tmp}/rank2-gap-output.XXXXXX")
-    trap 'rm -f "$temporary"' EXIT HUP INT TERM
 
     (cd "$directory" && sha256sum -c CHECKSUMS.sha256)
-    (cd "$directory" && run_gap "$script") > "$temporary"
-    if ! cmp "$temporary" "$directory/$recorded"; then
+    : > "$certificate_stdout"
+    : > "$certificate_stderr"
+    if (cd "$directory" && run_gap "$script") \
+        > "$certificate_stdout" 2> "$certificate_stderr"; then
+        certificate_status=0
+    else
+        certificate_status=$?
+    fi
+
+    if [ "$certificate_status" -ne 0 ]; then
+        printf '%s\n' \
+            "ERROR: certificate exited with status $certificate_status: $directory/$script" >&2
+        if [ -s "$certificate_stderr" ]; then
+            cat "$certificate_stderr" >&2
+        fi
+        exit 1
+    fi
+    if [ -s "$certificate_stderr" ]; then
+        printf '%s\n' \
+            "ERROR: certificate wrote to standard error: $directory/$script" >&2
+        cat "$certificate_stderr" >&2
+        exit 1
+    fi
+    if ! cmp -s "$certificate_stdout" "$directory/$recorded"; then
         printf '%s\n' "ERROR: output differs in $directory" >&2
         exit 1
     fi
 
-    rm -f "$temporary"
-    trap - EXIT HUP INT TERM
     printf '%s\n' "PASS: $directory"
 }
 

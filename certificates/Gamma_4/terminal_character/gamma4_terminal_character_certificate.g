@@ -18,8 +18,8 @@
 ##   target remaining in the terminal-character calculation after the
 ##   projective-character substitutions rho(h)=sigma(g)=-1, Delta4=1,
 ##   and epsilon^4=1.  This version does not take that target on trust:
-##   it first reconstructs K_q, lambda_1 and lambda_2 from the six displayed
-##   action coefficients L_qa,L_qp,L_ha,L_hy,L_hr,L_hY, performs the stated
+##   it first reconstructs K, lambda_1 and lambda_2 from the six displayed
+##   action coefficients L_a,L_p,L_ha,L_hy,L_hr,L_hY, performs the stated
 ##   projective-character eliminations, and checks that the result is the
 ##   recorded 76-atom Laurent target before applying the 146 defects.
 ##
@@ -32,6 +32,12 @@
 ## REPRODUCTION
 ##   gap --bare -A -r -q --nointeract gamma4_terminal_character_certificate.g
 #############################################################################
+
+Gamma4Fail := function(arg)
+    CallFuncList(PrintTo, Concatenation(["*errout*"], arg));
+    PrintTo("*errout*", "\n");
+    QUIT_GAP(1);
+end;
 
 AddExponent := function(v, key, exponent)
     local i;
@@ -252,10 +258,10 @@ CMinus := Multiply(Multiply(InverseElt(Epsilon), Multiply(QDegree, XElt)), H);
 CPlus := Multiply(Multiply(InverseElt(Epsilon), Multiply(H, Multiply(G, H))), Epsilon);
 
 if CMinus <> Multiply(Multiply(U, ZElt), PowerElt(G, 3)) then
-    Error("FAIL: c_- normal form is not uzg^3");
+    Gamma4Fail("FAIL: c_- normal form is not uzg^3");
 fi;
 if CPlus <> Multiply(Multiply(U, ZElt), G) then
-    Error("FAIL: c_+ normal form is not uzg");
+    Gamma4Fail("FAIL: c_+ normal form is not uzg");
 fi;
 
 RhoEpsilon := CharacterAtom("R", Epsilon);
@@ -270,7 +276,7 @@ Rho := function(a)
     local i, j, k, letters, result;
     i := a[1]; j := a[2]; k := a[3];
     if (k mod 2) <> 0 then
-        Error("rho requested outside C_G(h): ", a);
+        Gamma4Fail("rho requested outside C_G(h): ", a);
     fi;
     letters := [];
     Append(letters, LettersPower(H, Epsilon, RhoEpsilon, i));
@@ -278,7 +284,7 @@ Rho := function(a)
     Append(letters, LettersPower(H, T, RhoT, QuoInt(k, 2)));
     result := CharacterWord(H, letters);
     if result[2] <> a then
-        Error("rho word has wrong endpoint: ", a, " versus ", result[2]);
+        Gamma4Fail("rho word has wrong endpoint: ", a, " versus ", result[2]);
     fi;
     return result[1];
 end;
@@ -287,12 +293,12 @@ SigmaValue := function(a)
     local i, j, k, m, rhs, aa, letters, result;
     i := a[1]; j := a[2]; k := a[3];
     if (j mod 2) <> 0 then
-        Error("sigma requested outside C_G(g): ", a);
+        Gamma4Fail("sigma requested outside C_G(g): ", a);
     fi;
     m := QuoInt(j, 2);
     rhs := (i + m) mod 4;
     if not rhs in [0, 2] then
-        Error("sigma normal form has invalid u exponent: ", a);
+        Gamma4Fail("sigma normal form has invalid u exponent: ", a);
     fi;
     aa := QuoInt(rhs, 2);
     letters := [];
@@ -301,7 +307,7 @@ SigmaValue := function(a)
     Append(letters, LettersPower(G, G, SigmaG, k));
     result := CharacterWord(G, letters);
     if result[2] <> a then
-        Error("sigma word has wrong endpoint: ", a, " versus ", result[2]);
+        Gamma4Fail("sigma word has wrong endpoint: ", a, " versus ", result[2]);
     fi;
     return result[1];
 end;
@@ -319,7 +325,7 @@ Delta4 := MultiplyMonomial(
 );
 
 ## The six displayed action coefficients.
-Lqa := DivideMonomial(
+L_a := DivideMonomial(
     MultiplyMonomial(
         MultiplyMonomial(PhiLocal(EGElt, QDegree, XElt),
                          PhiLocal(G, Multiply(QDegree, XElt), H)),
@@ -327,7 +333,7 @@ Lqa := DivideMonomial(
     ),
     PhiLocal(G, Epsilon, CMinus)
 );
-Lqp := DivideMonomial(
+L_p := DivideMonomial(
     MultiplyMonomial(
         MultiplyMonomial(PhiUpper(QDegree, XElt, H),
                          PhiLocal(G, QDegree, Epsilon)),
@@ -366,9 +372,9 @@ LhY := MultiplyMonomial(
     )
 );
 
-Kq := MultiplyMonomial(
+K := MultiplyMonomial(
     MultiplyMonomial(A1, PhiUpper(QDegree, RGElt, EDElt)),
-    MultiplyMonomial(Lqa, Lqp)
+    MultiplyMonomial(L_a, L_p)
 );
 Lambda1 := MultiplyMonomial(PhiUpper(H, EGElt, RDElt),
                             MultiplyMonomial(Lhr, LhY));
@@ -378,7 +384,7 @@ Lambda2 := DivideMonomial(
 );
 
 SourceBeforeElimination := DivideMonomial(
-    MultiplyMonomial(Kq, Lambda2),
+    MultiplyMonomial(K, Lambda2),
     MultiplyMonomial(Rho(H), MultiplyMonomial(PowerMonomial(SigmaValue(G), 2),
                                               Lambda1))
 );
@@ -394,7 +400,7 @@ DeltaReduced := SubstituteMonomial(Delta4, RhoH[1][1], SignAtom);
 DeltaReduced := SubstituteMonomial(DeltaReduced, SigmaG[1][1], SignAtom);
 SigmaZExponent := ExponentOf(DeltaReduced, SigmaZ[1][1]);
 if not SigmaZExponent in [-1, 1] then
-    Error("FAIL: Delta_4 is not linear in sigma(z)");
+    Gamma4Fail("FAIL: Delta_4 is not linear in sigma(z)");
 fi;
 DeltaRest := RemoveKey(DeltaReduced, SigmaZ[1][1]);
 SigmaZValue := PowerMonomial(DeltaRest, -SigmaZExponent);
@@ -406,20 +412,20 @@ EpsilonRelationData := CharacterWord(
     H, LettersPower(H, Epsilon, RhoEpsilon, 4)
 );
 if EpsilonRelationData[2] <> IdentityElt then
-    Error("FAIL: epsilon^4 word does not return to the identity");
+    Gamma4Fail("FAIL: epsilon^4 word does not return to the identity");
 fi;
 if ExponentOf(EpsilonRelationData[1], RhoEpsilon[1][1]) <> 4 then
-    Error("FAIL: epsilon^4 relation has wrong rho(epsilon) exponent");
+    Gamma4Fail("FAIL: epsilon^4 relation has wrong rho(epsilon) exponent");
 fi;
 EpsilonRest := RemoveKey(EpsilonRelationData[1], RhoEpsilon[1][1]);
 if ExponentOf(SourceAfterCharacters, RhoEpsilon[1][1]) <> -4 then
-    Error("FAIL: source has wrong residual rho(epsilon) exponent");
+    Gamma4Fail("FAIL: source has wrong residual rho(epsilon) exponent");
 fi;
 SourceAfterCharacters := RemoveKey(SourceAfterCharacters, RhoEpsilon[1][1]);
 SourceTarget := MultiplyMonomial(SourceAfterCharacters, EpsilonRest);
 
 if ForAny(SourceTarget, term -> not StartsWith(term[1], "P(")) then
-    Error("FAIL: source-to-target elimination left a character atom");
+    Gamma4Fail("FAIL: source-to-target elimination left a character atom");
 fi;
 
 ## Exact 76-atom Laurent target from the terminal-character reduction.
@@ -652,19 +658,19 @@ Certificate := [
 ];
 
 if Length(Target) <> 76 then
-    Error("FAIL: target must have 76 Laurent atoms");
+    Gamma4Fail("FAIL: target must have 76 Laurent atoms");
 fi;
 if L1Sparse(Target) <> 76 then
-    Error("FAIL: target must have l1 norm 76");
+    Gamma4Fail("FAIL: target must have l1 norm 76");
 fi;
 if Length(Certificate) <> 146 then
-    Error("FAIL: certificate must contain 146 cocycle defects");
+    Gamma4Fail("FAIL: certificate must contain 146 cocycle defects");
 fi;
 if Sum(Certificate, entry -> AbsInt(entry[2])) <> 245 then
-    Error("FAIL: certificate coefficient l1 norm must be 245");
+    Gamma4Fail("FAIL: certificate coefficient l1 norm must be 245");
 fi;
 if SourceTarget <> Target then
-    Error("FAIL: the six action coefficients do not reconstruct the recorded 76-atom target");
+    Gamma4Fail("FAIL: the six action coefficients do not reconstruct the recorded 76-atom target");
 fi;
 
 CertificateVector := [];
@@ -679,14 +685,14 @@ od;
 
 Residual := AddSparse(Target, ScaleSparse(CertificateVector, -1));
 if Length(Residual) <> 0 then
-    Error("FAIL: nonzero Laurent residual; atoms = ", Length(Residual));
+    Gamma4Fail("FAIL: nonzero Laurent residual; atoms = ", Length(Residual));
 fi;
 
 Print("Gamma4 terminal-root self-character certificate\n");
 Print("Arithmetic: exact integers in a formal sparse Laurent lattice\n");
 Print("External GAP packages required: none\n");
 Print("Source action coefficients reconstructed: 6\n");
-Print("Source scalars reconstructed: K_q, lambda_1, lambda_2\n");
+Print("Source scalars reconstructed: K, lambda_1, lambda_2\n");
 Print("Source-to-recorded-target residual atoms: ",
       Length(AddSparse(SourceTarget, ScaleSparse(Target, -1))), "\n");
 Print("Target Laurent atoms: ", Length(Target), "\n");

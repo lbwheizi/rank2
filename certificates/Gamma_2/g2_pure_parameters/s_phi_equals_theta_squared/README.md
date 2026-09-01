@@ -23,7 +23,8 @@ exponent vector in normalized symbols $\Phi(a,b,c)$.  The script subtracts
 the stated product of normalized $3$-cocycle relators and checks that the
 integral residual is zero.  It uses no finite quotient, rationalization,
 floating-point arithmetic, or optional GAP package.  The certificate has 63
-relators and coefficient $\ell^1$-norm 69.
+relator records, including records with nonunit powers, and total coefficient
+$\ell^1$-norm 69.
 
 No $G_2$ parameter condition is used: the identity holds in the abstract
 $\Gamma_2$ setting described above.  It is then applied to the $G_2$

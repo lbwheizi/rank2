@@ -1,8 +1,8 @@
 # Gamma4 reflected-Y2 parameter certificate
 
-This directory verifies the seven parameter identities after the first
-reflection used in
-`lem:Gamma4-R1-reflected-parameter-reduction`:
+This directory verifies the coordinate calculation in Lemma C.3 and the
+seven parameter identities after the first reflection in Lemma C.7 and
+equation (C.11) (`lem:Gamma4-R1-reflected-parameter-reduction`):
 
 \[
 R_1(V,W)=(V^*,X_1),\qquad
@@ -29,25 +29,40 @@ identities \(\mathcal P_i=1\) proved in the manuscript, these calculations give
 prove that the reflected second adjoint object is simple; that conclusion
 also uses the mathematical argument in the manuscript.
 
-0. `gamma4_reflected_y2_source.g` independently builds, from the abstract
-   Gamma4 group law and the displayed transversals, the induced actions on
-   the initial objects (V,W).  It constructs (X_1) by `phi_1`, extracts
-   its transported projective character, constructs the rigid dual (V^*),
-   and then builds the reflected induced pair
+0. `gamma4_reflected_y2_source.g` builds, from the abstract Gamma4 group
+   law and the displayed transversals, the induced actions on the initial
+   objects (V,W).  It constructs the displayed first-root vector by
+   `phi_1`, reads the scalar action on its line from one nonzero coordinate,
+   constructs the rigid dual (V^*), and then builds the reflected induced
+   pair
 
    \[
    (\varepsilon',h',g')=(\varepsilon^{-1},h^{-1},hg).
    \]
 
-   For both the initial and reflected pairs it reconstructs `phi_1`, the
+   The stability, simplicity, and one-dimensional homogeneous component of
+   the first-root object are inputs from
+   `lem:Gamma4-first-adjoint` in the manuscript.  In particular, the source
+   program does not independently compare both coordinates of the
+   first-root vector.  For both the initial and reflected pairs it
+   reconstructs `phi_1`, the
    corrected `phi_2`, and all eight nonzero coordinates.  It checks directly
    from the action matrix that the coordinates form the two cycles displayed
    above.  The homogeneous terminal degrees are respectively
    `epsilon*h*g^2` and `epsilon^2*h*g^2`.  The seven scalars in the displayed
    formula are then expanded using only the one-dimensional
-   projective-character law.  GAP checks them atom by atom against the
-   thirteen initial scalar rows and the seven reflected target rows.  Thus
-   the expanded rows are not accepted as unverified source input.
+   projective-character law.  It also reconstructs the first six packet
+   rows
+
+   ```text
+   rho(h)/(-1), sigma(g)/(-1), Delta4, Delta4_reflected,
+   rho1(h1)/(-1), sigma1(g1)/(-1).
+   ```
+
+   GAP checks these six rows, the seven initial Theta rows, and the seven
+   reflected target rows atom by atom.  Thus all twenty expanded rows are
+   compared with a separate source calculation, subject to the preceding
+   first-root-line input from the manuscript.
 
 1. The generated data first records seven base-coordinate ratios
    `R_j=L_0/L_j`.  The verifier applies the exact integral identities
@@ -82,9 +97,14 @@ also uses the mathematical argument in the manuscript.
    where the order of the initial scalar rows is
 
    ```text
-   R(h)/(-1), S(g)/(-1), Delta4, Delta4_reflected,
-   self_Vdual, self_X1, initial_Theta_2_1, ..., initial_Theta_2_7.
+   rho(h)/(-1), sigma(g)/(-1), Delta4, Delta4_reflected,
+   rho1(h1)/(-1), sigma1(g1)/(-1),
+   initial_Theta_2_1, ..., initial_Theta_2_7.
    ```
+
+   The displayed Stage-A matrix has zero columns at `Delta4` and
+   `rho1(h1)/(-1)`; the verifier nevertheless retains, reconstructs, and
+   audits both packet rows and checks explicitly that those columns vanish.
 
    The resulting integer matrix `C` is embedded in the verifier.  No rational
    powers are used.  The seven pure-cocycle residual rows have respectively

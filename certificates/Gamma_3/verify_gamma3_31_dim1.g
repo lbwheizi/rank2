@@ -2,7 +2,18 @@
 # normalized bar chains E,A,B,T0,T1,T2,M0,M1,M2,Theta,K,C02,Cpow as the
 # (3,1)_2 calculation.  Reading the shared verifier first rechecks those
 # chains and their explicit S3 four-chain boundaries.
+G3_Fail := function(arg)
+    CallFuncList(PrintTo,
+        Concatenation(["*errout*"], arg, ["\n"]));
+    QUIT_GAP(1);
+end;
+
+G3_GAMMA331_DIM2_OK := false;
+G3_GAMMA331_DIM1_OK := false;
 Read("verify_gamma3_31_dim2.g");
+if not G3_GAMMA331_DIM2_OK then
+    G3_Fail("The shared (3,1)_2 verifier did not report success");
+fi;
 
 VerifyGamma331Dim1ScalarReduction := function()
     local ring, vars, p, t, k, RatDiv, RatEq,
@@ -36,23 +47,24 @@ VerifyGamma331Dim1ScalarReduction := function()
     rhs02 := [-k, p^3*t*(1-t)];
     rhs12 := [-t, (1-t)^2];
 
-    if not RatEq(r01,rhs01) then Error("(3,1)_1 m0/m1 reduction"); fi;
-    if not RatEq(r02,rhs02) then Error("(3,1)_1 m0/m2 reduction"); fi;
-    if not RatEq(r12,rhs12) then Error("(3,1)_1 m1/m2 reduction"); fi;
+    if not RatEq(r01,rhs01) then G3_Fail("(3,1)_1 m0/m1 reduction"); fi;
+    if not RatEq(r02,rhs02) then G3_Fail("(3,1)_1 m0/m2 reduction"); fi;
+    if not RatEq(r12,rhs12) then G3_Fail("(3,1)_1 m1/m2 reduction"); fi;
 
     # Exact polynomial consequences used after m0=m1=m2.
     if t*(1-t)-1 <> -(1-t+t^2) then
-        Error("(3,1)_1 t(1-t)=1 reduction");
+        G3_Fail("(3,1)_1 t(1-t)=1 reduction");
     fi;
     if t^3+1 <> (t+1)*(t^2-t+1) then
-        Error("(3,1)_1 t^3=-1 reduction");
+        G3_Fail("(3,1)_1 t^3=-1 reduction");
     fi;
     if (p*t)^3-1 <> (p*t-1)*((p*t)^2+p*t+1) then
-        Error("(3,1)_1 pt=1 cubic reduction");
+        G3_Fail("(3,1)_1 pt=1 cubic reduction");
     fi;
 
     Print("[PASS] (3,1)_1: shared C02/Cpow bar certificates were rechecked.\n");
     Print("[PASS] (3,1)_1: all three m_i ratios and branch polynomials agree exactly.\n");
+    return true;
 end;
 
-VerifyGamma331Dim1ScalarReduction();
+G3_GAMMA331_DIM1_OK := VerifyGamma331Dim1ScalarReduction();

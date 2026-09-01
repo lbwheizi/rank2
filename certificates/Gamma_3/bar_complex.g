@@ -1,6 +1,14 @@
 # Core-only exact normalized bar-complex utilities.
 # A chain is a list [ [bar, integerCoefficient], ... ].
 
+if not IsBound(G3_Fail) then
+    G3_Fail := function(arg)
+        CallFuncList(PrintTo,
+            Concatenation(["*errout*"], arg, ["\n"]));
+        QUIT_GAP(1);
+    end;
+fi;
+
 BC_Slice := function(list, first, last)
     if first > last then
         return [];
@@ -87,7 +95,7 @@ BC_AssertZero := function(label, chain, one)
     local normalized;
     normalized := BC_Normalize(chain, one);
     if Length(normalized) <> 0 then
-        Error(label, ": nonzero residual: ", normalized);
+        G3_Fail(label, ": nonzero residual: ", normalized);
     fi;
 end;
 

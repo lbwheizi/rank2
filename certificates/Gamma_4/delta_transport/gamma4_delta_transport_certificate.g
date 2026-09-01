@@ -23,6 +23,12 @@
 ##   gap --bare -A -r -q --nointeract gamma4_delta_transport_certificate.g
 #############################################################################
 
+Gamma4Fail := function(arg)
+    CallFuncList(PrintTo, Concatenation(["*errout*"], arg));
+    PrintTo("*errout*", "\n");
+    QUIT_GAP(1);
+end;
+
 Read("gamma4_delta_transport_certificate_data.g");
 SizeScreen([1000, 1000]);
 
@@ -196,7 +202,7 @@ VerifyCertificate := function(entry, target)
     od;
     residual := AddSparse(target, ScaleSparse(combination, -1));
     if Length(residual) <> 0 then
-        Error("FAIL: nonzero bar-boundary residual for ", entry.name);
+        Gamma4Fail("FAIL: nonzero bar-boundary residual for ", entry.name);
     fi;
     Print(entry.name,
           ": certificate terms=", Length(entry.certificate),
@@ -217,7 +223,7 @@ Targets := [
 ];
 
 if Length(OmegaCertificates) <> Length(Targets) then
-    Error("FAIL: wrong number of embedded certificates");
+    Gamma4Fail("FAIL: wrong number of embedded certificates");
 fi;
 
 VerifyCertificate(OmegaCertificates[1], Targets[1]);

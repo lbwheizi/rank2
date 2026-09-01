@@ -2,7 +2,7 @@
 
 `gamma4_xi3_certificate.g` is a core-only GAP 4.16 source-to-target
 verifier for the cocycle reduction and coefficient cancellation recorded
-in Lemmas C.5 and C.6 and equation (C.12) of the paper
+in Lemmas C.4 and C.5 and equation (C.9) of the paper
 (`lem:Gamma4-Xi3-cocycle-reduction`,
 `lem:Gamma4-Y3-coefficient-cancellation`, and
 `eq:Gamma4-Xi3-direct`).
@@ -11,6 +11,14 @@ It first reconstructs the corrected recursive maps
 \(c_{12}=a(c_{W,W}\otimes\mathrm{id})a^{-1}\), constructs the eight
 nonzero coordinates of the chosen \(Y_2\)-seed, and extracts the two
 Laurent monomials in the common zero-based coordinate 45 of \(Y_3\).
+The program computes the corresponding GAP position 46 from the four tensor
+degrees
+
+\[
+(\varepsilon g,\varepsilon g,\varepsilon^2g,\varepsilon^{-1}h)
+\]
+
+and checks that their product is \(\varepsilon^2hg^3\).
 After the displayed one-dimensional projective-character reduction, it
 checks that their signed ratio is exactly the eight-atom target.  With
 

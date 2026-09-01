@@ -17,9 +17,14 @@ Print("Dependencies: GAP core only; no packages or floating point.\n");
 
 T_CHECKS := 0;;
 
+T_Fail := function(arg)
+    PrintTo("*errout*", "FAIL: ", Concatenation(arg), "\n");
+    QUIT_GAP(1);
+end;;
+
 T_Check := function(condition, message)
     if not condition then
-        Error(Concatenation("FAIL: ", message));
+        T_Fail(message);
     fi;
     T_CHECKS := T_CHECKS + 1;
     Print("[OK] ", message, "\n");
@@ -142,7 +147,7 @@ T_VecFromTerms := function(m, terms)
     v := T_VecZero(m);
     for term in terms do
         if Length(term[1]) <> m then
-            Error("A displayed word has the wrong length");
+            T_Fail("A displayed word has the wrong length");
         fi;
         idx := T_WordIndex(term[1]);
         v.coeffs[idx] := T_PolyAdd(v.coeffs[idx], term[2]);
@@ -153,7 +158,7 @@ end;;
 T_VecAdd := function(a, b)
     local i, out;
     if a.m <> b.m then
-        Error("Vector-length mismatch in T_VecAdd");
+        T_Fail("Vector-length mismatch in T_VecAdd");
     fi;
     out := T_VecZero(a.m);
     for i in [1 .. Length(a.coeffs)] do
@@ -228,7 +233,8 @@ T_VecPrefix := function(label, a)
 end;;
 
 #############################################################################
-# The tetrahedral rack and the constant (-1) strict braiding.
+# The tetrahedral rack and the constant (-1) coefficient table in the
+# compatible bases fixed in the manuscript.
 #
 # The rows are reconstructed from
 # Ad(x_1)=(2,4,3), Ad(x_2)=(1,3,4),
@@ -270,7 +276,8 @@ for T_i in [1 .. 4] do
         od;
     od;
 od;
-# In the normal form, s=-1 and epsilon=s*b_23*b_42*b_34.
+# For these compatible bases and the assumed value epsilon=1, one has
+# s=-1 and epsilon=s*b_23*b_42*b_34.
 T_ok := T_ok and
     (-1) * T_BRAID_COEFFS[2][3] * T_BRAID_COEFFS[4][2] *
     T_BRAID_COEFFS[3][4] = 1;;
@@ -308,7 +315,7 @@ T_HWord := function(word)
         state := T_BraidLabels(state, k);
     od;
     if state[m + 1] <> 0 then
-        Error("The h_m braid loop did not return V to the last position");
+        T_Fail("The h_m braid loop did not return V to the last position");
     fi;
     return state{[1 .. m]};
 end;;
@@ -324,11 +331,11 @@ T_Check(T_ok,
     "eq:T-adjoint-recursion: displayed h_m braid-loop direction (all h_2 words)");;
 
 #############################################################################
-# Strict recursion eq:T-adjoint-recursion (D.6).
+# Compatible-basis coefficient recursion eq:T-adjoint-recursion (6.17).
 #############################################################################
 
-T_StrictPhiWord := fail;;
-T_StrictPhiWord := function(word)
+T_PhiWord := fail;;
+T_PhiWord := function(word)
     local hword, inner, lower, m, out, prefix;
     m := Length(word);
     if m = 1 then
@@ -344,7 +351,7 @@ T_StrictPhiWord := function(word)
     if m >= 3 then
         Append(inner, word{[3 .. m]});
     fi;
-    lower := T_StrictPhiWord(inner);
+    lower := T_PhiWord(inner);
     prefix := T_RackOp(word[1], word[2]);
     out := T_VecAdd(out, T_VecNeg(T_VecPrefix(prefix, lower)));
     return out;
@@ -356,7 +363,7 @@ T_PhiOnPrefixedVector := function(prefix, a)
     for i in [1 .. Length(a.coeffs)] do
         if not T_PolyIsZero(a.coeffs[i]) then
             word := Concatenation([prefix], T_IndexWord(a.m, i));
-            image := T_StrictPhiWord(word);
+            image := T_PhiWord(word);
             out := T_VecAdd(out, T_VecScale(image, a.coeffs[i]));
         fi;
     od;
@@ -364,7 +371,7 @@ T_PhiOnPrefixedVector := function(prefix, a)
 end;;
 
 #############################################################################
-# eq:T-Y2-basis and eq:T-phi2-table (D.7--D.8):
+# eq:T-Y2-basis and eq:T-phi2-table (D.2--D.3):
 # u_i and the complete phi_2 table, modulo f(p).
 #############################################################################
 
@@ -390,9 +397,10 @@ T_PHI2_SPEC := [
     [[3,T_MINUS_P],    [1,T_MINUS_P],     [2,T_P_MINUS_ONE], fail]
 ];;
 
+T_ok := true;;
 for T_i in [1 .. 4] do
     for T_j in [1 .. 4] do
-        T_actual := T_VecReduceF(T_StrictPhiWord([T_i, T_j]));;
+        T_actual := T_VecReduceF(T_PhiWord([T_i, T_j]));;
         T_spec := T_PHI2_SPEC[T_i][T_j];;
         if T_spec = fail then
             T_expected := T_VecZero(2);;
@@ -400,17 +408,14 @@ for T_i in [1 .. 4] do
             T_expected := T_VecReduceF(
                 T_VecScale(T_u[T_spec[1]], T_spec[2]));;
         fi;
-        if not T_VecEqual(T_actual, T_expected) then
-            Error(Concatenation("FAIL: eq:T-phi2-table at cell (",
-                String(T_i), ",", String(T_j), ")"));
-        fi;
+        T_ok := T_ok and T_VecEqual(T_actual, T_expected);
     od;
 od;
-T_Check(true,
+T_Check(T_ok,
     "eq:T-phi2-table: complete phi_2 table modulo p^2-p+1");;
 
 #############################################################################
-# eq:T-y3-generator and eq:T-phi3-table (D.9--D.10):
+# eq:T-y3-generator (6.18) and eq:T-phi3-table (D.4):
 # y and the complete phi_3 table, modulo f(p).
 #############################################################################
 
@@ -430,6 +435,7 @@ T_y := T_VecFromTerms(3, [
 ]);;
 
 T_PHI3_DIAGONAL := [T_P, T_P, T_MINUS_ONE, T_ONE_MINUS_P];;
+T_ok := true;;
 for T_i in [1 .. 4] do
     for T_j in [1 .. 4] do
         T_actual := T_VecReduceF(T_PhiOnPrefixedVector(T_i, T_u[T_j]));;
@@ -439,17 +445,14 @@ for T_i in [1 .. 4] do
         else
             T_expected := T_VecZero(3);;
         fi;
-        if not T_VecEqual(T_actual, T_expected) then
-            Error(Concatenation("FAIL: eq:T-phi3-table at cell (",
-                String(T_i), ",", String(T_j), ")"));
-        fi;
+        T_ok := T_ok and T_VecEqual(T_actual, T_expected);
     od;
 od;
-T_Check(true,
+T_Check(T_ok,
     "eq:T-phi3-table: complete phi_3 table modulo p^2-p+1");;
 
 #############################################################################
-# eq:T-Y4-homogeneous-components and eq:T-Y4-Z1 (D.11--D.12):
+# eq:T-Y4-homogeneous-components and eq:T-Y4-Z1 (D.5--D.6):
 # exact, unreduced identity phi_4(w_1 tensor y)=f(p) Z_1.
 #############################################################################
 
@@ -482,7 +485,7 @@ T_Check(T_VecIsZero(T_VecReduceF(T_actual4)),
 
 #############################################################################
 # eq:T-R2-monodromy-cycles and eq:T-R2-mixed-monodromy
-# (6.21--6.22): derive the four monodromy cycles from adjacent braids.
+# (6.22--6.23): derive the four monodromy cycles from adjacent braids.
 #############################################################################
 
 # signature = [sign, exponent of r, exponent of ell].
@@ -518,7 +521,7 @@ T_MonodromyOuterOne := function(triple)
         signature := result.signature;
     od;
     if state[1] <> 1 or state[5] <> 0 then
-        Error("The R2 monodromy braid did not close");
+        T_Fail("The R2 monodromy braid did not close");
     fi;
     return rec(triple := state{[2 .. 4]}, signature := signature);
 end;;

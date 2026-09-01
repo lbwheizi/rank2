@@ -20,16 +20,17 @@ their complete integer boundary residuals.
 ## Files
 
 - `bar_complex.g`: normalized inhomogeneous bar-chain arithmetic.
-- `verify_gamma3_32.g`: the \((3,2)\) obstruction in Lemma E.3
-  (`lem:Gamma3-32-bar-reduction`).
+- `verify_gamma3_32.g`: the \((3,2)\) bar reduction in Lemma E.2
+  (`lem:Gamma3-32-bar-reduction`), used in the obstruction argument of
+  Proposition 7.15 (`prop:Gamma3-32-X2-obstruction`).
 - `verify_gamma3_31_dim2.g`: the \((3,1)_2\) central two-dimensional
-  obstruction in Proposition 7.8
+  obstruction in Proposition 7.16
   (`prop:Gamma3-dim2-X2-obstruction`).
 - `verify_gamma3_31_dim1.g`: the \((3,1)_1\) central one-dimensional
-  obstruction in Proposition 7.9
+  obstruction in Proposition 7.17
   (`prop:Gamma3-dim1-X2-obstruction`).  It first reruns the shared bar
   certificate from the preceding file and then verifies the three
-  scalar-ratio reductions in (7.34)
+  scalar-ratio reductions in (7.36)
   (`eq:Gamma3-dim1-m-ratios`) and the branch polynomial identities.
 - `verify_s3_cocycle_mod3.g`: an independent normalized
   \(\mathbb F_3\)-valued \(3\)-cocycle on \(S_3\), with kappa exponent
@@ -52,6 +53,11 @@ For an exact comparison with the recorded output:
 gap --bare -A -r -q --nointeract verify_all_gamma3.g > actual_output.txt
 diff -u EXPECTED_OUTPUT.txt actual_output.txt
 ```
+
+The complete verifier exits with status zero only after all four
+component success flags have been checked.  Any failed assertion is
+written to standard error and terminates GAP with a nonzero status;
+the final total-PASS line is then unreachable.
 
 Each component may also be run separately:
 
@@ -130,9 +136,12 @@ the elementary polynomial consequences used for the two branches.
 
 ### The \(S_3\) detector
 
-`verify_s3_cocycle_mod3.g` checks all \(6^4=1296\) normalized
-three-cocycle equations for a fixed \(\mathbb F_3\)-valued cochain,
-checks its support size \(32\), and checks that
+`verify_s3_cocycle_mod3.g` first checks that the recorded triples are
+distinct and have nonzero values.  It then evaluates the cochain on
+all \(6^3\) triples, reconstructs its actual support, and checks that
+this support is exactly the recorded set of size \(32\).  Finally, it
+checks all \(6^4=1296\) normalized three-cocycle equations and checks
+that
 \[
 f(\varepsilon,\varepsilon,\varepsilon)
 +f(\varepsilon,\varepsilon^2,\varepsilon)=1\in\mathbb F_3.
@@ -172,7 +181,7 @@ their boundaries over \(\mathbb Z\).
 
 The one-dimensional and two-dimensional central-support calculations
 have identical bar-chain definitions; this equality is stated and
-proved in Lemma E.7 (`lem:Gamma3-dim1-chain-identification`) of the
+proved in Lemma E.5 (`lem:Gamma3-dim1-chain-identification`) of the
 accompanying mathematical text.  The one-dimensional GAP entry point
 reruns the shared certificate and separately verifies its own
 scalar-ratio consequences.

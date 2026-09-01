@@ -3,7 +3,7 @@ Read("bar_complex.g");
 VerifyGamma332 := function()
     local one, e, e2, g, h, G3Mul, G3Inv, G3Conj,
           Bar, AddC, SubC, Sc, SumC, L, U, R,
-          d, p, q, y0, y1, A, B0, S, E, K, C1, C2,
+          p, q, y0, y1, A, B0, S, E, K, C1, C2,
           T0, T1, T2, Cs, Clambda, Cr,
           SOne, S3Mul, Project, Proj, SBar,
           sg, se, se2, seg, se2g, Qs, Qlambda, Qr;
@@ -55,7 +55,6 @@ VerifyGamma332 := function()
         return SubC(Bar([a, x, y]), Bar([G3Conj(a, x), a, y]));
     end;
 
-    d  := G3Mul(G3Mul(g, g), h);
     p  := [g, G3Mul(g, e), G3Mul(g, e2)];
     q  := List(p, x -> G3Mul(x, h));
     y0 := G3Mul(e, h);
@@ -101,7 +100,7 @@ VerifyGamma332 := function()
     BC_AssertZero("Gamma32 Clambda differential", BC_Boundary(Clambda, G3Mul, one), one);
     BC_AssertZero("Gamma32 Cr differential", BC_Boundary(Cr, G3Mul, one), one);
     if Length(Cs) <> 25 or Length(Clambda) <> 44 or Length(Cr) <> 53 then
-        Error("Gamma32 chain term counts differ from the recorded certificate");
+        G3_Fail("Gamma32 chain term counts differ from the recorded certificate");
     fi;
 
     SOne := [0, 0, 0];
@@ -193,6 +192,7 @@ VerifyGamma332 := function()
     Print("[PASS] (3,2): Cs, Clambda, Cr have zero Gamma_3 differential.\n");
     Print("[PASS] (3,2): explicit S_3 four-chain residuals are zero.\n");
     Print("       Gamma terms: 25, 44, 53; S3 four-chain terms: 5, 24, 22.\n");
+    return true;
 end;
 
-VerifyGamma332();
+G3_GAMMA332_OK := VerifyGamma332();

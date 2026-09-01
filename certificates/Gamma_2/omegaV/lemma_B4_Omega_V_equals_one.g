@@ -201,7 +201,7 @@ if Length(difference) = 0 then
 else
     Print("FAILURE: the two formal exponent vectors are different.\n");
     Print("Nonzero difference: ",difference,"\n");
-    Error("The Omega_V certificate did not verify");
+    QUIT_GAP(1);
 fi;
 
-quit;
+QUIT_GAP(0);

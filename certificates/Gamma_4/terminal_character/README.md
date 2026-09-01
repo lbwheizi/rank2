@@ -1,13 +1,14 @@
 # Gamma4 terminal-character certificate
 
 `gamma4_terminal_character_certificate.g` is a core-only GAP 4.16 verifier
-for the terminal-root self-character cancellation used in Lemma C.9
+for the terminal-root self-character cancellation used in Lemma C.6 and
+equation (C.10)
 (`lem:Gamma4-Y2-support-value`) of the paper.  In the abstract normal form
 \(\varepsilon^i h^j g^k\), it first
 reconstructs the six displayed action coefficients
-\(L_{qa},L_{qp},L_{ha},L_{hy},L_{hr},L_{hY}\), then builds
-\(K_q,\lambda_1,\lambda_2\) and the source quotient
-\(K_q\lambda_2/(\rho(h)\sigma(g)^2\lambda_1)\).  It performs the stated
+\(L_a,L_p,L_{ha},L_{hy},L_{hr},L_{hY}\), then builds
+\(K,\lambda_1,\lambda_2\) and the source quotient
+\(K\lambda_2/(\rho(h)\sigma(g)^2\lambda_1)\).  It performs the stated
 projective-character eliminations using
 \(\rho(h)=\sigma(g)=-1\), \(\Delta_4=1\), and \(\varepsilon^4=1\), and
 checks that the result is exactly the recorded 76-atom Laurent target.

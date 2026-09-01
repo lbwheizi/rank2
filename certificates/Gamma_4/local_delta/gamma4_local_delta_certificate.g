@@ -36,11 +36,17 @@
 ##   gap --bare -A -r -q --nointeract gamma4_local_delta_certificate.g
 #############################################################################
 
+Gamma4Fail := function(arg)
+    CallFuncList(PrintTo, Concatenation(["*errout*"], arg));
+    PrintTo("*errout*", "\n");
+    QUIT_GAP(1);
+end;
+
 Read("gamma4_local_delta_certificate_data.g");
 SizeScreen([1000, 1000]);
 
 if C12AssocIn <> "Phi" or C12AssocOut <> "Phi^-1" then
-    Error("FAIL: the relation snapshot has the wrong c12 associator direction");
+    Gamma4Fail("FAIL: the relation snapshot has the wrong c12 associator direction");
 fi;
 
 AddExponent := function(v, key, exponent)
@@ -343,7 +349,7 @@ G4HomogeneousObject := function(degrees, name)
             target := G4Conjugate(actor, degree);
             row := Position(degrees, target);
             if row = fail then
-                Error("support is not stable under a required actor");
+                Gamma4Fail("support is not stable under a required actor");
             fi;
             matrix[row][column] := G4MonomialPolynomial(
                 G4ActionVariable(name, actor, degree), 1
@@ -525,12 +531,12 @@ G4ThirdAdjointRelations := function()
                 polynomial := output[coordinate];
                 if Length(polynomial) > 0 then
                     if Length(polynomial) <> 2 then
-                        Error("a reconstructed Y3 coordinate is not binomial");
+                        Gamma4Fail("a reconstructed Y3 coordinate is not binomial");
                     fi;
                     first := polynomial[1];
                     second := polynomial[2];
                     if AbsInt(first[2]) <> 1 or AbsInt(second[2]) <> 1 then
-                        Error("a reconstructed Y3 coefficient is not a unit sign");
+                        Gamma4Fail("a reconstructed Y3 coefficient is not a unit sign");
                     fi;
                     ratio := G4MonomialMultiply(
                         first[1], G4MonomialInverse(second[1])
@@ -557,21 +563,21 @@ VerifyReconstructedRows := function()
     local actual, expected, matches, row;
     actual := G4ThirdAdjointRelations();
     if Length(actual) <> 192 then
-        Error("FAIL: expected 192 nonzero reconstructed Y3 binomials, got ",
+        Gamma4Fail("FAIL: expected 192 nonzero reconstructed Y3 binomials, got ",
               Length(actual));
     fi;
     for expected in LocalRelations do
         matches := Filtered(actual, row -> row.label = expected.label);
         if Length(matches) <> 1 then
-            Error("FAIL: reconstructed coordinate label missing or repeated: ",
+            Gamma4Fail("FAIL: reconstructed coordinate label missing or repeated: ",
                   expected.label);
         fi;
         row := matches[1];
         if row.sign <> expected.sign then
-            Error("FAIL: reconstructed binomial sign differs at ", expected.label);
+            Gamma4Fail("FAIL: reconstructed binomial sign differs at ", expected.label);
         fi;
         if row.ratio <> CanonicalSparse(expected.terms) then
-            Error("FAIL: reconstructed Laurent row differs at ", expected.label);
+            Gamma4Fail("FAIL: reconstructed Laurent row differs at ", expected.label);
         fi;
     od;
     Print("Actual phi3 recursion: nonzero binomial coordinates=", Length(actual),
@@ -590,7 +596,7 @@ RelationByLabel := function(label)
     local matches;
     matches := Filtered(LocalRelations, relation -> relation.label = label);
     if Length(matches) <> 1 then
-        Error("relation label is missing or repeated: ", label);
+        Gamma4Fail("relation label is missing or repeated: ", label);
     fi;
     return matches[1];
 end;
@@ -612,10 +618,10 @@ VerifyCertificate := function(targetName, target, certificate)
     ## must vanish.
     residual := AddSparse(CanonicalSparse(target), combination);
     if Length(residual) <> 0 then
-        Error("FAIL: nonzero Laurent residual for ", targetName);
+        Gamma4Fail("FAIL: nonzero Laurent residual for ", targetName);
     fi;
     if signExponent <> 0 then
-        Error("FAIL: the signs do not cancel for ", targetName);
+        Gamma4Fail("FAIL: the signs do not cancel for ", targetName);
     fi;
     Print(targetName, ": relations=", Length(certificate),
           ", coefficient sum=", Sum(certificate, item -> item[2]),

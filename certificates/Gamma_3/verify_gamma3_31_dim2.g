@@ -97,7 +97,7 @@ VerifyGamma331Dim2 := function()
     BC_AssertZero("Gamma31dim2 C02 cycle", BC_Boundary(C02, G3Mul, one), one);
     BC_AssertZero("Gamma31dim2 Cpow cycle", BC_Boundary(Cpow, G3Mul, one), one);
     if Length(C02) <> 38 or Length(Cpow) <> 20 then
-        Error("Gamma31dim2 chain term counts differ from the recorded certificate");
+        G3_Fail("Gamma31dim2 chain term counts differ from the recorded certificate");
     fi;
 
     SOne := [0, 0, 0];
@@ -153,6 +153,7 @@ VerifyGamma331Dim2 := function()
     Print("[PASS] (3,1)_2: all Gamma_3 differentials and reductions agree.\n");
     Print("[PASS] (3,1)_2: explicit S_3 four-chain residuals are zero.\n");
     Print("       C02/Cpow Gamma terms: 38, 20; S3 four-chain terms: 8, 9.\n");
+    return true;
 end;
 
-VerifyGamma331Dim2();
+G3_GAMMA331_DIM2_OK := VerifyGamma331Dim2();

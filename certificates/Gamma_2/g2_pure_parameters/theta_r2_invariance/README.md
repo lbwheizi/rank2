@@ -23,7 +23,8 @@ exponent vector in normalized symbols $\Phi(a,b,c)$.  The script subtracts
 the stated product of normalized $3$-cocycle relators and checks that the
 integral residual is zero.  It uses no finite quotient, rationalization,
 floating-point arithmetic, or optional GAP package.  The certificate has 94
-relators and coefficient $\ell^1$-norm 131.
+normalized relator records, whose coefficients range from $-4$ to $4$, and
+total coefficient $\ell^1$-norm 131.
 
 ## Run
 

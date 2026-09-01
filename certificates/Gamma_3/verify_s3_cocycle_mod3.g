@@ -1,9 +1,17 @@
 # Exact core-only check of the F_3-valued normalized S_3 3-cocycle
 # used as a detector for the kappa class.
 
+if not IsBound(G3_Fail) then
+    G3_Fail := function(arg)
+        CallFuncList(PrintTo,
+            Concatenation(["*errout*"], arg, ["\n"]));
+        QUIT_GAP(1);
+    end;
+fi;
+
 VerifyS3CocycleMod3 := function()
     local one, e, e2, g, eg, e2g, elts, mul, support, value,
-          a, b, c, d, delta, kappa;
+          recordedSupport, actualSupport, a, b, c, d, delta, kappa;
 
     one := [0,0,0];
     e   := [1,0,0];
@@ -40,7 +48,36 @@ VerifyS3CocycleMod3 := function()
         return support[pos][2];
     end;
 
-    if Length(support) <> 32 then Error("S3 cocycle support count"); fi;
+    if Length(support) <> 32 then
+        G3_Fail("S3 recorded support count");
+    fi;
+    recordedSupport := List(support, t -> t[1]);
+    if Length(Set(recordedSupport)) <> Length(recordedSupport) then
+        G3_Fail("S3 recorded support contains repeated triples");
+    fi;
+    if ForAny(support, t -> t[2] mod 3 = 0) then
+        G3_Fail("S3 recorded support contains a zero value");
+    fi;
+
+    actualSupport := [];
+    for a in elts do
+        for b in elts do
+            for c in elts do
+                if value(a,b,c) mod 3 <> 0 then
+                    Add(actualSupport, [a,b,c]);
+                fi;
+            od;
+        od;
+    od;
+    recordedSupport := Set(recordedSupport);
+    actualSupport := Set(actualSupport);
+    if Length(actualSupport) <> 32 then
+        G3_Fail("S3 cocycle support count");
+    fi;
+    if actualSupport <> recordedSupport then
+        G3_Fail("S3 actual support differs from the recorded support");
+    fi;
+
     for a in elts do
         for b in elts do
             for c in elts do
@@ -51,7 +88,7 @@ VerifyS3CocycleMod3 := function()
                              - value(a,b,mul(c,d))
                              + value(a,b,c);
                     if delta mod 3 <> 0 then
-                        Error("S3 cocycle equation failed at ", [a,b,c,d]);
+                        G3_Fail("S3 cocycle equation failed at ", [a,b,c,d]);
                     fi;
                 od;
             od;
@@ -59,10 +96,11 @@ VerifyS3CocycleMod3 := function()
     od;
 
     kappa := (value(e,e,e) + value(e,e2,e)) mod 3;
-    if kappa <> 1 then Error("S3 detector has wrong kappa exponent"); fi;
+    if kappa <> 1 then G3_Fail("S3 detector has wrong kappa exponent"); fi;
 
     Print("[PASS] S3 detector: all 1296 normalized 3-cocycle equations hold.\n");
     Print("[PASS] S3 detector: support = 32 and kappa exponent = 1 in F_3.\n");
+    return true;
 end;
 
-VerifyS3CocycleMod3();
+G3_S3_OK := VerifyS3CocycleMod3();

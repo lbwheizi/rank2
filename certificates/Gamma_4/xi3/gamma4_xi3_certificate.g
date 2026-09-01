@@ -33,6 +33,12 @@
 ##   gap --bare -A -r -q --nointeract gamma4_xi3_certificate.g
 #############################################################################
 
+Gamma4Fail := function(arg)
+    CallFuncList(PrintTo, Concatenation(["*errout*"], arg));
+    PrintTo("*errout*", "\n");
+    QUIT_GAP(1);
+end;
+
 ## Sparse Laurent monomials are sorted lists [ [key, exponent], ... ].
 AddExponent := function(v, key, exponent)
     local i;
@@ -258,7 +264,7 @@ PositionDegree := function(degrees, degree)
     local position;
     position := Position(degrees, degree);
     if position = fail then
-        Error("degree not found in induced support: ", degree);
+        Gamma4Fail("degree not found in induced support: ", degree);
     fi;
     return position;
 end;
@@ -454,7 +460,7 @@ Y2Vector := Phi2WVonVector(Y2Input);
 Y2SupportPositions := Filtered([1 .. D2Obj.dim],
     i -> Length(Y2Vector[i]) > 0);
 if Y2SupportPositions <> [6, 7, 9, 16, 18, 19, 28, 29] then
-    Error("FAIL: corrected phi_2 has unexpected nonzero coordinates: ",
+    Gamma4Fail("FAIL: corrected phi_2 has unexpected nonzero coordinates: ",
           Y2SupportPositions);
 fi;
 
@@ -467,14 +473,47 @@ od;
 Y3Vector := HigherPhiApply(WObj, D2Obj, D1Obj,
     Phi2WVonVector, Y3Input);
 
-## Python's zero-based coordinate 45 is GAP position 46.  It is the common
-## line used for C_- and C_+ in the proof.
-CommonCoordinate := Y3Vector[46];
+## The common line used for C_- and C_+ in the proof has tensor factors
+##
+##   (epsilon*g, epsilon*g, epsilon^2*g, epsilon^-1*h).
+##
+## Compute its ambient position from those four indices instead of taking
+## the position from the recorded coefficient calculation.
+CommonTensorIndices := [
+    PositionDegree(WObj.degrees, EGElt),
+    PositionDegree(WObj.degrees, EGElt),
+    PositionDegree(WObj.degrees, UGElt),
+    PositionDegree(VObj.degrees, RHElt)
+];
+CommonPosition :=
+    (CommonTensorIndices[1] - 1) * D2Obj.dim
+  + (CommonTensorIndices[2] - 1) * D1Obj.dim
+  + (CommonTensorIndices[3] - 1) * VObj.dim
+  + CommonTensorIndices[4];
+CommonTensorFactors := [
+    WObj.degrees[CommonTensorIndices[1]],
+    WObj.degrees[CommonTensorIndices[2]],
+    WObj.degrees[CommonTensorIndices[3]],
+    VObj.degrees[CommonTensorIndices[4]]
+];
+if CommonPosition <> 46 or
+   CommonTensorFactors <> [EGElt, EGElt, UGElt, RHElt] then
+    Gamma4Fail("FAIL: common Y_3 tensor position or multidegree is wrong");
+fi;
+CommonTotalDegree := IdentityElt;
+for CommonFactor in CommonTensorFactors do
+    CommonTotalDegree := MultiplyElt(CommonTotalDegree, CommonFactor);
+od;
+if CommonTotalDegree <> MultiplyElt(MultiplyElt(U, H), PowerElt(G, 3)) then
+    Gamma4Fail("FAIL: common Y_3 total degree is not epsilon^2*h*g^3");
+fi;
+
+CommonCoordinate := Y3Vector[CommonPosition];
 if Length(CommonCoordinate) <> 2 then
-    Error("FAIL: common Y_3 coordinate does not have exactly two terms");
+    Gamma4Fail("FAIL: common Y_3 coordinate does not have exactly two terms");
 fi;
 if Set(List(CommonCoordinate, term -> term[2])) <> [-1] then
-    Error("FAIL: common-coordinate integer coefficients are not both -1");
+    Gamma4Fail("FAIL: common-coordinate integer coefficients are not both -1");
 fi;
 
 Sg := CharacterAtom("S", G);
@@ -492,10 +531,10 @@ elif ExponentOf(CommonCoordinate[2][1], SugKey) = 3 then
     NumeratorTerm := CommonCoordinate[2][1];
     DenominatorTerm := CommonCoordinate[1][1];
 else
-    Error("FAIL: cannot identify the two common-coordinate contributions");
+    Gamma4Fail("FAIL: cannot identify the two common-coordinate contributions");
 fi;
 if ExponentOf(DenominatorTerm, SugKey) <> 2 then
-    Error("FAIL: denominator contribution has wrong sigma(ug) exponent");
+    Gamma4Fail("FAIL: denominator contribution has wrong sigma(ug) exponent");
 fi;
 
 ## sigma(g)sigma(ug)/(Phi_g(g,ug)sigma(ut))=1.  Dividing by this
@@ -524,10 +563,10 @@ XiDirect := AddSparse(XiDirect, ScaleSparse(PhiAtom(EGElt, HX, G), -1));
 SourceToTargetResidual := AddSparse(XiFromCoordinate,
                                     ScaleSparse(XiDirect, -1));
 if Length(SourceToTargetResidual) <> 0 then
-    Error("FAIL: recursive common-coordinate ratio is not the eight-atom target");
+    Gamma4Fail("FAIL: recursive common-coordinate ratio is not the eight-atom target");
 fi;
 if Length(XiDirect) <> 8 then
-    Error("FAIL: Xi_3 target must have eight Laurent atoms");
+    Gamma4Fail("FAIL: Xi_3 target must have eight Laurent atoms");
 fi;
 
 D1 := CocycleDefect(H, G, UGElt, G);
@@ -535,7 +574,7 @@ D2 := CocycleDefect(EGElt, H, UGElt, G);
 CertificateVector := AddSparse(D1, ScaleSparse(D2, -1));
 Residual := AddSparse(XiDirect, ScaleSparse(CertificateVector, -1));
 if Length(Residual) <> 0 then
-    Error("FAIL: nonzero Laurent residual in the two-defect certificate");
+    Gamma4Fail("FAIL: nonzero Laurent residual in the two-defect certificate");
 fi;
 
 Print("Gamma4 Xi3 source-to-target cancellation certificate\n");

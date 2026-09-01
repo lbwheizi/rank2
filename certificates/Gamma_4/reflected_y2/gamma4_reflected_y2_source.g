@@ -4,12 +4,19 @@
 ## This file is read by gamma4_reflected_y2_certificate.g after the exact
 ## Laurent helper functions and the delivered data have been loaded.  It
 ## reconstructs, over abstract Gamma4 normal forms, the induced actions on
-## the initial pair (V,W), the first-root character on X1, the rigid-dual
-## action on V*, and the induced actions on the reflected pair (V*,X1).
+## the initial pair (V,W), the scalar formulas for the first-root character
+## on X1, the rigid-dual action on V*, and the induced actions on the
+## reflected pair (V*,X1).
 ## It then constructs phi_1 and phi_2 with the corrected right-associated
 ## c_12 convention and returns the seven line-stability ratios
 ## Theta_2_j, 1 <= j <= 7.  The eight nonzero coordinates are numbered
 ## 0,...,7 so that conjugation by h acts as (0 1 2 3)(4 5 6 7).
+##
+## The program reads the scalar for the action on X1 from one nonzero
+## coordinate of the displayed first-root vector.  It does not prove that
+## the second coordinate gives the same scalar.  Stability and simplicity
+## of the one-dimensional homogeneous component are supplied by
+## Lemma lem:Gamma4-first-adjoint in the manuscript.
 #############################################################################
 
 SRC_One := [0, 0, 0];
@@ -283,7 +290,7 @@ SRC_Representative := function(representatives, degree)
     local matches;
     matches := Filtered(representatives, item -> item[1] = degree);
     if Length(matches) <> 1 then
-        Error("missing or repeated transversal representative for degree ", degree);
+        Gamma4Fail("missing or repeated transversal representative for degree ", degree);
     fi;
     return matches[1][2];
 end;
@@ -300,7 +307,7 @@ SRC_InducedObject := function(x, characterBuilder, representatives)
             newDegree := Conjugate(actor, degree);
             row := Position(degrees, newDegree);
             if row = fail then
-                Error("induced support is not stable under actor ", actor);
+                Gamma4Fail("induced support is not stable under actor ", actor);
             fi;
             repDegree := SRC_Representative(representatives, degree);
             repNew := SRC_Representative(representatives, newDegree);
@@ -404,10 +411,10 @@ end;
 SRC_SignedMonomial := function(polynomial)
     local answer;
     if Length(polynomial) <> 1 then
-        Error("expected a single Laurent monomial, got ", Length(polynomial));
+        Gamma4Fail("expected a single Laurent monomial, got ", Length(polynomial));
     fi;
     if polynomial[1][2] <> 1 and polynomial[1][2] <> -1 then
-        Error("expected a unit coefficient");
+        Gamma4Fail("expected a unit coefficient");
     fi;
     answer := polynomial[1][1];
     if polynomial[1][2] = -1 then
@@ -469,7 +476,7 @@ SRC_InitializeFirstRoot := function()
         SRC_BasisVector(tensor.dim, (ih - 1) * w.dim + ig));
     support := Filtered([1 .. Length(x1)], i -> Length(x1[i]) > 0);
     if Length(support) <> 2 then
-        Error("first-root vector must have two nonzero coordinates");
+        Gamma4Fail("first-root vector must have two nonzero coordinates");
     fi;
     SRC_FirstRootData := rec(tensor := tensor, vector := x1, support := support);
 end;
@@ -491,6 +498,14 @@ SRC_FirstRootCharacter := function(actor)
     return value;
 end;
 
+SRC_DualCharacter := function(actor)
+    local value;
+    value := SRC_InverseMonomial(
+        SRC_PhiSuperscript(actor, InverseElt(SRC_H), SRC_H));
+    return SRC_MultiplyMonomials(value,
+        SRC_InverseMonomial(SRC_Character("R", actor)));
+end;
+
 SRC_InitialMarking := function()
     local reps;
     reps := SRC_OriginalRepresentatives();
@@ -506,22 +521,16 @@ SRC_InitialMarking := function()
 end;
 
 SRC_ReflectedMarking := function()
-    local ep, hp, gp, reps, rhoDual;
+    local ep, hp, gp, reps;
     ep := InverseElt(SRC_Epsilon);
     hp := InverseElt(SRC_H);
     gp := SRC_D;
     reps := SRC_ReflectedRepresentatives();
-    rhoDual := function(c)
-        local value;
-        value := SRC_InverseMonomial(SRC_PhiSuperscript(c, hp, SRC_H));
-        return SRC_MultiplyMonomials(value,
-            SRC_InverseMonomial(SRC_Character("R", c)));
-    end;
     return rec(
         epsilon := ep,
         h := hp,
         g := gp,
-        v := SRC_InducedObject(hp, rhoDual, reps.v),
+        v := SRC_InducedObject(hp, SRC_DualCharacter, reps.v),
         w := SRC_InducedObject(gp, SRC_FirstRootCharacter, reps.w)
     );
 end;
@@ -550,7 +559,7 @@ SRC_Y2Source := function(marking)
     wi := Position(w.degrees, Multiply(epsilon, g));
     vi := Position(v.degrees, h);
     if wi = fail or vi = fail then
-        Error("Y1 seed degree is absent from the marked supports");
+        Gamma4Fail("Y1 seed degree is absent from the marked supports");
     fi;
     y1 := SRC_MatrixApply(f1,
         SRC_BasisVector(d1.dim, (wi - 1) * v.dim + vi));
@@ -573,7 +582,7 @@ SRC_Y2Source := function(marking)
 
     w2 := Position(w.degrees, Multiply(u, g));
     if w2 = fail then
-        Error("Y2 seed degree is absent from the marked support");
+        Gamma4Fail("Y2 seed degree is absent from the marked support");
     fi;
     inputY2 := List([1 .. d2.dim], i -> []);
     for j in [1 .. Length(y1)] do
@@ -590,15 +599,15 @@ SRC_Y2Source := function(marking)
 
     support := Filtered([1 .. Length(y2)], i -> Length(y2[i]) > 0);
     if Length(support) <> 8 then
-        Error("Y2 must have exactly eight nonzero coordinates");
+        Gamma4Fail("Y2 must have exactly eight nonzero coordinates");
     fi;
     if ForAny(support,
               i -> Length(y2[i]) <> 1 or Length(hy2[i]) <> 1) then
-        Error("each relevant Y2 and h.Y2 coordinate must be monomial");
+        Gamma4Fail("each relevant Y2 and h.Y2 coordinate must be monomial");
     fi;
     degrees := Set(List(support, i -> d2.degrees[i]));
     if Length(degrees) <> 1 then
-        Error("the eight Y2 coordinates do not have one homogeneous degree");
+        Gamma4Fail("the eight Y2 coordinates do not have one homogeneous degree");
     fi;
 
     ## Recover the two h-orbits directly from the action matrix.  Number the
@@ -610,7 +619,7 @@ SRC_Y2Source := function(marking)
         images := Filtered([1 .. Length(y2)],
             i -> Length(actionMatrix[i][coordinate]) > 0);
         if Length(images) <> 1 then
-            Error("the h-action is not monomial at coordinate ", coordinate);
+            Gamma4Fail("the h-action is not monomial at coordinate ", coordinate);
         fi;
         return images[1];
     end;
@@ -621,12 +630,12 @@ SRC_Y2Source := function(marking)
     od;
     if nextCoordinate(firstCycle[4]) <> firstCycle[1] or
        Length(Set(firstCycle)) <> 4 then
-        Error("the first coordinate orbit is not a 4-cycle");
+        Gamma4Fail("the first coordinate orbit is not a 4-cycle");
     fi;
 
     remaining := Difference(support, firstCycle);
     if Length(remaining) <> 4 then
-        Error("the eight coordinates do not split into two 4-cycles");
+        Gamma4Fail("the eight coordinates do not split into two 4-cycles");
     fi;
     secondCycle := [remaining[1]];
     for j in [1 .. 3] do
@@ -634,7 +643,7 @@ SRC_Y2Source := function(marking)
     od;
     if nextCoordinate(secondCycle[4]) <> secondCycle[1] or
        Set(Concatenation(firstCycle, secondCycle)) <> Set(support) then
-        Error("the second coordinate orbit is not a disjoint 4-cycle");
+        Gamma4Fail("the second coordinate orbit is not a disjoint 4-cycle");
     fi;
 
     coordinateOrder := Concatenation(firstCycle, secondCycle);
@@ -723,7 +732,7 @@ SRC_CanonicalCharacterValue := function(name, element)
     factors := [];
     if name = "R" then
         if k mod 2 <> 0 then
-            Error("R-value requested outside C_G(h): ", element);
+            Gamma4Fail("R-value requested outside C_G(h): ", element);
         fi;
         SRC_AppendFactors(factors, SRC_Epsilon, e);
         SRC_AppendFactors(factors, SRC_H, j);
@@ -732,11 +741,11 @@ SRC_CanonicalCharacterValue := function(name, element)
         datum := SRC_CharacterWordValue(SRC_H, name, factors);
     elif name = "S" then
         if j mod 2 <> 0 then
-            Error("S-value requested outside C_G(g): ", element);
+            Gamma4Fail("S-value requested outside C_G(g): ", element);
         fi;
         b := QuoInt(j, 2);
         if (e + b) mod 2 <> 0 then
-            Error("invalid epsilon exponent in C_G(g): ", element);
+            Gamma4Fail("invalid epsilon exponent in C_G(g): ", element);
         fi;
         a := QuoInt(e + b, 2) mod 2;
         SRC_AppendFactors(factors, SRC_U, a);
@@ -744,10 +753,10 @@ SRC_CanonicalCharacterValue := function(name, element)
         SRC_AppendFactors(factors, SRC_G, k);
         datum := SRC_CharacterWordValue(SRC_G, name, factors);
     else
-        Error("unknown character name ", name);
+        Gamma4Fail("unknown character name ", name);
     fi;
     if datum.element <> element then
-        Error("canonical projective-character word has wrong product for ",
+        Gamma4Fail("canonical projective-character word has wrong product for ",
               name, " at ", element, ": ", datum.element);
     fi;
     return datum.value;
@@ -777,7 +786,7 @@ SRC_AtomString := function(key)
     elif key[1] = "NEG" then
         return "NEG";
     fi;
-    Error("unknown source atom ", key);
+    Gamma4Fail("unknown source atom ", key);
 end;
 
 SRC_StringRow := function(monomial)
@@ -789,6 +798,49 @@ SRC_StringRow := function(monomial)
     return CanonicalSparse(answer);
 end;
 
+SRC_Delta4Value := function(epsilon, h, g, rhoValue, sigmaValue)
+    local inverseEpsilon, answer;
+    inverseEpsilon := InverseElt(epsilon);
+    answer := SRC_PhiSubscript(h, g, Multiply(epsilon, g));
+    answer := SRC_MultiplyMonomials(answer,
+        SRC_PhiSubscript(g, Multiply(inverseEpsilon, h), h));
+    answer := SRC_MultiplyMonomials(answer,
+        rhoValue(Multiply(inverseEpsilon, Multiply(g, g))));
+    answer := SRC_MultiplyMonomials(answer,
+        sigmaValue(Multiply(inverseEpsilon, Multiply(h, h))));
+    return answer;
+end;
+
+SRC_ReconstructPacketRows := function()
+    local ep, hp, gp, rows, value;
+    ep := InverseElt(SRC_Epsilon);
+    hp := InverseElt(SRC_H);
+    gp := SRC_D;
+    rows := [];
+
+    value := SRC_MultiplyMonomials(
+        SRC_Character("R", SRC_H), SRC_InverseMonomial(SRC_NegativeOne));
+    Add(rows, SRC_StringRow(value));
+    value := SRC_MultiplyMonomials(
+        SRC_Character("S", SRC_G), SRC_InverseMonomial(SRC_NegativeOne));
+    Add(rows, SRC_StringRow(value));
+
+    value := SRC_Delta4Value(SRC_Epsilon, SRC_H, SRC_G,
+        c -> SRC_Character("R", c), c -> SRC_Character("S", c));
+    Add(rows, SRC_StringRow(SRC_ExpandCharacters(value)));
+    value := SRC_Delta4Value(ep, hp, gp,
+        SRC_DualCharacter, SRC_FirstRootCharacter);
+    Add(rows, SRC_StringRow(SRC_ExpandCharacters(value)));
+
+    value := SRC_MultiplyMonomials(
+        SRC_DualCharacter(hp), SRC_InverseMonomial(SRC_NegativeOne));
+    Add(rows, SRC_StringRow(SRC_ExpandCharacters(value)));
+    value := SRC_MultiplyMonomials(
+        SRC_FirstRootCharacter(gp), SRC_InverseMonomial(SRC_NegativeOne));
+    Add(rows, SRC_StringRow(SRC_ExpandCharacters(value)));
+    return rows;
+end;
+
 SRC_ReconstructRows := function()
     local initial, reflected;
     initial := SRC_Y2Source(SRC_InitialMarking());
@@ -796,6 +848,7 @@ SRC_ReconstructRows := function()
     return rec(
         initial := initial,
         reflected := reflected,
+        packetRows := SRC_ReconstructPacketRows(),
         initialRows := List(initial.ratios,
             monomial -> SRC_StringRow(SRC_ExpandCharacters(monomial))),
         reflectedRows := List(reflected.ratios,

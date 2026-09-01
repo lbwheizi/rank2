@@ -29,6 +29,12 @@
 ## source input.
 #############################################################################
 
+Gamma4Fail := function(arg)
+    CallFuncList(PrintTo, Concatenation(["*errout*"], arg));
+    PrintTo("*errout*", "\n");
+    QUIT_GAP(1);
+end;
+
 Read("gamma4_reflected_y2_certificate_data.g");
 SizeScreen([1000, 1000]);
 
@@ -247,7 +253,11 @@ ReflectedY2ExpectedStageACoefficients := [
 ];
 if ReflectedY2StageACoefficients <>
    ReflectedY2ExpectedStageACoefficients then
-    Error("FAIL: incorrect transformed Stage-A coefficient matrix");
+    Gamma4Fail("FAIL: incorrect transformed Stage-A coefficient matrix");
+fi;
+if ForAny(ReflectedY2StageACoefficients,
+          row -> row[3] <> 0 or row[5] <> 0) then
+    Gamma4Fail("FAIL: the retained Delta4 or rho1(h1) Stage-A column is nonzero");
 fi;
 
 ## Reconstruct the initial and reflected induced actions, phi_1, phi_2,
@@ -256,27 +266,34 @@ fi;
 Read("gamma4_reflected_y2_source.g");
 
 VerifySourceReconstruction := function()
-    local source, index, expectedInitial, expectedReflected;
+    local source, index, expectedPacket, expectedInitial, expectedReflected;
     source := SRC_ReconstructRows();
     if source.initial.degree <> [1, 1, 2] then
-        Error("FAIL: wrong initial terminal degree: ", source.initial.degree);
+        Gamma4Fail("FAIL: wrong initial terminal degree: ", source.initial.degree);
     fi;
     if source.reflected.degree <> [2, 1, 2] then
-        Error("FAIL: wrong reflected terminal degree: ",
+        Gamma4Fail("FAIL: wrong reflected terminal degree: ",
               source.reflected.degree);
     fi;
     if source.initial.coordinateLabels <> [0 .. 7] or
        source.reflected.coordinateLabels <> [0 .. 7] then
-        Error("FAIL: the Y2 coordinates are not numbered 0,...,7");
+        Gamma4Fail("FAIL: the Y2 coordinates are not numbered 0,...,7");
     fi;
+    for index in [1 .. 6] do
+        expectedPacket := CanonicalSparse(ReflectedY2PacketRows[index]);
+        if source.packetRows[index] <> expectedPacket then
+            Gamma4Fail("FAIL: reconstructed non-Theta packet row at index ",
+                       index);
+        fi;
+    od;
     for index in [1 .. 7] do
         expectedInitial := CanonicalSparse(ReflectedY2PacketRows[index + 6]);
         expectedReflected := CanonicalSparse(ReflectedY2TargetRows[index]);
         if source.initialRows[index] <> expectedInitial then
-            Error("FAIL: reconstructed initial Y2 row at index ", index);
+            Gamma4Fail("FAIL: reconstructed initial Y2 row at index ", index);
         fi;
         if source.reflectedRows[index] <> expectedReflected then
-            Error("FAIL: reconstructed reflected Y2 row at index ", index);
+            Gamma4Fail("FAIL: reconstructed reflected Y2 row at index ", index);
         fi;
     od;
     Print("Source recursion: initial/reflected phi2 coordinates=8/8, ",
@@ -301,11 +318,11 @@ VerifyStageA := function(index)
         ScaleSparse(ReflectedY2ResidualRows[index], -1)
     );
     if Length(residual) <> 0 then
-        Error("FAIL: Stage-A source-to-target identity at index ", index);
+        Gamma4Fail("FAIL: Stage-A source-to-target identity at index ", index);
     fi;
     nonPhi := Filtered(row, term -> PositionSublist(term[1], "P(") <> 1);
     if Length(nonPhi) <> 0 then
-        Error("FAIL: Stage-A row still has character/sign atoms at index ", index);
+        Gamma4Fail("FAIL: Stage-A row still has character/sign atoms at index ", index);
     fi;
     Print("Theta_2_", ReflectedY2ThetaIndices[index],
           ": source atoms=", Length(ReflectedY2TargetRows[index]),
@@ -326,7 +343,7 @@ VerifyBarCertificate := function(index)
     maxProductH := 0; maxProductG := 0;
     for term in entry.certificate do
         if not IsInt(term[2]) then
-            Error("FAIL: nonintegral certificate coefficient in ", entry.name);
+            Gamma4Fail("FAIL: nonintegral certificate coefficient in ", entry.name);
         fi;
         quad := term[1];
         combination := AddSparse(
@@ -348,7 +365,7 @@ VerifyBarCertificate := function(index)
     od;
     residual := AddSparse(target, ScaleSparse(combination, -1));
     if Length(residual) <> 0 then
-        Error("FAIL: nonzero abstract bar residual for ", entry.name);
+        Gamma4Fail("FAIL: nonzero abstract bar residual for ", entry.name);
     fi;
     Print(entry.name,
           ": certificate terms=", Length(entry.certificate),
@@ -360,17 +377,17 @@ VerifyBarCertificate := function(index)
 end;
 
 if Length(ReflectedY2PacketRows) <> 13 then
-    Error("FAIL: expected thirteen packet rows");
+    Gamma4Fail("FAIL: expected thirteen packet rows");
 fi;
 if Length(ReflectedY2TargetRows) <> 7 or
    Length(ReflectedY2ResidualRows) <> 7 or
    Length(ReflectedY2Certificates) <> 7 then
-    Error("FAIL: expected seven reflected equations");
+    Gamma4Fail("FAIL: expected seven reflected equations");
 fi;
 
 ## A nontrivial orientation check for the displayed c_12 quotient.
 if Length(C12Coefficient([0,0,1], [0,1,0], [0,0,1])) = 0 then
-    Error("FAIL: degenerate c_12 orientation check");
+    Gamma4Fail("FAIL: degenerate c_12 orientation check");
 fi;
 
 VerifySourceReconstruction();

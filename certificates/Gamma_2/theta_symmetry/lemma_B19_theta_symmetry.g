@@ -86,35 +86,6 @@ CertDeltaCocVector := function(g,h)
     return out;
 end;;
 
-CertThetaVector := function(g,h)
-    local out,eg,eh,gh,egh,g2;
-    out := [];
-    eg := CertMulElt(eps,g);
-    eh := CertMulElt(eps,h);
-    gh := CertMulElt(g,h);
-    egh := CertMulElt(eps,gh);
-    g2 := CertMulElt(g,g);
-    CertAddLocal(out,h,eps,eps,1);
-    CertAddLocal(out,h,eg,g,1);
-    CertAddUpper(out,h,g,gh,1);
-    CertAddUpper(out,h,eg,eh,1);
-    CertAddLocal(out,g,h,g,2);
-    CertAddLocal(out,g,h,eps,-1);
-    CertAddLocal(out,h,eps,g2,-1);
-    CertAddLocal(out,h,eps,h,-1);
-    CertAddLocal(out,h,g,eh,-1);
-    CertAddUpper(out,g,g,h,-1);
-    CertAddLocal(out,h,h,g,1);
-    CertAddLocal(out,g,eps,g,1);
-    CertAddLocal(out,g,h,eg,1);
-    CertAddUpper(out,h,eg,egh,-1);
-    CertAddUpper(out,g,eg,eh,-1);
-    CertAddUpper(out,h,eg,h,-1);
-    CertAddLocal(out,g,g,h,-1);
-    CertAddLocal(out,h,g,g,-1);
-    return out;
-end;;
-
 # CertSPhiVector is the exponent vector of s_Phi in the abstract
 # Gamma2 normal form.
 CertSPhiVector := function(g,h)
@@ -227,7 +198,7 @@ if Length(difference) = 0 then
     Print("PASS: exact integral residual is zero.\n");
 else
     Print("FAIL: nonzero exact residual: ",difference,"\n");
-    Error("integer cocycle certificate failed");
+    QUIT_GAP(1);
 fi;
 
-quit;
+QUIT_GAP(0);
