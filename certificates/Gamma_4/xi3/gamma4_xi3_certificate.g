@@ -1,9 +1,12 @@
 #############################################################################
-## Gamma4 Xi3 source-to-target and direct-cancellation certificate
+## Gamma4 Y3 two-coefficient source-to-target cancellation certificate
 ## (core GAP only)
 ##
 ## PURPOSE
-##   Reconstruct the common coordinate used in the Y_3 calculation directly
+##   Reconstruct beta, B1, nu1, and mu1 from the recursive source and actual
+##   epsilon-action coordinates, proving beta*B1*nu1*mu1=-sigma(g) before
+##   specializing sigma(g)=-1.  Independently reconstruct the common
+##   coordinate used in the Y_3 calculation directly
 ##   from the corrected recursive operators phi_1, phi_2, phi_3.  The program
 ##   extracts its two Laurent monomials, converts their ratio with the stated
 ##   one-dimensional projective-character relation, and verifies that the
@@ -334,6 +337,59 @@ ActionColumn := function(obj, a, column)
         MultiplyMonomial(leftAction[2], rightAction[2]))];
 end;
 
+ApplyActionVector := function(obj, a, vector)
+    local ans, column, action;
+    ans := ZeroPolyVector(obj.dim);
+    for column in [1 .. obj.dim] do
+        if Length(vector[column]) > 0 then
+            action := ActionColumn(obj, a, column);
+            AddToVectorPosition(ans, action[1],
+                MultiplyPolyMonomial(vector[column], action[2]));
+        fi;
+    od;
+    return ans;
+end;
+
+SignedMonomialRatio := function(numerator, denominator)
+    if Length(numerator) <> 1 or Length(denominator) <> 1 then
+        Gamma4Fail("FAIL: a signed monomial ratio has a non-monomial entry");
+    fi;
+    if AbsInt(numerator[1][2]) <> 1 or AbsInt(denominator[1][2]) <> 1 then
+        Gamma4Fail("FAIL: a signed monomial ratio has a non-unit coefficient");
+    fi;
+    return rec(
+        monomial := DivideMonomial(numerator[1][1], denominator[1][1]),
+        sign := numerator[1][2] * denominator[1][2]
+    );
+end;
+
+MultiplySignedMonomials := function(left, right)
+    return rec(
+        monomial := MultiplyMonomial(left.monomial, right.monomial),
+        sign := left.sign * right.sign
+    );
+end;
+
+DivideSignedMonomials := function(left, right)
+    return rec(
+        monomial := DivideMonomial(left.monomial, right.monomial),
+        sign := left.sign * right.sign
+    );
+end;
+
+SpecializeSignedCharacterMinusOne := function(value, key)
+    local exponent, answer;
+    exponent := ExponentOf(value.monomial, key);
+    answer := rec(
+        monomial := AddSparse(value.monomial, [[key, -exponent]]),
+        sign := value.sign
+    );
+    if (exponent mod 2) <> 0 then
+        answer.sign := -answer.sign;
+    fi;
+    return answer;
+end;
+
 ApplyBraid := function(left, right, vector)
     local ans, column, i, j, action, row, rightDim;
     ans := ZeroPolyVector(right.dim * left.dim);
@@ -464,6 +520,139 @@ if Y2SupportPositions <> [6, 7, 9, 16, 18, 19, 28, 29] then
           Y2SupportPositions);
 fi;
 
+#############################################################################
+## First coefficient in equation (C.9).
+##
+## Recover beta, B_1, nu_1, and mu_1 from the recursive vectors, the
+## actual c_12 image, and actual action columns.  In particular, neither
+## comparison identity at the end of Lemma C.5 is supplied as input.
+#############################################################################
+
+WIndexG := PositionDegree(WObj.degrees, G);
+WIndexUG := PositionDegree(WObj.degrees, UGElt);
+VIndexRH := PositionDegree(VObj.degrees, RHElt);
+
+BetaPosition := (WIndexG - 1) * VObj.dim + VIndexRH;
+if Length(Y1Vector[BetaPosition]) <> 1 or
+   Y1Vector[BetaPosition][1][2] <> -1 then
+    Gamma4Fail("FAIL: cannot recover beta from y_1");
+fi;
+BetaSigned := rec(
+    monomial := Y1Vector[BetaPosition][1][1],
+    sign := 1
+);
+
+## Extract B_1 from c_12(w_2 tensor (w tensor v_1)).  The c_12 output
+## contains the actual scalar of (epsilon^2 g) acting on w; dividing by
+## that action scalar leaves B_1.
+C12SeedPosition := (WIndexUG - 1) * D1Obj.dim
+                 + (WIndexG - 1) * VObj.dim + VIndexRH;
+C12Seed := BasisPolyVector(D2Obj.dim, C12SeedPosition);
+C12Image := C12Apply(WObj, VObj, C12Seed);
+C12Support := Filtered([1 .. D2Obj.dim],
+    i -> Length(C12Image[i]) > 0);
+R1Action := ActionColumn(WObj, UGElt, WIndexG);
+if Length(C12Support) <> 1 or R1Action[1] <> WIndexG then
+    Gamma4Fail("FAIL: the c_12 source for B_1 has the wrong output line");
+fi;
+ExpectedC12Position := (R1Action[1] - 1) * D1Obj.dim
+                     + (WIndexUG - 1) * VObj.dim + VIndexRH;
+if C12Support[1] <> ExpectedC12Position then
+    Gamma4Fail("FAIL: the c_12 source for B_1 has the wrong tensor position");
+fi;
+B1Signed := SignedMonomialRatio(C12Image[ExpectedC12Position],
+    MonomialPoly(R1Action[2]));
+B1Direct := DivideMonomial(PhiAtom(UGElt, G, RHElt),
+    PhiAtom(ConjugateElt(UGElt, G), UGElt, RHElt));
+if B1Signed.sign <> 1 or B1Signed.monomial <> B1Direct then
+    Gamma4Fail("FAIL: c_12 does not reconstruct the stated B_1 quotient");
+fi;
+
+## r_1=(epsilon^2 g).w and g.r_1=nu_1 w.
+GActionOnW := ActionColumn(WObj, G, WIndexG);
+if R1Action[1] <> WIndexG or GActionOnW[1] <> WIndexG then
+    Gamma4Fail("FAIL: r_1 or g.r_1 leaves the w-line");
+fi;
+Nu1Signed := rec(
+    monomial := MultiplyMonomial(R1Action[2], GActionOnW[2]),
+    sign := 1
+);
+
+## p_1=phi_1(w_2 tensor v_1), followed by phi_2(w tensor p_1).
+P1InputPosition := (WIndexUG - 1) * VObj.dim + VIndexRH;
+P1Vector := Phi1WVonVector(BasisPolyVector(D1Obj.dim, P1InputPosition));
+WP1Input := ZeroPolyVector(D2Obj.dim);
+for IndexJ in [1 .. D1Obj.dim] do
+    WP1Input[(WIndexG - 1) * D1Obj.dim + IndexJ] := P1Vector[IndexJ];
+od;
+Phi2WP1 := Phi2WVonVector(WP1Input);
+if Filtered([1 .. D2Obj.dim], i -> Length(Phi2WP1[i]) > 0) <>
+   Y2SupportPositions then
+    Gamma4Fail("FAIL: phi_2(w tensor p_1) has the wrong coordinate support");
+fi;
+
+## Use the nonzero line of multidegree (g,epsilon^2 g,epsilon^-1 h).
+## The paper proves that this component of Y_2 is one-dimensional, so this
+## actual coordinate determines the scalar mu_1.
+Mu1Position := (WIndexG - 1) * D1Obj.dim
+             + (WIndexUG - 1) * VObj.dim + VIndexRH;
+Mu1Signed := SignedMonomialRatio(Phi2WP1[Mu1Position],
+                                 Y2Vector[Mu1Position]);
+
+FirstCoefficientProduct := MultiplySignedMonomials(
+    MultiplySignedMonomials(BetaSigned, B1Signed),
+    MultiplySignedMonomials(Nu1Signed, Mu1Signed));
+SgKey := CharacterAtom("S", G)[1][1];
+if FirstCoefficientProduct.sign <> -1 or
+   FirstCoefficientProduct.monomial <> CharacterAtom("S", G) then
+    Gamma4Fail("FAIL: beta*B1*nu1*mu1 is not -sigma(g)");
+fi;
+FirstCoefficientSpecialized := SpecializeSignedCharacterMinusOne(
+    FirstCoefficientProduct, SgKey);
+if FirstCoefficientSpecialized.sign <> 1 or
+   Length(FirstCoefficientSpecialized.monomial) <> 0 then
+    Gamma4Fail("FAIL: beta*B1*nu1*mu1 is not 1 at sigma(g)=-1");
+fi;
+
+## Independently reconstruct the two epsilon-action paths used in the
+## manuscript.  The first path acts on w_2 tensor y_1 and then applies
+## phi_2; the second acts directly on z_1.
+EpsilonSeedAction := ApplyActionVector(D2Obj, Epsilon, Y2Input);
+WP1Support := Filtered([1 .. D2Obj.dim], i -> Length(WP1Input[i]) > 0);
+if Filtered([1 .. D2Obj.dim], i -> Length(EpsilonSeedAction[i]) > 0) <>
+   WP1Support then
+    Gamma4Fail("FAIL: epsilon.(w_2 tensor y_1) has the wrong support");
+fi;
+Chi1Signed := SignedMonomialRatio(EpsilonSeedAction[WP1Support[1]],
+                                  WP1Input[WP1Support[1]]);
+
+EpsilonZ1 := ApplyActionVector(D2Obj, Epsilon, Y2Vector);
+if Filtered([1 .. D2Obj.dim], i -> Length(EpsilonZ1[i]) > 0) <>
+   Y2SupportPositions then
+    Gamma4Fail("FAIL: epsilon.z_1 has the wrong coordinate support");
+fi;
+Tau2EpsilonSigned := SignedMonomialRatio(EpsilonZ1[Mu1Position],
+                                         Y2Vector[Mu1Position]);
+FirstEpsilonPathResidual := DivideSignedMonomials(
+    MultiplySignedMonomials(Chi1Signed, Mu1Signed),
+    Tau2EpsilonSigned);
+if FirstEpsilonPathResidual.sign <> 1 or
+   Length(FirstEpsilonPathResidual.monomial) <> 0 then
+    Gamma4Fail("FAIL: the first epsilon-action path has a nonzero residual");
+fi;
+
+SecondEpsilonPathResidual := DivideSignedMonomials(
+    Chi1Signed,
+    MultiplySignedMonomials(Tau2EpsilonSigned,
+        MultiplySignedMonomials(
+            MultiplySignedMonomials(BetaSigned, B1Signed), Nu1Signed)));
+SecondEpsilonPathResidual := SpecializeSignedCharacterMinusOne(
+    SecondEpsilonPathResidual, SgKey);
+if SecondEpsilonPathResidual.sign <> 1 or
+   Length(SecondEpsilonPathResidual.monomial) <> 0 then
+    Gamma4Fail("FAIL: the second epsilon-action path has a nonzero residual");
+fi;
+
 ## y_3 = phi_3(w_g tensor y_2).
 Y3Input := ZeroPolyVector(WObj.dim * D2Obj.dim);
 for IndexJ in [1 .. D2Obj.dim] do
@@ -472,6 +661,36 @@ for IndexJ in [1 .. D2Obj.dim] do
 od;
 Y3Vector := HigherPhiApply(WObj, D2Obj, D1Obj,
     Phi2WVonVector, Y3Input);
+
+## Check the first coefficient once more inside the full phi_3 output.  The
+## selected coordinate is w_g tensored with the same nonzero Y_2 line used
+## to determine mu_1.  Its two source terms have quotient sigma(g), hence
+## cancel after sigma(g)=-1.
+FirstY3Position := (WIndexG - 1) * D2Obj.dim + Mu1Position;
+FirstY3Coordinate := Y3Vector[FirstY3Position];
+if Length(FirstY3Coordinate) <> 2 or
+   Set(List(FirstY3Coordinate, term -> term[2])) <> [-1] then
+    Gamma4Fail("FAIL: the first Y_3 coordinate does not have two source terms");
+fi;
+FirstY3WithSigma := Filtered(FirstY3Coordinate,
+    term -> ExponentOf(term[1], SgKey) = 1);
+FirstY3WithoutSigma := Filtered(FirstY3Coordinate,
+    term -> ExponentOf(term[1], SgKey) = 0);
+if Length(FirstY3WithSigma) <> 1 or Length(FirstY3WithoutSigma) <> 1 or
+   DivideMonomial(FirstY3WithSigma[1][1],
+                  FirstY3WithoutSigma[1][1]) <> CharacterAtom("S", G) then
+    Gamma4Fail("FAIL: the two first-coefficient source terms have the wrong quotient");
+fi;
+FirstY3Specialized := [];
+for FirstY3Term in FirstY3Coordinate do
+    FirstY3Signed := SpecializeSignedCharacterMinusOne(
+        rec(monomial := FirstY3Term[1], sign := FirstY3Term[2]), SgKey);
+    AddPolyTerm(FirstY3Specialized, FirstY3Signed.monomial,
+                FirstY3Signed.sign);
+od;
+if Length(FirstY3Specialized) <> 0 then
+    Gamma4Fail("FAIL: the first Y_3 coordinate does not cancel at sigma(g)=-1");
+fi;
 
 ## The common line used for C_- and C_+ in the proof has tensor factors
 ##
@@ -582,6 +801,11 @@ Print("Arithmetic: exact integers in a formal sparse Laurent lattice\n");
 Print("External GAP packages required: none\n");
 Print("Corrected recursive operators reconstructed: phi_1, phi_2, phi_3\n");
 Print("Y2 nonzero recursive coordinates: ", Length(Y2SupportPositions), "\n");
+Print("First Y3 coefficient: beta, B1, nu1, mu1 reconstructed from source coordinates\n");
+Print("Unspecialized product beta*B1*nu1*mu1: -sigma(g)\n");
+Print("Epsilon-action comparison paths: residuals=0/0\n");
+Print("At sigma(g)=-1: beta*B1*nu1*mu1=1\n");
+Print("First Y3 recursive coordinate: terms=2, specialized residual=0\n");
 Print("Common Y3 coordinate (zero-based): 45\n");
 Print("Common-coordinate Laurent terms: ", Length(CommonCoordinate), "\n");
 Print("Source-to-eight-atom-target residual: ",
@@ -589,4 +813,4 @@ Print("Source-to-eight-atom-target residual: ",
 Print("Direct Xi3 Laurent atoms: ", Length(XiDirect), "\n");
 Print("Certificate: +d[h|g|ug|g] - d[epsilon*g|h|ug|g]\n");
 Print("Final residual Laurent atoms: ", Length(Residual), "\n");
-Print("PASS: recursive coordinate quotient equals the stated Xi3 and Xi3=1\n");
+Print("PASS: both Y3 coefficients vanish by independent source calculations\n");

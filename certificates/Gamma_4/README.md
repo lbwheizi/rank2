@@ -3,10 +3,14 @@
 This directory contains the exact GAP certificates accompanying Appendix C
 of the paper:
 
-- `xi3/` — reconstruction of the corrected third-adjoint common coordinate
-  in Lemmas C.4--C.5 and equation (C.9),
-  its reduction to the eight-atom Xi_3 target, and the final two-defect
-  cancellation Xi_3 = 1;
+- `x2_cocycle_reduction/` — a source-to-target verification of the
+  `Xi_X/kappa_X` reduction in `lem:Gamma4-X2-cocycle-reduction`, beginning
+  with the displayed definitions and ending with the six normalized
+  cocycle defects;
+- `xi3/` — reconstruction of both third-adjoint coefficients in Lemmas
+  C.4--C.5 and equation (C.9): the first coefficient is recovered from
+  `beta`, `B1`, `nu1`, and `mu1`, while the second is reduced to the
+  eight-atom Xi_3 target and the final two-defect cancellation Xi_3 = 1;
 - `local_delta/` — the corrected third-adjoint recursion and the two local
   Gamma_2 Delta identities for W in Lemma C.8 and equations (C.14)--(C.15);
 - `delta_transport/` — the three displayed identities for quotients
@@ -16,7 +20,8 @@ of the paper:
   Lemma C.6 and equation (C.10), and
   the source quotient, its reduction to the 76-atom target, and the
   terminal-root self-character cancellation;
-- `reflected_y2/` — reconstruction of the initial and reflected induced
+- `reflected_y2/` — reconstruction and factorization of the four-coordinate
+  `z0` vector in Lemma C.2, followed by the initial and reflected induced
   actions used in Lemmas C.3 and C.7 and equation (C.11), the corrected
   first two adjoint maps and their eight-coordinate \(Y_2\) vectors,
   followed by exact integral

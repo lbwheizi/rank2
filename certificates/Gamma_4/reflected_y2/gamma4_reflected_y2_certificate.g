@@ -1,7 +1,12 @@
 #############################################################################
-## R1-reflected Gamma4 Y2 parameter certificate (core GAP only)
+## Gamma4 z0 factorization and R1-reflected Y2 parameter certificate
+## (core GAP only)
 ##
-## This verifier checks two exact integral bridges for each of the seven
+## The companion source engine first reconstructs all four z0 coordinates
+## from phi_1, phi_2, the tensor action, and the corrected c_12.  It checks
+## the last-coordinate cancellation at sigma(g)=-1 and the factorization by
+## 1-Delta4.  The verifier then checks two exact integral bridges for each
+## of the seven
 ## reflected parameter identities Theta_2_j:
 ##
 ##   (A) Theta_2_j + sum_{i=1}^{13} C[j][i] P_i = B_j(Phi)
@@ -265,6 +270,21 @@ fi;
 ## This source engine does not read any of the expanded packet/target rows.
 Read("gamma4_reflected_y2_source.g");
 
+VerifyZ0SourceReconstruction := function()
+    local source;
+    source := SRC_Z0Source();
+    if Length(source.support) <> 4 or source.termCounts <> [2, 2, 2, 2] then
+        Gamma4Fail("FAIL: incomplete z_0 four-coordinate reconstruction");
+    fi;
+    if Length(source.specializedSupport) <> 2 or not source.factorized then
+        Gamma4Fail("FAIL: incomplete z_0 factorization at sigma(g)=-1");
+    fi;
+    Print("z0 source recursion: multihomogeneous coordinates=4, ",
+          "terms per coordinate=", source.termCounts, "\n");
+    Print("z0 at sigma(g)=-1: surviving coordinates=2, ",
+          "last coefficient=0, factor (1-Delta4) verified\n");
+end;
+
 VerifySourceReconstruction := function()
     local source, index, expectedPacket, expectedInitial, expectedReflected;
     source := SRC_ReconstructRows();
@@ -390,6 +410,7 @@ if Length(C12Coefficient([0,0,1], [0,1,0], [0,0,1])) = 0 then
     Gamma4Fail("FAIL: degenerate c_12 orientation check");
 fi;
 
+VerifyZ0SourceReconstruction();
 VerifySourceReconstruction();
 
 for index in [1 .. 7] do
@@ -403,4 +424,4 @@ Print("c12 convention: Phi(x,y,l)/Phi(x*y*x^-1,x,l)\n");
 Print("External GAP packages required: none\n");
 Print("Group model: epsilon exponent modulo 4; h,g exponents integral\n");
 Print("No h- or g-order relation used\n");
-Print("PASS: seven reflected Theta_2_j exponent identities verified\n");
+Print("PASS: z0 factorization and seven reflected Theta_2_j identities verified\n");

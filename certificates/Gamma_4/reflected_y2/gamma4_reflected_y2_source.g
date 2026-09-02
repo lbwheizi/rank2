@@ -7,8 +7,9 @@
 ## the initial pair (V,W), the scalar formulas for the first-root character
 ## on X1, the rigid-dual action on V*, and the induced actions on the
 ## reflected pair (V*,X1).
-## It then constructs phi_1 and phi_2 with the corrected right-associated
-## c_12 convention and returns the seven line-stability ratios
+## It also reconstructs the four z0 coordinates and their factorization at
+## sigma(g)=-1.  It then constructs phi_1 and phi_2 with the corrected
+## right-associated c_12 convention and returns the seven line-stability ratios
 ## Theta_2_j, 1 <= j <= 7.  The eight nonzero coordinates are numbered
 ## 0,...,7 so that conjugation by h acts as (0 1 2 3)(4 5 6 7).
 ##
@@ -113,6 +114,19 @@ SRC_PhiSuperscript := function(a, x, y)
         SRC_Phi(Conjugate(a, x), Conjugate(a, y), a));
     answer := SRC_MultiplyMonomials(answer,
         SRC_InverseMonomial(SRC_Phi(Conjugate(a, x), a, y)));
+    return answer;
+end;
+
+SRC_CocycleDefect := function(a, b, c, d)
+    local answer;
+    answer := SRC_Phi(b, c, d);
+    answer := SRC_MultiplyMonomials(answer,
+        SRC_Phi(a, Multiply(b, c), d));
+    answer := SRC_MultiplyMonomials(answer, SRC_Phi(a, b, c));
+    answer := SRC_MultiplyMonomials(answer,
+        SRC_InverseMonomial(SRC_Phi(Multiply(a, b), c, d)));
+    answer := SRC_MultiplyMonomials(answer,
+        SRC_InverseMonomial(SRC_Phi(a, b, Multiply(c, d))));
     return answer;
 end;
 
@@ -687,6 +701,307 @@ SRC_Y2Source := function(marking)
         coordinateLabels := [0 .. 7],
         degree := degrees[1],
         ratios := ratios
+    );
+end;
+
+#############################################################################
+## Independent z_0 reconstruction and factorization check.
+##
+## This starts again from the initial induced pair.  It constructs y_1 by
+## phi_1, applies phi_2 to w_g tensor y_1, and only afterwards identifies
+## the four multihomogeneous coordinates.  Thus the four coefficients in
+## equation (C.4) are outputs of the recursion, not source data.
+#############################################################################
+
+SRC_SpecializeCharacterMinusOneMonomial := function(monomial, name, element)
+    local answer, sign, term;
+    answer := [];
+    sign := 1;
+    for term in monomial do
+        if term[1][1] = name and term[1][2] = element then
+            if (term[2] mod 2) <> 0 then
+                sign := -sign;
+            fi;
+        else
+            Add(answer, [StructuralCopy(term[1]), term[2]]);
+        fi;
+    od;
+    return [SRC_CanonicalMonomial(answer), sign];
+end;
+
+SRC_SpecializeCharacterMinusOnePolynomial := function(polynomial, name, element)
+    local answer, term, specialized;
+    answer := [];
+    for term in polynomial do
+        specialized := SRC_SpecializeCharacterMinusOneMonomial(
+            term[1], name, element);
+        answer := SRC_PolynomialAdd(answer,
+            [[specialized[1], specialized[2] * term[2]]], 1);
+    od;
+    return answer;
+end;
+
+SRC_SpecializeCharacterMinusOneVector := function(vector, name, element)
+    return List(vector,
+        polynomial -> SRC_SpecializeCharacterMinusOnePolynomial(
+            polynomial, name, element));
+end;
+
+SRC_ExpandCharacterPolynomial := function(polynomial)
+    local answer, term, expandCharacters;
+    answer := [];
+    expandCharacters := ValueGlobal("SRC_ExpandCharacters");
+    for term in polynomial do
+        answer := SRC_PolynomialAdd(answer,
+            [[expandCharacters(term[1]), term[2]]], 1);
+    od;
+    return answer;
+end;
+
+SRC_ExpandCharacterVector := function(vector)
+    return List(vector, SRC_ExpandCharacterPolynomial);
+end;
+
+SRC_Z0Source := function()
+    local marking, epsilon, h, g, v, w, d1, f1, wi, vi, y1,
+          d2, double, associatorMonomials, associatorIn, associatorOut,
+          c12, inputZ0, j, term0, term1, term2, z0, support,
+          vInverseH, positionFirst, positionSecond, actedW1,
+          positionThird, positionFourth, expectedSupport, betaPosition,
+          beta, actionVInverseH, delta, factor, gh, actedW, actedWRow,
+          actedWScalar, normalized, expectedCoefficients, sigmaG,
+          c12Coefficient, phiGGH, phiRHG, upperOne, upperTwo,
+          identityOne, identityTwo, specializedCoefficients,
+          specializedExpected, factorizedCoefficients, epsilonH,
+          inverseEpsilonG, sourceFourthTerm, expectedFourthTerm,
+          coordinateResidual, coordinateCertificate;
+
+    marking := SRC_InitialMarking();
+    epsilon := marking.epsilon;
+    h := marking.h;
+    g := marking.g;
+    v := marking.v;
+    w := marking.w;
+
+    d1 := SRC_TensorObject(w, v);
+    f1 := SRC_PhiOne(w, v);
+    wi := Position(w.degrees, Multiply(epsilon, g));
+    vi := Position(v.degrees, h);
+    y1 := SRC_MatrixApply(f1,
+        SRC_BasisVector(d1.dim, (wi - 1) * v.dim + vi));
+
+    d2 := SRC_TensorObject(w, d1);
+    double := SRC_MatrixMultiply(SRC_Braid(d1, w), SRC_Braid(w, d1));
+    associatorMonomials := Concatenation(List(w.degrees,
+        x -> Concatenation(List(w.degrees,
+            y -> List(v.degrees, z -> SRC_Phi(x, y, z))))));
+    associatorIn := SRC_DiagonalMatrix(associatorMonomials);
+    associatorOut := SRC_DiagonalMatrix(List(associatorMonomials,
+        SRC_InverseMonomial));
+    c12 := SRC_MatrixMultiply(associatorOut,
+        SRC_MatrixMultiply(
+            SRC_Kronecker(SRC_Braid(w, w), SRC_IdentityMatrix(v.dim)),
+            associatorIn));
+
+    inputZ0 := List([1 .. d2.dim], i -> []);
+    for j in [1 .. d1.dim] do
+        inputZ0[(Position(w.degrees, g) - 1) * d1.dim + j] := y1[j];
+    od;
+    term0 := inputZ0;
+    term1 := SRC_MatrixApply(double, inputZ0);
+    term2 := SRC_MatrixApply(
+        SRC_Kronecker(SRC_IdentityMatrix(w.dim), f1),
+        SRC_MatrixApply(c12, inputZ0));
+    z0 := SRC_VectorAdd(SRC_VectorAdd(term0, term1, -1), term2, 1);
+
+    vInverseH := Multiply(InverseElt(epsilon), h);
+    positionFirst := (Position(w.degrees, g) - 1) * d1.dim
+                   + (Position(w.degrees, Multiply(epsilon, g)) - 1) * v.dim
+                   + Position(v.degrees, h);
+    positionSecond := (Position(w.degrees, g) - 1) * d1.dim
+                    + (Position(w.degrees, g) - 1) * v.dim
+                    + Position(v.degrees, vInverseH);
+
+    actedW1 := SRC_ActionMatrix(w, g);
+    positionThird := Filtered([1 .. w.dim],
+        i -> Length(actedW1[i][Position(w.degrees,
+                                      Multiply(epsilon, g))]) > 0);
+    if Length(positionThird) <> 1 then
+        Gamma4Fail("g acting on w_1 is not monomial");
+    fi;
+    positionThird := (positionThird[1] - 1) * d1.dim
+                   + (Position(w.degrees, g) - 1) * v.dim
+                   + Position(v.degrees, h);
+    positionFourth := (QuoInt(positionThird - 1, d1.dim)) * d1.dim
+                    + (QuoInt(positionThird - 1, d1.dim)) * v.dim
+                    + Position(v.degrees, vInverseH);
+
+    expectedSupport := [positionFirst, positionSecond,
+                        positionThird, positionFourth];
+    support := Filtered([1 .. Length(z0)], i -> Length(z0[i]) > 0);
+    if Set(support) <> Set(expectedSupport) then
+        Gamma4Fail("z_0 recursion has the wrong four multihomogeneous coordinates");
+    fi;
+    if ForAny(support, i -> Length(z0[i]) <> 2) then
+        Gamma4Fail("a z_0 multihomogeneous coefficient does not have two terms");
+    fi;
+
+    ## Extract beta from y_1=w_1 tensor v-beta w tensor v_1, rather than
+    ## inserting the displayed formula for beta.
+    betaPosition := (Position(w.degrees, g) - 1) * v.dim
+                  + Position(v.degrees, vInverseH);
+    if Length(y1[betaPosition]) <> 1 or y1[betaPosition][1][2] <> -1 then
+        Gamma4Fail("cannot recover beta from the recursive y_1 vector");
+    fi;
+    beta := y1[betaPosition][1][1];
+
+    ## Recover Phi_h(g,g)rho(g^2) as the actual scalar of g acting on v_1.
+    actionVInverseH := SRC_ActionMatrix(v, g);
+    if Length(actionVInverseH[Position(v.degrees, h)]
+                             [Position(v.degrees, vInverseH)]) <> 1 then
+        Gamma4Fail("g acting on v_1 is not monomial");
+    fi;
+    actionVInverseH := SRC_SignedMonomial(
+        actionVInverseH[Position(v.degrees, h)]
+                       [Position(v.degrees, vInverseH)]);
+    delta := SRC_MultiplyMonomials(beta, actionVInverseH);
+    factor := SRC_PolynomialAdd(
+        SRC_MonomialPolynomial([], 1),
+        SRC_MonomialPolynomial(delta, 1), -1);
+
+    ## Divide the last two standard-basis coordinates by the actual scalar
+    ## of (gh) acting on w.  This expresses all four coefficients in the
+    ## four tensor lines displayed in equation (C.4), rather than in the
+    ## transversal basis used internally by the induced module.
+    gh := Multiply(g, h);
+    actedW := SRC_ActionMatrix(w, gh);
+    actedWRow := QuoInt(positionThird - 1, d1.dim) + 1;
+    if Length(actedW[actedWRow][Position(w.degrees, g)]) <> 1 then
+        Gamma4Fail("(gh) acting on w is not monomial");
+    fi;
+    actedWScalar := SRC_SignedMonomial(
+        actedW[actedWRow][Position(w.degrees, g)]);
+    normalized := [
+        z0[positionFirst],
+        z0[positionSecond],
+        SRC_PolynomialMultiply(z0[positionThird],
+            SRC_MonomialPolynomial(SRC_InverseMonomial(actedWScalar), 1)),
+        SRC_PolynomialMultiply(z0[positionFourth],
+            SRC_MonomialPolynomial(
+                SRC_ScaleMonomial(actedWScalar, -2), 1))
+    ];
+
+    ## Reconstruct the compact four coefficients from the independently
+    ## recovered beta, Delta4, tensor-action scalar, and c_12 quotient.
+    sigmaG := SRC_Character("S", g);
+    c12Coefficient := SRC_MultiplyMonomials(
+        SRC_Phi(g, Multiply(epsilon, g), h),
+        SRC_InverseMonomial(
+            SRC_Phi(Conjugate(g, Multiply(epsilon, g)), g, h)));
+    phiGGH := SRC_PhiSubscript(g, g, h);
+    phiRHG := SRC_PhiSubscript(g, vInverseH, g);
+    upperOne := SRC_PhiSuperscript(g, Multiply(epsilon, g), h);
+    upperTwo := SRC_PhiSuperscript(g, g, vInverseH);
+
+    expectedCoefficients := [
+        SRC_PolynomialAdd(
+            SRC_MonomialPolynomial([], 1),
+            SRC_MonomialPolynomial(
+                SRC_MultiplyMonomials(sigmaG, delta), 1), 1),
+        SRC_PolynomialAdd(
+            SRC_MonomialPolynomial(beta, -1),
+            SRC_MonomialPolynomial(
+                SRC_MultiplyMonomials(beta, sigmaG), -1), 1),
+        SRC_PolynomialAdd(
+            SRC_MonomialPolynomial(
+                SRC_MultiplyMonomials(
+                    SRC_MultiplyMonomials(sigmaG, delta), upperTwo), 1),
+            SRC_MonomialPolynomial(
+                SRC_MultiplyMonomials(c12Coefficient, phiGGH), 1), 1),
+        SRC_PolynomialAdd(
+            SRC_MonomialPolynomial(
+                SRC_MultiplyMonomials(phiGGH, upperOne), -1),
+            SRC_MonomialPolynomial(
+                SRC_MultiplyMonomials(
+                    SRC_MultiplyMonomials(
+                        SRC_MultiplyMonomials(phiGGH, c12Coefficient),
+                        phiRHG),
+                    SRC_InverseMonomial(sigmaG)), -1), 1)
+    ];
+
+    normalized := List(normalized, SRC_ExpandCharacterPolynomial);
+    expectedCoefficients := List(expectedCoefficients,
+        SRC_ExpandCharacterPolynomial);
+    if ForAny([1 .. 3],
+              j -> Length(SRC_PolynomialAdd(
+                  normalized[j], expectedCoefficients[j], -1)) <> 0) then
+        Gamma4Fail("one of the first three recursive z_0 coefficients is incorrect");
+    fi;
+    if Length(normalized[4]) <> 2 or Length(expectedCoefficients[4]) <> 2 or
+       normalized[4][1] <> expectedCoefficients[4][1] or
+       normalized[4][2][2] <> expectedCoefficients[4][2][2] then
+        Gamma4Fail("the fourth recursive z_0 coefficient has the wrong two terms");
+    fi;
+
+    ## The second monomial in the fourth coefficient is expressed in the
+    ## transversal basis by the source recursion.  Its quotient by the
+    ## compact projective-action expression is the following difference of
+    ## two normalized 3-cocycle defects.  This bridges the source basis to
+    ## the fourth coefficient in (C.4) without assuming that coefficient.
+    sourceFourthTerm := normalized[4][2][1];
+    expectedFourthTerm := expectedCoefficients[4][2][1];
+    coordinateResidual := SRC_MultiplyMonomials(sourceFourthTerm,
+        SRC_InverseMonomial(expectedFourthTerm));
+    epsilonH := Multiply(epsilon, h);
+    inverseEpsilonG := Multiply(InverseElt(epsilon), g);
+    coordinateCertificate := SRC_MultiplyMonomials(
+        SRC_CocycleDefect(epsilonH, g, Multiply(epsilon, epsilon), g),
+        SRC_InverseMonomial(
+            SRC_CocycleDefect(inverseEpsilonG, epsilonH,
+                              Multiply(epsilon, epsilon), g)));
+    if coordinateResidual <> coordinateCertificate then
+        Gamma4Fail("the fourth z_0 coordinate has a nonzero source-to-target residual");
+    fi;
+    normalized := expectedCoefficients;
+
+    ## These two identities follow directly by expanding Phi^g and Phi_g.
+    ## They are checked before sigma(g) is specialized.
+    identityOne := SRC_MultiplyMonomials(c12Coefficient, phiRHG);
+    identityTwo := SRC_MultiplyMonomials(c12Coefficient, phiGGH);
+    if upperOne <> identityOne or upperTwo <> identityTwo then
+        Gamma4Fail("a cocycle quotient used in the z_0 factorization is incorrect");
+    fi;
+
+    specializedCoefficients := List(expectedCoefficients,
+        polynomial -> SRC_SpecializeCharacterMinusOnePolynomial(
+            polynomial, "S", g));
+    specializedExpected := [factor, [],
+        SRC_PolynomialMultiply(factor,
+            SRC_MonomialPolynomial(identityTwo, 1)), []];
+    specializedExpected := List(specializedExpected,
+        SRC_ExpandCharacterPolynomial);
+    factorizedCoefficients := List(specializedExpected,
+        polynomial -> SRC_SpecializeCharacterMinusOnePolynomial(
+            polynomial, "S", g));
+    if specializedCoefficients[4] <> [] then
+        Gamma4Fail("the last z_0 coefficient does not vanish when sigma(g)=-1");
+    fi;
+    if specializedCoefficients[2] <> [] then
+        Gamma4Fail("the w tensor (w tensor v_1) coefficient does not vanish when sigma(g)=-1");
+    fi;
+    if ForAny([1 .. 4],
+              j -> Length(SRC_PolynomialAdd(
+                  specializedCoefficients[j],
+                  factorizedCoefficients[j], -1)) <> 0) then
+        Gamma4Fail("the specialized z_0 coefficients do not have the factor 1-Delta4");
+    fi;
+
+    return rec(
+        support := support,
+        termCounts := List(normalized, Length),
+        specializedSupport := Filtered([1 .. 4],
+            i -> Length(specializedCoefficients[i]) > 0),
+        factorized := true
     );
 end;
 

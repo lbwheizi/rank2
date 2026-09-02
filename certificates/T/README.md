@@ -7,7 +7,9 @@ Stable LaTeX labels are used below so that this record remains valid if the
 display numbers change.
 
 It was tested with GAP 4.16.0. It loads no GAP package and uses no
-floating-point arithmetic.
+floating-point arithmetic.  The coordinate formula for
+`epsilon_Phi(W)` is checked by exact Laurent-monomial arithmetic; the
+later adjoint calculations use exact coefficient lists in `Z[p]`.
 
 ## Run
 
@@ -19,8 +21,7 @@ gap --bare -A -r -q --quitonbreak --norepl verify_T_case.g
 
 For an interactive run, first start `gap --bare -A -r -q`, then load the
 script at `gap>` with `Read("verify_T_case.g");`.  Success returns to `gap>`;
-failure
-stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
+failure stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
 
 In the batch form, the process exits with status zero after printing the
 contents of `verify_T_case.out`. Any failed identity writes a diagnostic to
@@ -28,20 +29,37 @@ standard error, and `--quitonbreak` makes GAP exit with nonzero status.
 
 ## What is reconstructed
 
-The verifier does not use the displayed adjoint tables as source data.
-It first reconstructs the tetrahedral rack table from the four conjugation
-permutations
+The verifier first reconstructs the tetrahedral rack table from the four
+conjugation permutations
 
 ```text
 Ad(x1)=(2,4,3), Ad(x2)=(1,3,4),
 Ad(x3)=(1,4,2), Ad(x4)=(1,2,3).
 ```
 
-It checks the rack axioms and all 64 instances of the braid equation for
-the constant `(-1)` coefficient table in the compatible bases fixed in the
-manuscript. It also checks that this table is consistent with the assumed
-value `epsilon=1`; it does not derive that value. A central marker `0` is
-then appended to every ordered word. Actual adjacent braids in the order
+For `eq:T-epsilon-explicit`, it records the three basis definitions
+
+```text
+a2=-x4 action a1, a3=-x2 action a1, a4=-x3 action a1
+```
+
+and derives the three required actions from the rack and the projective-action
+composition rule.  If `a_j=-x_s action a1`, the rack determines the unique
+carrier `x_k` having the same action on the degree `x1` as `x_s^2`.  The
+program therefore constructs the centralizer tail `x_k^-1*x_s^2` and derives
+the corresponding quotient of local-cocycle and projective-representation
+values.  It
+then performs three actual braids beginning with `a2 tensor a3` and compares
+the accumulated Laurent monomial with the displayed right-hand side.  This
+part does not assume `epsilon_Phi(W)=1` and does not use the later constant
+coefficient table.
+
+The remaining checks do not use the displayed adjoint tables as source data.
+They check all 64 instances of the braid equation for the constant `(-1)`
+coefficient table in the compatible bases fixed in the manuscript. They also
+check that this table is consistent with the assumed value `epsilon=1`; they
+do not derive that value. A central marker `0` is then appended to every
+ordered word. Actual adjacent braids in the order
 
 ```text
 1,2,...,m,m,...,2,1
@@ -63,6 +81,13 @@ Thus every comparison is exact.
 
 ## Identities checked
 
+- **`eq:T-epsilon-explicit`:** the three action coefficients are generated
+  from the tetrahedral rack, the basis definitions, and projective-action
+  composition.  Three successive braidings are then accumulated.  The
+  resulting exact Laurent monomial is compared with the displayed formula,
+  including its total minus sign, its three local-cocycle quotients, and its
+  three `sigma` factors.  The three displayed action coefficients are not
+  used as definitions of the generated coefficients.
 - **`eq:T-Y2-basis` and `eq:T-phi2-table` (D.2--D.3):** the four
   displayed basis vectors and all 16 entries of the complete phi_2 table,
   reduced only modulo f(p)=p^2-p+1.
@@ -89,8 +114,11 @@ rack and the compatible-basis coefficient recursion.
 ## Scope
 
 This certificate verifies only the finite coefficient calculations just
-listed. It does **not** derive the compatible bases, the assumed identity
-`epsilon_Phi(W)=1`, the action of `x_1^{-1}` on
+listed. Its first part verifies the coordinate identity
+`eq:T-epsilon-explicit`; it does **not** prove that the resulting scalar is
+one.  The second part assumes `epsilon_Phi(W)=1` when it passes to the
+constant `(-1)` braiding table.  The certificate does not derive the
+compatible bases, the action of `x_1^{-1}` on
 `(W^*)_{x_1^{-1}}`, or the rigid-dual identity `epsilon_Phi(W^*)=1`.
 It also does not prove the normal-form lemma for
 arbitrary b_ij, simplicity of the adjoint objects, existence or

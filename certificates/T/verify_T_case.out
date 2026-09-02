@@ -1,8 +1,21 @@
 T-case exact core verifier (Appendix D)
-Arithmetic: exact coefficient lists in Z[p].
+Arithmetic: exact Laurent monomials and coefficient lists in Z[p].
 Dependencies: GAP core only; no packages or floating point.
-[OK] lem:T-tetrahedral-braiding: tetrahedral rack table and all 64 constant-(-\
-1) braid instances
+[OK] lem:T-group-data: tetrahedral rack reconstructed from the four conjugatio\
+n permutations
+
+Part I: reconstruct eq:T-epsilon-explicit without assuming epsilon_Phi(W)=1.
+[OK] eq:T-epsilon-explicit: three projective-action coefficients derived from \
+the rack and basis definitions
+[OK] eq:T-epsilon-explicit: all three generated action coefficients match thei\
+r displayed formulas
+[OK] eq:T-epsilon-explicit: three actual braids close on a_2 tensor a_3
+[OK] eq:T-epsilon-explicit: exact Laurent identity, including the total minus \
+sign and three sigma factors
+
+Part II: existing coefficient checks under epsilon_Phi(W)=1.
+[OK] lem:T-tetrahedral-braiding: all 64 constant-(-1) braid instances and assu\
+med epsilon_Phi(W)=1
 [OK] eq:T-adjoint-recursion: displayed h_m braid-loop direction (all h_2 words\
 )
 [OK] eq:T-phi2-table: complete phi_2 table modulo p^2-p+1
@@ -17,4 +30,4 @@ ids
 [OK] eq:T-y3-generator and eq:T-R2-monodromy-cycles: four displayed coefficien\
 t triples of y
 [OK] eq:T-R2-mixed-monodromy: eigenvalue (1-p) on all four cycles
-PASS: 10 exact checks completed.
+PASS: 15 exact checks completed.

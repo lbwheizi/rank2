@@ -1,0 +1,13 @@
+GAP version: 4.16.0
+Arithmetic: exact integral Laurent exponent vectors
+Forward quotient support: 9
+Forward quotient L1: 9
+Forward exact residual support: 0
+Opposite quotient support: 9
+Opposite quotient L1: 9
+Opposite exact residual support: 0
+Forward perturbed residual support: 1
+Opposite perturbed residual support: 1
+PASS: both exact Laurent identities hold.
+PASS: both deliberate one-factor perturbations are detected.
+Hence both conditional coefficient reductions are verified.

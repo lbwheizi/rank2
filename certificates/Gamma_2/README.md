@@ -5,6 +5,8 @@ and Appendix B of the paper.  The existing certificate suites are grouped by
 the calculation they verify:
 
 - `delta_reduction/` — first-adjoint Delta reduction;
+- `theta_coefficient_reduction/` — the two second-adjoint coefficient
+  reductions to `Theta_Phi` and its opposite counterpart;
 - `omegaV/` — the identity Omega_V = 1;
 - `g2_propagation/` — the G_2 propagation identities;
 - `g2_pure_parameters/` — the pure-parameter identities and auxiliary checks;

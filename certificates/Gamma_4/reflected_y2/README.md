@@ -1,8 +1,31 @@
 # Gamma4 reflected-Y2 parameter certificate
 
-This directory verifies the coordinate calculation in Lemma C.3 and the
-seven parameter identities after the first reflection in Lemma C.7 and
-equation (C.11) (`lem:Gamma4-R1-reflected-parameter-reduction`):
+This directory verifies the four-coordinate calculation and factorization
+of \(z_0\) in `lem:Gamma4-z0-factorization`, the coordinate calculation for
+\(z_1\), and the seven parameter identities after the first reflection in
+`lem:Gamma4-R1-reflected-parameter-reduction`.
+
+For \(z_0\), `gamma4_reflected_y2_source.g` starts from the original induced
+objects, constructs \(y_1\) by `phi_1`, and computes
+\(\varphi_2^\Phi(w\otimes y_1)\) using the tensor action and the corrected
+right-associated `c12`.  Only after this recursion does it identify the
+four multihomogeneous coordinates.  Each reconstructed coefficient has two
+Laurent monomials.  The fourth source-coordinate quotient is certified by
+the difference of two normalized 3-cocycle defects; it is not replaced by
+the compact target formula.  The program then checks that
+\(\sigma(g)=-1\) kills the second and fourth coefficients and verifies,
+coordinate by coordinate, the factorization
+
+\[
+z_0=(1-\Delta_4)\left[
+ w\otimes(w_1\otimes v)
+ +\frac{\Phi(g,\varepsilon g,h)}
+        {\Phi(\varepsilon^{-1}g,g,h)}
+  \Phi_g(g,h)((gh)\rhd w)\otimes(w\otimes v)
+\right].
+\]
+
+The remaining checks concern \(z_1\) and the reflected parameters.  They use
 
 \[
 R_1(V,W)=(V^*,X_1),\qquad

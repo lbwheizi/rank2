@@ -1,3 +1,5 @@
+z0 source recursion: multihomogeneous coordinates=4, terms per coordinate=[ 2, 2, 2, 2 ]
+z0 at sigma(g)=-1: surviving coordinates=2, last coefficient=0, factor (1-Delta4) verified
 Source recursion: initial/reflected phi2 coordinates=8/8, Theta rows checked=7/7, terminal degrees=[ [ 1, 1, 2 ], [ 2, 1, 2 ] ]
 Theta_2_1: source atoms=113, packet residual atoms=136, packet coefficient l1=8
 Theta_2_1: certificate terms=1561, coefficient l1=2706, residual atoms=0, max |h,g| in entries=[ 2, 2 ], max |h,g| in adjacent products=[ 3, 3 ]
@@ -19,4 +21,4 @@ c12 convention: Phi(x,y,l)/Phi(x*y*x^-1,x,l)
 External GAP packages required: none
 Group model: epsilon exponent modulo 4; h,g exponents integral
 No h- or g-order relation used
-PASS: seven reflected Theta_2_j exponent identities verified
+PASS: z0 factorization and seven reflected Theta_2_j identities verified

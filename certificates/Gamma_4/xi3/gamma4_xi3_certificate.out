@@ -3,10 +3,15 @@ Arithmetic: exact integers in a formal sparse Laurent lattice
 External GAP packages required: none
 Corrected recursive operators reconstructed: phi_1, phi_2, phi_3
 Y2 nonzero recursive coordinates: 8
+First Y3 coefficient: beta, B1, nu1, mu1 reconstructed from source coordinates
+Unspecialized product beta*B1*nu1*mu1: -sigma(g)
+Epsilon-action comparison paths: residuals=0/0
+At sigma(g)=-1: beta*B1*nu1*mu1=1
+First Y3 recursive coordinate: terms=2, specialized residual=0
 Common Y3 coordinate (zero-based): 45
 Common-coordinate Laurent terms: 2
 Source-to-eight-atom-target residual: 0
 Direct Xi3 Laurent atoms: 8
 Certificate: +d[h|g|ug|g] - d[epsilon*g|h|ug|g]
 Final residual Laurent atoms: 0
-PASS: recursive coordinate quotient equals the stated Xi3 and Xi3=1
+PASS: both Y3 coefficients vanish by independent source calculations

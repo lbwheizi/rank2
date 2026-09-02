@@ -3,9 +3,25 @@ Gamma_3 exact certificate suite (GAP core only)
 [PASS] (3,2): Cs, Clambda, Cr have zero Gamma_3 differential.
 [PASS] (3,2): explicit S_3 four-chain residuals are zero.
        Gamma terms: 25, 44, 53; S3 four-chain terms: 5, 24, 22.
+[PASS] (3,2): adjoint coefficients and degrees were reconstructed.
+[PASS] (3,2): scalar-chain dictionary and cycle evaluations agree.
+[PASS] (3,2): two one-factor perturbations were rejected.
 [PASS] (3,1)_2: all Gamma_3 differentials and reductions agree.
 [PASS] (3,1)_2: explicit S_3 four-chain residuals are zero.
        C02/Cpow Gamma terms: 38, 20; S3 four-chain terms: 8, 9.
+[PASS] (3,1)_2 coefficients: shifted varphi_1 and three paths agree.
+[PASS] (3,1)_2 action: transported epsilon coefficients agree.
+[PASS] (3,1)_2 chain bridge: E/R/A/B/T/M/Theta/K agree.
+[PASS] (3,1)_2 comparisons: the remaining quotient is kappa^3.
+[PASS] (3,1)_2 negative test: a perturbed c_12 path is rejected.
+       Atomic symbolic generators used: 60.
+[PASS] (3,1)_1 coefficients: all three recursive paths agree.
+[PASS] (3,1)_1 action: transported epsilon coefficients agree.
+[PASS] (3,1)_1 chain bridge: E/A/B/T/M/Theta/K agree.
+[PASS] (3,1)_1 dictionary: all three m_i--mu_i formulas agree.
+[PASS] (3,1)_1 comparisons: common mu quotient is kappa^3.
+[PASS] (3,1)_1 negative test: a perturbed c_12 path is rejected.
+       Atomic symbolic generators used: 59.
 [PASS] (3,1)_1: shared C02/Cpow bar certificates were rechecked.
 [PASS] (3,1)_1: all three m_i ratios and branch polynomials agree exactly.
 [PASS] S3 detector: all 1296 normalized 3-cocycle equations hold.

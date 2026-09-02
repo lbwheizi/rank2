@@ -1,0 +1,13 @@
+Gamma4 X2 cocycle-reduction source-to-target certificate
+GAP version: 4.16.0
+Arithmetic: exact integers in a formal sparse Laurent lattice
+External GAP packages required: none
+Raw Xi_X/kappa_X rho atoms: 4
+Projective multiplication identities used: 2
+Projective source-to-displayed residual: 0
+Local-coherence instances expanded and certified: 3
+Expanded local-coherence atom counts: [ 8, 8, 12 ]
+Final target cocycle defects: 6
+Expanded six-defect Laurent atoms after cancellation: 14
+Final source-to-six-defect residual: 0
+PASS: Xi_X/kappa_X equals the stated six-defect product and hence 1

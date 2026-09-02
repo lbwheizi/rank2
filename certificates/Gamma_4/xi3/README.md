@@ -9,7 +9,36 @@ in Lemmas C.4 and C.5 and equation (C.9) of the paper
 It first reconstructs the corrected recursive maps
 \(\varphi_1^\Phi,\varphi_2^\Phi,\varphi_3^\Phi\), including
 \(c_{12}=a(c_{W,W}\otimes\mathrm{id})a^{-1}\), constructs the eight
-nonzero coordinates of the chosen \(Y_2\)-seed, and extracts the two
+nonzero coordinates of the chosen \(Y_2\)-seed, and verifies both
+coefficients in equation (C.9).
+
+For the first coefficient, it recovers \(\beta\) from the recursive
+\(y_1\)-vector, extracts \(B_1\) from the actual `c12` image, obtains
+\(\nu_1\) from the two action columns defining
+\(r_1=(\varepsilon^2g)\rhd w\) and \(g\rhd r_1\), and obtains
+\(\mu_1\) from a common nonzero coordinate of
+\(\varphi_2^\Phi(w\otimes p_1)\) and \(z_1\).  Before using
+\(\sigma(g)=-1\), the source calculation gives the stronger exact identity
+
+\[
+\beta B_1\nu_1\mu_1=-\sigma(g).
+\]
+
+It also constructs the two comparison paths from the actual
+\(\varepsilon\)-action on \(w_2\otimes y_1\) and on \(z_1\); both path
+residuals are checked to be zero on the common nonzero coordinate, and the
+full coordinate supports are checked to agree.  Thus the scalar calculation
+in the two comparison identities is a verified output rather than an
+assumption.  The one-dimensionality of the relevant homogeneous component,
+and hence the fact that the same scalar applies on its other coordinates,
+is the mathematical input from the manuscript; the free Laurent source
+engine does not independently reprove that consequence of 3-cocycle
+coherence.  Substitution of \(\sigma(g)=-1\) then gives
+\(\beta B_1\nu_1\mu_1=1\).  As a separate check, the full `phi3` output is
+inspected on the corresponding \(w\otimes z_1\) coordinate: its two source
+terms have quotient \(\sigma(g)\) and cancel after the same specialization.
+
+For the second coefficient, the verifier extracts the two
 Laurent monomials in the common zero-based coordinate 45 of \(Y_3\).
 The program computes the corresponding GAP position 46 from the four tensor
 degrees
@@ -39,9 +68,9 @@ It then verifies that target by the two normalized 3-cocycle defects shown
 above.  All group elements are handled as abstract normal forms
 \(\varepsilon^i h^j g^k\); no quotient-specific order relation is used.
 The program therefore checks the full source-to-target bridge for this
-chosen coefficient, but it does not verify the simplicity criterion for
-\(Y_2\), the other coefficient of \(Y_3\), or any assertion about the
-Cartan graph.
+pair of coefficients, but it does not verify the simplicity criterion for
+\(Y_2\), the one-dimensionality argument used to define \(\mu_1\) and
+\(\tau_2(\varepsilon)\), or any assertion about the Cartan graph.
 
 Run from this directory with GAP 4.16:
 
