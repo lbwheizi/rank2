@@ -23,8 +23,13 @@ relators and coefficient $\ell^1$-norm 71.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract auxiliary_s_phi_square.g
+gap --bare -A -r -q --quitonbreak --norepl auxiliary_s_phi_square.g
 ```
+
+For an interactive run, first start `gap --bare -A -r -q`, then load the
+script at `gap>` with `Read("auxiliary_s_phi_square.g");`.  Success returns to
+`gap>`; failure
+stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
 
 The checked output is in `auxiliary_s_phi_square.out`; file hashes are in
 `CHECKSUMS.sha256`.

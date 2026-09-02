@@ -14,12 +14,17 @@ floating-point arithmetic.
 From this directory, run
 
 ```sh
-gap --bare -A -r -q --nointeract verify_T_case.g
+gap --bare -A -r -q --quitonbreak --norepl verify_T_case.g
 ```
 
-The process exits with status zero after printing the contents of
-`verify_T_case.out`. Any failed identity writes a diagnostic to standard
-error and exits with nonzero status.
+For an interactive run, first start `gap --bare -A -r -q`, then load the
+script at `gap>` with `Read("verify_T_case.g");`.  Success returns to `gap>`;
+failure
+stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
+
+In the batch form, the process exits with status zero after printing the
+contents of `verify_T_case.out`. Any failed identity writes a diagnostic to
+standard error, and `--quitonbreak` makes GAP exit with nonzero status.
 
 ## What is reconstructed
 

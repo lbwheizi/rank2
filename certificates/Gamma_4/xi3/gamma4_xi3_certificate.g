@@ -29,14 +29,14 @@
 ##   cocycle, or floating-point arithmetic is used.  Coefficients are exact
 ##   integers in a formal sparse Laurent lattice.
 ##
-## REPRODUCTION
-##   gap --bare -A -r -q --nointeract gamma4_xi3_certificate.g
+## FAIL-FAST BATCH REPRODUCTION (from this directory)
+##   gap --bare -A -r -q --quitonbreak --norepl gamma4_xi3_certificate.g
 #############################################################################
 
 Gamma4Fail := function(arg)
     CallFuncList(PrintTo, Concatenation(["*errout*"], arg));
     PrintTo("*errout*", "\n");
-    QUIT_GAP(1);
+    ErrorNoReturn("Certificate verification failed.");
 end;
 
 ## Sparse Laurent monomials are sorted lists [ [key, exponent], ... ].
@@ -590,5 +590,3 @@ Print("Direct Xi3 Laurent atoms: ", Length(XiDirect), "\n");
 Print("Certificate: +d[h|g|ug|g] - d[epsilon*g|h|ug|g]\n");
 Print("Final residual Laurent atoms: ", Length(Residual), "\n");
 Print("PASS: recursive coordinate quotient equals the stated Xi3 and Xi3=1\n");
-
-QUIT_GAP(0);

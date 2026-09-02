@@ -88,8 +88,13 @@ the simplicity of $X_1$.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract lemma_B1_first_coefficient_reduction.g
+gap --bare -A -r -q --quitonbreak --norepl lemma_B1_first_coefficient_reduction.g
 ```
+
+For an interactive run, first start `gap --bare -A -r -q`, then load the
+script at `gap>` with `Read("lemma_B1_first_coefficient_reduction.g");`.
+Success returns to `gap>`; failure
+stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
 
 Expected output:
 

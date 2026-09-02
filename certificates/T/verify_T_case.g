@@ -19,7 +19,7 @@ T_CHECKS := 0;;
 
 T_Fail := function(arg)
     PrintTo("*errout*", "FAIL: ", Concatenation(arg), "\n");
-    QUIT_GAP(1);
+    ErrorNoReturn("Certificate verification failed.");
 end;;
 
 T_Check := function(condition, message)
@@ -587,4 +587,3 @@ T_Check(T_ok,
     "eq:T-R2-mixed-monodromy: eigenvalue (1-p) on all four cycles");;
 
 Print("PASS: ", T_CHECKS, " exact checks completed.\n");
-QUIT_GAP(0);

@@ -32,10 +32,10 @@ fi
 run_gap() {
     script=$1
     if [ -n "$GAP_ROOT_DIRECTORY" ]; then
-        "$GAP_EXECUTABLE" --bare -A -r -q --nointeract \
+        "$GAP_EXECUTABLE" --bare -A -r -q --quitonbreak --norepl \
             -l "$GAP_ROOT_DIRECTORY" "$script"
     else
-        "$GAP_EXECUTABLE" --bare -A -r -q --nointeract "$script"
+        "$GAP_EXECUTABLE" --bare -A -r -q --quitonbreak --norepl "$script"
     fi
 }
 
@@ -52,8 +52,7 @@ cleanup() {
 trap cleanup EXIT HUP INT TERM
 
 printf '%s\n' \
-    'Print(GAPInfo.Version, "\n");' \
-    'QUIT_GAP(0);' > "$version_source"
+    'Print(GAPInfo.Version, "\n");' > "$version_source"
 
 if run_gap "$version_source" > "$version_stdout" 2> "$version_stderr"; then
     version_status=0

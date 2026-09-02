@@ -241,10 +241,5 @@ if Length(difference) = 0 then
 else
     Print("FAILURE: the two formal exponent vectors are different.\n");
     Print("Nonzero difference: ",difference,"\n");
-if not GAPInfo.CommandLineOptions.nointeract then
-    Print("\nThe verification failed. Press Enter to close GAP.\n");
-    ReadLine(InputTextUser());;
+    ErrorNoReturn("Certificate verification failed.");
 fi;
-QUIT_GAP(1);
-
-#QUIT_GAP(0);

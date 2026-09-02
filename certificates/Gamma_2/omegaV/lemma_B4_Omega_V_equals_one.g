@@ -201,7 +201,5 @@ if Length(difference) = 0 then
 else
     Print("FAILURE: the two formal exponent vectors are different.\n");
     Print("Nonzero difference: ",difference,"\n");
-    QUIT_GAP(1);
+    ErrorNoReturn("Certificate verification failed.");
 fi;
-
-QUIT_GAP(0);

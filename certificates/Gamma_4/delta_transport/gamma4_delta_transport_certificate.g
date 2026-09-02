@@ -19,14 +19,14 @@
 ##   exponent lattice on normalized symbols Phi(a,b,c).  No external GAP
 ##   package, floating-point arithmetic, or sampled cocycle is used.
 ##
-## REPRODUCTION (from this directory)
-##   gap --bare -A -r -q --nointeract gamma4_delta_transport_certificate.g
+## FAIL-FAST BATCH REPRODUCTION (from this directory)
+##   gap --bare -A -r -q --quitonbreak --norepl gamma4_delta_transport_certificate.g
 #############################################################################
 
 Gamma4Fail := function(arg)
     CallFuncList(PrintTo, Concatenation(["*errout*"], arg));
     PrintTo("*errout*", "\n");
-    QUIT_GAP(1);
+    ErrorNoReturn("Certificate verification failed.");
 end;
 
 Read("gamma4_delta_transport_certificate_data.g");
@@ -236,5 +236,3 @@ Print("External GAP packages required: none\n");
 Print("Group model: epsilon exponent modulo 4; h,g exponents integral\n");
 Print("No h- or g-order relation used\n");
 Print("PASS: Omega_01(g,h)=Omega_10(g,h)=Omega_01(hg,h)=Omega_10(hg,h)\n");
-
-QUIT_GAP(0);

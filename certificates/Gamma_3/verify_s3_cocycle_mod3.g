@@ -5,7 +5,7 @@ if not IsBound(G3_Fail) then
     G3_Fail := function(arg)
         CallFuncList(PrintTo,
             Concatenation(["*errout*"], arg, ["\n"]));
-        QUIT_GAP(1);
+        ErrorNoReturn("Certificate verification failed.");
     end;
 fi;
 

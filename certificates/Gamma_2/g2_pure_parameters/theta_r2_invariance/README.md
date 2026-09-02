@@ -31,8 +31,13 @@ total coefficient $\ell^1$-norm 131.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract lemma_B15_theta_after_second_reflection.g
+gap --bare -A -r -q --quitonbreak --norepl lemma_B15_theta_after_second_reflection.g
 ```
+
+For an interactive run, first start `gap --bare -A -r -q`, then load the
+script at `gap>` with `Read("lemma_B15_theta_after_second_reflection.g");`.
+Success returns to `gap>`; failure
+stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
 
 The checked output is in `lemma_B15_theta_after_second_reflection.out`; file
 hashes are in `CHECKSUMS.sha256`.

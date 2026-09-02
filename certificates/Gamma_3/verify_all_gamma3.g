@@ -1,7 +1,7 @@
 G3_Fail := function(arg)
     CallFuncList(PrintTo,
         Concatenation(["*errout*"], arg, ["\n"]));
-    QUIT_GAP(1);
+    ErrorNoReturn("Certificate verification failed.");
 end;
 
 Print("Gamma_3 exact certificate suite (GAP core only)\n");
@@ -37,4 +37,3 @@ fi;
 
 Print("================================================\n");
 Print("ALL GAMMA_3 CERTIFICATE CHECKS PASSED.\n");
-QUIT_GAP(0);

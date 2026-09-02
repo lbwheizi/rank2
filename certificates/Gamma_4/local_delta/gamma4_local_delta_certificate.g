@@ -32,14 +32,14 @@
 ##   until the independent reconstruction checks it.  No external GAP
 ##   package is used.
 ##
-## REPRODUCTION (from this directory)
-##   gap --bare -A -r -q --nointeract gamma4_local_delta_certificate.g
+## FAIL-FAST BATCH REPRODUCTION (from this directory)
+##   gap --bare -A -r -q --quitonbreak --norepl gamma4_local_delta_certificate.g
 #############################################################################
 
 Gamma4Fail := function(arg)
     CallFuncList(PrintTo, Concatenation(["*errout*"], arg));
     PrintTo("*errout*", "\n");
-    QUIT_GAP(1);
+    ErrorNoReturn("Certificate verification failed.");
 end;
 
 Read("gamma4_local_delta_certificate_data.g");
@@ -640,5 +640,3 @@ Print("c12 associator direction: input Phi, output Phi^-1\n");
 Print("Corrected Y3 certificate rows independently checked: ",
       Length(LocalRelations), "\n");
 Print("PASS: Y3=0 forces Delta_01^W=Delta_10^W=1\n");
-
-QUIT_GAP(0);

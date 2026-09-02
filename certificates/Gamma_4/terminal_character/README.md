@@ -24,8 +24,13 @@ argument in the main text.
 Run from this directory with GAP 4.16:
 
 ```text
-gap --bare -A -r -q --nointeract gamma4_terminal_character_certificate.g
+gap --bare -A -r -q --quitonbreak --norepl gamma4_terminal_character_certificate.g
 ```
+
+For an interactive run, first start `gap --bare -A -r -q`, then load the
+script at `gap>` with `Read("gamma4_terminal_character_certificate.g");`.
+Success returns to `gap>`; failure
+stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
 
 The checked standard output is stored in
 `gamma4_terminal_character_certificate.out`.  `CHECKSUMS.sha256` records the

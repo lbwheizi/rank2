@@ -32,7 +32,7 @@
 Gamma4Fail := function(arg)
     CallFuncList(PrintTo, Concatenation(["*errout*"], arg));
     PrintTo("*errout*", "\n");
-    QUIT_GAP(1);
+    ErrorNoReturn("Certificate verification failed.");
 end;
 
 Read("gamma4_reflected_y2_certificate_data.g");
@@ -404,5 +404,3 @@ Print("External GAP packages required: none\n");
 Print("Group model: epsilon exponent modulo 4; h,g exponents integral\n");
 Print("No h- or g-order relation used\n");
 Print("PASS: seven reflected Theta_2_j exponent identities verified\n");
-
-QUIT_GAP(0);

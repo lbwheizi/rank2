@@ -26,8 +26,13 @@ only exact integer arithmetic and the GAP core library.
 With GAP 4.16.0, run from this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract theta_diagonal_braiding_cocycle.g
+gap --bare -A -r -q --quitonbreak --norepl theta_diagonal_braiding_cocycle.g
 ```
+
+For an interactive run, first start `gap --bare -A -r -q`, then load the
+script at `gap>` with `Read("theta_diagonal_braiding_cocycle.g");`.  Success
+returns to `gap>`; failure
+stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
 
 The expected output is stored in `theta_diagonal_braiding_cocycle.out`.
 File hashes are stored in `CHECKSUMS.sha256`.

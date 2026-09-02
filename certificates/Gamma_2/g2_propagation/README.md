@@ -28,8 +28,13 @@ $\ell^1$-norm 13; the second has 18 relators and coefficient $\ell^1$-norm
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract lemma_B12_K3_and_d4_cocycle_reductions.g
+gap --bare -A -r -q --quitonbreak --norepl lemma_B12_K3_and_d4_cocycle_reductions.g
 ```
+
+For an interactive run, first start `gap --bare -A -r -q`, then load the
+script at `gap>` with `Read("lemma_B12_K3_and_d4_cocycle_reductions.g");`.
+Success returns to `gap>`; failure
+stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
 
 The checked output is in
 `lemma_B12_K3_and_d4_cocycle_reductions.out`; file hashes are in

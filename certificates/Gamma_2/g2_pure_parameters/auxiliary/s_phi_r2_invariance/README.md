@@ -24,8 +24,13 @@ relators and coefficient $\ell^1$-norm 175.
 From this directory:
 
 ```sh
-gap --bare -A -r -q --nointeract auxiliary_s_phi_R2_invariance.g
+gap --bare -A -r -q --quitonbreak --norepl auxiliary_s_phi_R2_invariance.g
 ```
+
+For an interactive run, first start `gap --bare -A -r -q`, then load the
+script at `gap>` with `Read("auxiliary_s_phi_R2_invariance.g");`.  Success
+returns to `gap>`; failure
+stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
 
 The checked output is in `auxiliary_s_phi_R2_invariance.out`; file hashes are
 in `CHECKSUMS.sha256`.

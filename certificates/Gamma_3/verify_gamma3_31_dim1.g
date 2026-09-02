@@ -5,7 +5,7 @@
 G3_Fail := function(arg)
     CallFuncList(PrintTo,
         Concatenation(["*errout*"], arg, ["\n"]));
-    QUIT_GAP(1);
+    ErrorNoReturn("Certificate verification failed.");
 end;
 
 G3_GAMMA331_DIM2_OK := false;

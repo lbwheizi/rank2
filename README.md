@@ -127,7 +127,7 @@ GAP_BIN=/path/to/gap GAP_ROOT=/path/to/gap-root ./verify_all.sh
 
 The script checks the root `SHA256SUMS`, every topic-level
 `CHECKSUMS.sha256`, runs all 16 suites with
-`--bare -A -r -q --nointeract`, and accepts a suite only if GAP exits with
+`--bare -A -r -q --quitonbreak --norepl`, and accepts a suite only if GAP exits with
 status zero, writes nothing to standard error, and produces standard output
 that agrees byte-for-byte with the recorded output. The preliminary version
 probe is subject to the same exit-status and standard-error checks and must
@@ -136,6 +136,15 @@ report exactly GAP 4.16.0. A successful run ends with:
 ```text
 PASS: all exact certificate suites
 ```
+
+The certificate files themselves never call `QUIT_GAP`.  The options
+`--quitonbreak --norepl` belong only to the fail-fast batch runner.  For an
+interactive run, first change to the certificate directory and start
+`gap --bare -A -r -q`.  Then load the certificate by its basename at `gap>`;
+for example, use `Read("verify_T_case.g");` from `certificates/T`.  A
+successful script returns to `gap>`.  A failed check calls `ErrorNoReturn` and
+stops at `brk>` without executing any later `PASS`; enter `quit;` there to
+return to the outer `gap>` prompt.
 
 ## Scope
 

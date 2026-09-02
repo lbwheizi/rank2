@@ -29,14 +29,14 @@
 ##   epsilon^i h^j g^k with i modulo 4 and j,k integral.  The computation is
 ##   exact in the free Laurent exponent lattice on formal Phi(a,b,c).
 ##
-## REPRODUCTION
-##   gap --bare -A -r -q --nointeract gamma4_terminal_character_certificate.g
+## FAIL-FAST BATCH REPRODUCTION (from this directory)
+##   gap --bare -A -r -q --quitonbreak --norepl gamma4_terminal_character_certificate.g
 #############################################################################
 
 Gamma4Fail := function(arg)
     CallFuncList(PrintTo, Concatenation(["*errout*"], arg));
     PrintTo("*errout*", "\n");
-    QUIT_GAP(1);
+    ErrorNoReturn("Certificate verification failed.");
 end;
 
 AddExponent := function(v, key, exponent)
@@ -702,5 +702,3 @@ Print("Certificate coefficient l1 norm: ",
       Sum(Certificate, entry -> AbsInt(entry[2])), "\n");
 Print("Residual Laurent atoms: ", Length(Residual), "\n");
 Print("PASS: Q is the stated product of normalized 3-cocycle defects, hence Q=1\n");
-
-QUIT_GAP(0);

@@ -299,7 +299,5 @@ if Length(difference) = 0 then
     Print("PASS: exact integral residual is zero.\n");
 else
     Print("FAIL: nonzero exact residual: ",difference,"\n");
-    QUIT_GAP(1);
+    ErrorNoReturn("Certificate verification failed.");
 fi;
-
-QUIT_GAP(0);

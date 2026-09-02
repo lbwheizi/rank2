@@ -44,28 +44,33 @@ their complete integer boundary residuals.
 Run GAP from this directory.  With GAP 4.16.0 the command is
 
 ```sh
-gap --bare -A -r -q --nointeract verify_all_gamma3.g
+gap --bare -A -r -q --quitonbreak --norepl verify_all_gamma3.g
 ```
+
+For an interactive run, first start `gap --bare -A -r -q`, then load the
+script at `gap>` with `Read("verify_all_gamma3.g");`.  Success returns to
+`gap>`; failure
+stops at `brk>`, where `quit;` returns to the outer `gap>` prompt.
 
 For an exact comparison with the recorded output:
 
 ```sh
-gap --bare -A -r -q --nointeract verify_all_gamma3.g > actual_output.txt
+gap --bare -A -r -q --quitonbreak --norepl verify_all_gamma3.g > actual_output.txt
 diff -u EXPECTED_OUTPUT.txt actual_output.txt
 ```
 
-The complete verifier exits with status zero only after all four
-component success flags have been checked.  Any failed assertion is
-written to standard error and terminates GAP with a nonzero status;
-the final total-PASS line is then unreachable.
+In the batch form, the complete verifier exits with status zero only after all
+four component success flags have been checked.  Any failed assertion is
+written to standard error, and `--quitonbreak` makes GAP exit with a nonzero
+status; the final total-PASS line is then unreachable.
 
 Each component may also be run separately:
 
 ```sh
-gap --bare -A -r -q --nointeract verify_gamma3_32.g
-gap --bare -A -r -q --nointeract verify_gamma3_31_dim2.g
-gap --bare -A -r -q --nointeract verify_gamma3_31_dim1.g
-gap --bare -A -r -q --nointeract verify_s3_cocycle_mod3.g
+gap --bare -A -r -q --quitonbreak --norepl verify_gamma3_32.g
+gap --bare -A -r -q --quitonbreak --norepl verify_gamma3_31_dim2.g
+gap --bare -A -r -q --quitonbreak --norepl verify_gamma3_31_dim1.g
+gap --bare -A -r -q --quitonbreak --norepl verify_s3_cocycle_mod3.g
 ```
 
 The one-dimensional script intentionally prints the

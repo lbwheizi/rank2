@@ -238,7 +238,7 @@ VerifyOne := function(identityText,target,terms)
         Print("PASS: exact integral residual is zero.\n");
     else
         Print("FAIL: nonzero exact residual: ",difference,"\n");
-        QUIT_GAP(1);
+        ErrorNoReturn("Certificate verification failed.");
     fi;
 end;;
 
@@ -282,4 +282,3 @@ D4Terms := [
 Print("GAP version: ",GAPInfo.Version,"\n");
 VerifyOne("mathcal K_3 = 1",K3Target(),K3Terms);
 VerifyOne("d_4 = lambda^3 kappa_4",D4Target(),D4Terms);
-QUIT_GAP(0);
