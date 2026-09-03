@@ -238,7 +238,9 @@ SubstituteMonomial := function(value, key, replacement)
     return MultiplyMonomial(rest, PowerMonomial(replacement, exponent));
 end;
 
-## Reconstruct the source expression in Lemma C.9.
+## Reconstruct the source expression in
+## eq:Gamma4-Y2-slant-cocycle-expression, used in
+## lem:Gamma4-Y2-support-value.
 Epsilon := [1, 0, 0];
 H := [0, 1, 0];
 G := [0, 0, 1];
