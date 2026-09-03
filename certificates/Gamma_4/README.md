@@ -16,10 +16,10 @@ of the paper:
 - `delta_transport/` — the three displayed identities for quotients
   involving \(\Omega_{01}\) and \(\Omega_{10}\) in Lemma C.9 and
   equation (C.16);
-- `terminal_character/` — reconstruction of the six action coefficients in
-  Lemma C.6 and equation (C.10), and
-  the source quotient, its reduction to the 76-atom target, and the
-  terminal-root self-character cancellation;
+-  `terminal_character/` — reconstruction of the six action coefficients
+  used in `lem:Gamma4-Y2-support-value`, followed by the source quotient in
+  `eq:Gamma4-Y2-slant-cocycle-expression`, its reduction to the 76-atom
+  target, and the terminal-root self-character cancellation;
 - `reflected_y2/` — reconstruction and factorization of the four-coordinate
   `z0` vector in Lemma C.2, followed by the initial and reflected induced
   actions used in Lemmas C.3 and C.7 and equation (C.11), the corrected
