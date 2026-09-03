@@ -1,9 +1,8 @@
 # Gamma4 terminal-character certificate
 
 `gamma4_terminal_character_certificate.g` is a core-only GAP 4.16 verifier
-for the terminal-root self-character cancellation used in Lemma C.6 and
-equation (C.10)
-(`lem:Gamma4-Y2-support-value`) of the paper.  In the abstract normal form
+for the scalar reduction in `eq:Gamma4-Y2-slant-cocycle-expression`,
+used in `lem:Gamma4-Y2-support-value` of the paper.  In the abstract normal form
 \(\varepsilon^i h^j g^k\), it first
 reconstructs the six displayed action coefficients
 \(L_a,L_p,L_{ha},L_{hy},L_{hr},L_{hY}\), then builds
