@@ -5,8 +5,8 @@ Dependencies: GAP core only; no packages or floating point.
 n permutations
 
 Part I: reconstruct eq:T-epsilon-explicit without assuming epsilon_Phi(W)=1.
-[OK] eq:T-epsilon-explicit: three projective-action coefficients derived from \
-the rack and basis definitions
+[OK] eq:T-epsilon-explicit: three coefficients from eq:YD-projective-action de\
+rived from the rack and basis definitions
 [OK] eq:T-epsilon-explicit: all three generated action coefficients match thei\
 r displayed formulas
 [OK] eq:T-epsilon-explicit: three actual braids close on a_2 tensor a_3
@@ -18,13 +18,15 @@ Part II: existing coefficient checks under epsilon_Phi(W)=1.
 med epsilon_Phi(W)=1
 [OK] eq:T-adjoint-recursion: displayed h_m braid-loop direction (all h_2 words\
 )
-[OK] eq:T-phi2-table: complete phi_2 table modulo p^2-p+1
-[OK] eq:T-phi3-table: complete phi_3 table modulo p^2-p+1
-[OK] eq:T-Y4-Z1: fifteen pairwise distinct ordered words
-[OK] eq:T-Y4-homogeneous-components and eq:T-Y4-Z1: exact factorization in unr\
-educed Z[p]
-[OK] eq:T-Y4-homogeneous-components: vanishing after exact factorization is re\
-duced modulo f
+[OK] lem:T-Y2-homogeneous-components: complete phi_2 calculation modulo p^2-p+\
+1
+[OK] lem:T-Y3-homogeneous-components: complete phi_3 calculation modulo p^2-p+\
+1
+[OK] lem:T-Y4-homogeneous-components: fifteen pairwise distinct words in the i\
+nternal Z_1 target
+[OK] lem:T-Y4-homogeneous-components: exact factorization in unreduced Z[p]
+[OK] lem:T-Y4-homogeneous-components: vanishing after exact factorization is r\
+educed modulo f
 [OK] eq:T-R2-monodromy-cycles: four cycles derived from the eight adjacent bra\
 ids
 [OK] eq:T-y3-generator and eq:T-R2-monodromy-cycles: four displayed coefficien\

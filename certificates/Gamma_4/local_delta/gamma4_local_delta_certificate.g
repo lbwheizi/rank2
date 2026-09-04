@@ -21,7 +21,7 @@
 ##   relation snapshot use precisely this convention.
 ##
 ## SCOPE
-##   The script independently reconstructs V,W, the twisted tensor actions,
+##   The script independently reconstructs V,W using eq:tensor-product,
 ##   braidings, phi_1, phi_2, phi_3, y_2 and g acting on y_2 from the Gamma4
 ##   normal-form group law and the formal coefficients R,S,F,P.  It obtains
 ##   all 192 nonzero Y3 coordinate binomials, checks the 19 rows used by the
@@ -314,7 +314,7 @@ G4BasisVector := function(dimension, index)
 end;
 
 #############################################################################
-## Homogeneous objects, tensor action, braiding, and adjoint recursion.
+## Homogeneous objects, eq:tensor-product, braiding, and adjoint recursion.
 #############################################################################
 
 G4MakeObject := function(degrees, builder)

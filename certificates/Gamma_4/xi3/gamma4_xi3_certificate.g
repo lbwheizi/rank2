@@ -521,11 +521,12 @@ if Y2SupportPositions <> [6, 7, 9, 16, 18, 19, 28, 29] then
 fi;
 
 #############################################################################
-## First coefficient in equation (C.9).
+## First coefficient in eq:Gamma4-y3-two-coefficients.
 ##
 ## Recover beta, B_1, nu_1, and mu_1 from the recursive vectors, the
 ## actual c_12 image, and actual action columns.  In particular, neither
-## comparison identity at the end of Lemma C.5 is supplied as input.
+## comparison identity at the end of
+## lem:Gamma4-Y3-coefficient-cancellation is supplied as input.
 #############################################################################
 
 WIndexG := PositionDegree(WObj.degrees, G);

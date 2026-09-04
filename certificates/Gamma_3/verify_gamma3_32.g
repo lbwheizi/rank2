@@ -377,7 +377,8 @@ VerifyGamma332CoefficientAndDictionary := function()
         elif c = e2 then return sigmaE2;
         elif c = G3Mul(g, g) then return sigmaG2;
         elif c = G3Mul(e2, G3Mul(g, g)) then
-            # sigma(epsilon^2 g^2), obtained from the projective product
+            # sigma(epsilon^2 g^2), obtained from
+            # eq:YD-projective-action applied to
             # sigma(epsilon^2)sigma(g^2).
             return MulM(MulM(sigmaE2, sigmaG2),
                         InvM(RawLocal(y0, e2, G3Mul(g, g))));
@@ -394,7 +395,7 @@ VerifyGamma332CoefficientAndDictionary := function()
     eg2h := G3Mul(e, g2h);
     ei := function(i) return [i mod 3, 0, 0]; end;
 
-    # Canonical consequences of the two projective products
+    # Canonical consequences of two applications of eq:YD-projective-action:
     # sigma(epsilon)^2 and sigma(epsilon^2)sigma(epsilon).  This
     # normalization is used for direct vector comparisons, without the
     # later assumption rho(g)=-1.
@@ -533,7 +534,7 @@ VerifyGamma332CoefficientAndDictionary := function()
     end;
 
     # First adjoint and induced-action coefficients, reconstructed from the
-    # two braidings and the tensor/projective action formulas.
+    # two braidings, eq:YD-projective-action, and eq:tensor-product.
     aw := WAction(p[3], 0);
     av := VAction(y1, 2);
     aRaw := MulM(aw.coeff, av.coeff);
@@ -884,7 +885,7 @@ VerifyGamma332CoefficientAndDictionary := function()
     AssertM("Gamma32 raw expansion of t1", tRaw[2], ChainM(T1));
     AssertM("Gamma32 raw expansion of t2", tRaw[3], ChainM(T2));
 
-    # Character relations are consequences of the projective-action law:
+    # Character relations are consequences of eq:YD-projective-action:
     # rho(gh)=rho(g)rho(h)/Phi_g(g,h),
     # sigma(e)^2=Phi_y0(e,e)sigma(e^2), and
     # sigma(e)^3=Phi_y0(e,e)Phi_y0(e^2,e).

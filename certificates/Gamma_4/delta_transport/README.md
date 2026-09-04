@@ -1,7 +1,9 @@
 # Gamma4 Delta-transport certificate
 
-`gamma4_delta_transport_certificate.g` is a core-only GAP 4.16 verifier for
-the three normalized bar-boundary identities
+`gamma4_delta_transport_certificate.g` is a core-only GAP 4.16.0 verifier for
+Lemma C.9, `lem:Gamma4-local-Delta-transport`, and
+`eq:Gamma4-Omega-local`.  It checks the three normalized bar-boundary
+identities
 
 \[
 \frac{\Omega_{01}(g,h)}{\Omega_{10}(g,h)}=1,
@@ -23,7 +25,7 @@ use \(h^8=1\), \(g^8=1\), or any other special finite-quotient relation.
 No external GAP package, floating-point arithmetic, or cocycle sampling is
 used.
 
-Run from this directory with GAP 4.16:
+Run from this directory with GAP 4.16.0:
 
 ```text
 gap --bare -A -r -q --quitonbreak --norepl gamma4_delta_transport_certificate.g

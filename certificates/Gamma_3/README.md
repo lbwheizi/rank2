@@ -15,9 +15,9 @@ The scripts use only the GAP core library and exact integer, rational,
 cyclotomic, polynomial, or finite-field arithmetic. No optional GAP
 package, Python, NumPy, SciPy, or integer-programming solver is used by
 the verifier. Atomic values \(\Phi(a,b,c)\) and representation scalars
-are kept formal. Local cocycles \(\Phi_x\), tensor-action factors
-\(\Phi^x\), and the factors \(R(a;x,y)\) are expanded from their
-definitions.
+are kept formal. Local cocycles \(\Phi_x\), the factors \(\Phi^x\) in
+`eq:tensor-product`, and the factors \(R(a;x,y)\) are expanded from
+their definitions.
 
 The original Python programs were used only to find and audit candidate
 four-chains. The four-chains are hard-coded here, and GAP reconstructs
@@ -32,10 +32,12 @@ the source residuals and recomputes every integer boundary coefficient.
   `eq:Gamma3-32-scalar-chain-dictionary`, and
   `lem:Gamma3-32-bar-reduction`.
 - `verify_gamma3_31_dim2.g`: the \((3,1)_2\) coefficient calculation
-  from `eq:Gamma3-dim2-shifted-X1` through
-  `eq:Gamma3-dim2-eta-values`, the scalar-to-chain dictionary, and the
-  two comparison-cycle reductions leading to
-  `eq:Gamma3-common-three-path-reduction`.
+  in `lem:Gamma3-dim2-epsilon-cubic`,
+  `lem:Gamma3-dim2-second-adjoint-expansion`, and
+  `lem:Gamma3-dim2-bar-reduction`, including the formulas from
+  `eq:Gamma3-dim2-shifted-X1` through
+  `eq:Gamma3-dim2-eta-values` and the two comparison-cycle reductions
+  leading to `eq:Gamma3-common-three-path-reduction`.
 - `verify_gamma3_31_dim1.g`: the \((3,1)_1\) calculation in
   `lem:Gamma3-dim1-three-elementary-tensors`, the chain identification
   in `lem:Gamma3-dim1-chain-identification`, the formulas relating
@@ -96,8 +98,9 @@ The one-dimensional entry point intentionally prints the
 ### The \((3,2)\) calculation
 
 `verify_gamma3_32.g` starts from the normal form in \(\Gamma _3\), the
-transversals defining the induced objects, the projective and tensor
-actions, the braiding, and the recursion defining \(\varphi _2^\Phi\).
+transversals defining the induced objects, `eq:YD-projective-action`,
+`eq:tensor-product`, the braiding formula, and
+`eq:recursive-varphi-2`.
 It reconstructs:
 
 1. the first-adjoint coefficients and the relevant induced actions;
@@ -145,8 +148,8 @@ table in `eq:Gamma3-dim2-standard-basis`. Under
    \(\varphi _2^\Phi(e_0)\);
 3. the common degree of \(e_0,e_1,e_2\);
 4. the cyclic action, including its three target indices and three
-   coefficients, from the transversals and the projective and tensor
-   actions;
+   coefficients, from the transversals, `eq:YD-projective-action`, and
+   `eq:tensor-product`;
 5. the evaluations of
    \(\mathsf E,\mathsf R,\mathsf A,\mathsf B,\mathsf T_i,
    \mathsf M_i,\mathsf\Theta,\mathsf K\) and both comparison cycles.
@@ -163,8 +166,8 @@ the altered result is required to differ from \(\mathfrak b\).
 The one-dimensional branch uses the same bar-chain definitions as the
 two-dimensional branch, so `verify_gamma3_31_dim1.g` first reruns
 `verify_gamma3_31_dim2.g`. It then reconstructs its own coefficients
-from the general projective and tensor actions, both braidings, and the
-recursion for \(\varphi _2^\Phi\). It checks:
+from `eq:YD-projective-action`, `eq:tensor-product`, the braiding
+formula, and `eq:recursive-varphi-2`. It checks:
 
 1. the two nontrivial coefficients in
    `lem:Gamma3-dim1-three-elementary-tensors`;
@@ -201,10 +204,11 @@ f(\varepsilon,\varepsilon,\varepsilon)
 
 ## Written-proof inputs and scope limits
 
-The coefficient verifiers start from the general action, tensor-action,
-braiding, and recursive-adjoint formulas in the paper. They do not use
-the desired coefficient identities as inputs. The following statements
-are, however, written-proof inputs or remain outside the programs:
+The coefficient verifiers start from `eq:YD-projective-action`,
+`eq:tensor-product`, the braiding formula, and
+`eq:recursive-varphi-2`. They do not use the desired coefficient
+identities as inputs. The following statements are, however,
+written-proof inputs or remain outside the programs:
 
 - the homology computations
   \(H_3(\Gamma _3,\mathbb Z)\simeq\mathbb Z/3\) and the injectivity of
@@ -221,7 +225,7 @@ are, however, written-proof inputs or remain outside the programs:
   `eq:Gamma3-dim1-epsilon-normalization` and
   `eq:Gamma3-dim1-epsilon-square`; the program explicitly uses them as
   rewrite rules and does not claim to prove them;
-- the projective-action identity identifying three successive
+- `eq:YD-projective-action`, applied to three successive
   \(\varepsilon\)-actions with
   \(\Phi_{\varepsilon g^2h}(\varepsilon,\varepsilon)
   \Phi_{\varepsilon g^2h}(\varepsilon^2,\varepsilon)\), and the earlier

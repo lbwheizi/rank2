@@ -335,7 +335,7 @@ T_Check(T_ok,
 #   a_2=-x_4 action a_1,  a_3=-x_2 action a_1,
 #   a_4=-x_3 action a_1,
 #
-# and applies the projective-action composition rule.  For a basis vector
+# and applies eq:YD-projective-action.  For a basis vector
 # a_j=-x_s action a_1, the rack finds the unique carrier x_k for which
 # x_k and x_s^2 have the same action on the degree x_1.  Consequently
 # c=x_k^-1*x_s^2 lies in C_G(x_1), and
@@ -427,7 +427,7 @@ T_Check(
         [4, 2, 3, "x2^-1*x4^2"],
         [3, 4, 2, "x4^-1*x3^2"]
     ],
-    "eq:T-epsilon-explicit: three projective-action coefficients derived from the rack and basis definitions");;
+    "eq:T-epsilon-explicit: three coefficients from eq:YD-projective-action derived from the rack and basis definitions");;
 
 # These are comparison targets only.  They are not consulted by
 # T_DeriveSquareAction or by the braid accumulator below.
@@ -462,7 +462,7 @@ T_BraidBasisPair := function(pair, scalar)
     fi;
     action := T_DeriveSquareAction(leftDegree);
     if action.source <> pair[2] then
-        T_Fail("The derived projective action has the wrong source basis vector");
+        T_Fail("The action derived from eq:YD-projective-action has the wrong source basis vector");
     fi;
     return rec(
         pair := [action.target, pair[1]],
@@ -582,7 +582,7 @@ T_Check(T_ok,
     "eq:T-adjoint-recursion: displayed h_m braid-loop direction (all h_2 words)");;
 
 #############################################################################
-# Compatible-basis coefficient recursion eq:T-adjoint-recursion (6.17).
+# Compatible-basis coefficient recursion eq:T-adjoint-recursion.
 #############################################################################
 
 T_PhiWord := fail;;
@@ -622,8 +622,8 @@ T_PhiOnPrefixedVector := function(prefix, a)
 end;;
 
 #############################################################################
-# eq:T-Y2-basis and eq:T-phi2-table (D.2--D.3):
-# u_i and the complete phi_2 table, modulo f(p).
+# Lemma D.1, lem:T-Y2-homogeneous-components, and eq:T-Y2-basis:
+# u_i and the complete internal phi_2 calculation, modulo f(p).
 #############################################################################
 
 T_u := [];;
@@ -663,11 +663,11 @@ for T_i in [1 .. 4] do
     od;
 od;
 T_Check(T_ok,
-    "eq:T-phi2-table: complete phi_2 table modulo p^2-p+1");;
+    "lem:T-Y2-homogeneous-components: complete phi_2 calculation modulo p^2-p+1");;
 
 #############################################################################
-# eq:T-y3-generator (6.18) and eq:T-phi3-table (D.4):
-# y and the complete phi_3 table, modulo f(p).
+# Lemma D.2, lem:T-Y3-homogeneous-components, and eq:T-y3-generator:
+# y and the complete internal phi_3 calculation, modulo f(p).
 #############################################################################
 
 T_y := T_VecFromTerms(3, [
@@ -700,11 +700,11 @@ for T_i in [1 .. 4] do
     od;
 od;
 T_Check(T_ok,
-    "eq:T-phi3-table: complete phi_3 table modulo p^2-p+1");;
+    "lem:T-Y3-homogeneous-components: complete phi_3 calculation modulo p^2-p+1");;
 
 #############################################################################
-# eq:T-Y4-homogeneous-components and eq:T-Y4-Z1 (D.5--D.6):
-# exact, unreduced identity phi_4(w_1 tensor y)=f(p) Z_1.
+# Lemma D.3, lem:T-Y4-homogeneous-components:
+# exact, unreduced internal identity phi_4(w_1 tensor y)=f(p) Z_1.
 #############################################################################
 
 T_Z1 := T_VecFromTerms(4, [
@@ -728,15 +728,15 @@ T_Z1 := T_VecFromTerms(4, [
 T_actual4 := T_PhiOnPrefixedVector(1, T_y);;
 T_expected4 := T_VecScale(T_Z1, T_F);;
 T_Check(Length(T_VecSupport(T_Z1)) = 15,
-    "eq:T-Y4-Z1: fifteen pairwise distinct ordered words");;
+    "lem:T-Y4-homogeneous-components: fifteen pairwise distinct words in the internal Z_1 target");;
 T_Check(T_VecEqual(T_actual4, T_expected4),
-    "eq:T-Y4-homogeneous-components and eq:T-Y4-Z1: exact factorization in unreduced Z[p]");;
+    "lem:T-Y4-homogeneous-components: exact factorization in unreduced Z[p]");;
 T_Check(T_VecIsZero(T_VecReduceF(T_actual4)),
-    "eq:T-Y4-homogeneous-components: vanishing after exact factorization is reduced modulo f");;
+    "lem:T-Y4-homogeneous-components: vanishing after exact factorization is reduced modulo f");;
 
 #############################################################################
 # eq:T-R2-monodromy-cycles and eq:T-R2-mixed-monodromy
-# (6.22--6.23): derive the four monodromy cycles from adjacent braids.
+# derive the four monodromy cycles from adjacent braids.
 #############################################################################
 
 # signature = [sign, exponent of r, exponent of ell].

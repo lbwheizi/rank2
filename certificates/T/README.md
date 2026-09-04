@@ -43,12 +43,12 @@ For `eq:T-epsilon-explicit`, it records the three basis definitions
 a2=-x4 action a1, a3=-x2 action a1, a4=-x3 action a1
 ```
 
-and derives the three required actions from the rack and the projective-action
-composition rule.  If `a_j=-x_s action a1`, the rack determines the unique
-carrier `x_k` having the same action on the degree `x1` as `x_s^2`.  The
-program therefore constructs the centralizer tail `x_k^-1*x_s^2` and derives
-the corresponding quotient of local-cocycle and projective-representation
-values.  It
+and derives the three required actions from the rack and
+`eq:YD-projective-action`.  If `a_j=-x_s action a1`, the rack determines the
+unique carrier `x_k` having the same action on the degree `x1` as `x_s^2`.
+The program therefore constructs the centralizer tail `x_k^-1*x_s^2` and
+derives the corresponding quotient of local-cocycle and
+projective-representation values.  It
 then performs three actual braids beginning with `a2 tensor a3` and compares
 the accumulated Laurent monomial with the displayed right-hand side.  This
 part does not assume `epsilon_Phi(W)=1` and does not use the later constant
@@ -66,7 +66,7 @@ ordered word. Actual adjacent braids in the order
 ```
 
 reconstruct the operation h_m. The program evaluates the compatible-basis
-coefficient recursion labelled `eq:T-adjoint-recursion` (6.17):
+coefficient recursion labelled `eq:T-adjoint-recursion`:
 
 ```text
 phi_m(e_i1...im)
@@ -82,34 +82,37 @@ Thus every comparison is exact.
 ## Identities checked
 
 - **`eq:T-epsilon-explicit`:** the three action coefficients are generated
-  from the tetrahedral rack, the basis definitions, and projective-action
-  composition.  Three successive braidings are then accumulated.  The
-  resulting exact Laurent monomial is compared with the displayed formula,
-  including its total minus sign, its three local-cocycle quotients, and its
-  three `sigma` factors.  The three displayed action coefficients are not
-  used as definitions of the generated coefficients.
-- **`eq:T-Y2-basis` and `eq:T-phi2-table` (D.2--D.3):** the four
-  displayed basis vectors and all 16 entries of the complete phi_2 table,
-  reduced only modulo f(p)=p^2-p+1.
-- **`eq:T-y3-generator` (6.18) and `eq:T-phi3-table` (D.4):** the
-  displayed generator and all 16 entries of the complete phi_3 table,
-  reduced only modulo f(p).
-- **`eq:T-Y4-homogeneous-components` and `eq:T-Y4-Z1` (D.5--D.6):**
-  the coefficientwise identity `phi_4(w_1 tensor y)=f(p)Z_1` in the
-  unreduced ring Z[p], together with the assertion that the 15 displayed
-  ordered words of Z_1 are distinct. Only after this exact factorization
-  is checked does the verifier reduce modulo f(p).
-- **`eq:T-R2-monodromy-cycles` and `eq:T-R2-mixed-monodromy`
-  (6.22--6.23):** the four three-cycles are derived by applying the eight
+  from the tetrahedral rack, the basis definitions, and
+  `eq:YD-projective-action`.  Three successive braidings are then
+  accumulated.  The resulting exact Laurent monomial is compared with the
+  displayed formula, including its total minus sign, its three local-cocycle
+  quotients, and its three `sigma` factors.  The three displayed action
+  coefficients are not used as definitions of the generated coefficients.
+- **Lemma D.1, `lem:T-Y2-homogeneous-components`, and
+  `eq:T-Y2-basis`:** the four displayed basis vectors and all 16 entries
+  of the internal complete phi_2 calculation, reduced only modulo
+  f(p)=p^2-p+1.
+- **Lemma D.2, `lem:T-Y3-homogeneous-components`, and
+  `eq:T-y3-generator`:** the displayed generator and all 16 entries of
+  the internal complete phi_3 calculation, reduced only modulo f(p).
+- **Lemma D.3, `lem:T-Y4-homogeneous-components`:** the internal exact
+  factorization `phi_4(w_1 tensor y)=f(p)Z_1` in the unreduced ring Z[p],
+  together with the assertion that the 15 ordered words of the certificate
+  target Z_1 are distinct. Only after this exact factorization is checked
+  does the verifier reduce modulo f(p).
+- **`eq:T-R2-monodromy-cycles` and `eq:T-R2-mixed-monodromy`:** the four
+  three-cycles are derived by applying the eight
   adjacent braids to `[1,i,j,k,0]`; they are not used as the definition of
   the monodromy. The program counts six W-W crossings and one r*ell=p
   mixed monodromy, recovers the four displayed coefficient triples of y,
   and checks `M(y)=(1-p)y` modulo f(p).
 
-The expected vectors and tables associated with
-`eq:T-Y2-basis`--`eq:T-Y4-Z1` are transcribed from the manuscript solely
-as comparison targets. All left-hand sides are generated afresh from the
-rack and the compatible-basis coefficient recursion.
+The basis and generator in `eq:T-Y2-basis` and `eq:T-y3-generator`, and
+the coefficient patterns used in Lemmas D.1--D.3, are comparison targets.
+The complete phi_2 and phi_3 calculations and Z_1 remain internal certificate
+data rather than separately labelled formulas in the manuscript. All
+left-hand sides are generated afresh from the rack and
+`eq:T-adjoint-recursion`.
 
 ## Scope
 

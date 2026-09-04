@@ -1,8 +1,8 @@
 # Gamma4 X2 cocycle-reduction certificate
 
-`gamma4_x2_cocycle_reduction_certificate.g` is a core-only GAP 4.16
+`gamma4_x2_cocycle_reduction_certificate.g` is a core-only GAP 4.16.0
 source-to-target verifier for
-`lem:Gamma4-X2-cocycle-reduction` in Appendix C of the paper.
+Lemma C.1, `lem:Gamma4-X2-cocycle-reduction`, in Appendix C of the paper.
 
 The program first constructs the Laurent exponent vectors of
 
@@ -69,7 +69,7 @@ The certificate verifies only this formal source-to-target cocycle
 reduction.  It does not verify the construction or simplicity of \(X_2\),
 the finite-dimensionality criterion, or the classification theorem.
 
-Run from this directory with GAP 4.16:
+Run from this directory with GAP 4.16.0:
 
 ```text
 gap --bare -A -r -q --quitonbreak --norepl gamma4_x2_cocycle_reduction_certificate.g

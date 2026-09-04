@@ -1,13 +1,16 @@
 # Gamma4 reflected-Y2 parameter certificate
 
 This directory verifies the four-coordinate calculation and factorization
-of \(z_0\) in `lem:Gamma4-z0-factorization`, the coordinate calculation for
-\(z_1\), and the seven parameter identities after the first reflection in
-`lem:Gamma4-R1-reflected-parameter-reduction`.
+of \(z_0\) in Lemma C.2, `lem:Gamma4-z0-factorization`, reconstructs the
+eight nonzero \(z_1\) coordinates and their two \(h\)-orbits used in Lemma
+C.3, `lem:Gamma4-Y2-coordinate-calculation`, and verifies the seven parameter
+identities after the first reflection in Lemma C.7,
+`lem:Gamma4-R1-reflected-parameter-reduction`.  It does not separately
+compare the displayed formulas for \(\mathcal A_j\) and \(H_j\).
 
 For \(z_0\), `gamma4_reflected_y2_source.g` starts from the original induced
 objects, constructs \(y_1\) by `phi_1`, and computes
-\(\varphi_2^\Phi(w\otimes y_1)\) using the tensor action and the corrected
+\(\varphi_2^\Phi(w\otimes y_1)\) using `eq:tensor-product` and the corrected
 right-associated `c12`.  Only after this recursion does it identify the
 four multihomogeneous coordinates.  Each reconstructed coefficient has two
 Laurent monomials.  The fourth source-coordinate quotient is certified by
@@ -73,8 +76,8 @@ also uses the mathematical argument in the manuscript.
    from the action matrix that the coordinates form the two cycles displayed
    above.  The homogeneous terminal degrees are respectively
    `epsilon*h*g^2` and `epsilon^2*h*g^2`.  The seven scalars in the displayed
-   formula are then expanded using only the one-dimensional
-   projective-character law.  It also reconstructs the first six packet
+   formula are then expanded using only `eq:YD-projective-action`.  It also
+   reconstructs the first six packet
    rows
 
    ```text
@@ -162,7 +165,7 @@ floating-point computation, external package, finite cocycle sample, or
 finite Gamma4 quotient.  The source engine and the certificate verifier are
 both part of the checksum manifest.
 
-Run from this directory with GAP 4.16:
+Run from this directory with GAP 4.16.0:
 
 ```text
 gap --bare -A -r -q --quitonbreak --norepl gamma4_reflected_y2_certificate.g

@@ -488,8 +488,9 @@ VerifyGamma331Dim2CoefficientAndBridge := function()
     AssertGroup("degree e_1", G3Mul(degreeV0, degreeX11), commonDegree);
     AssertGroup("degree e_2", G3Mul(degreeV1, degreeX12), commonDegree);
 
-    # Reconstruct epsilon on a transported vector e^i action u from the
-    # projective-action law.  The output is [new transversal index,scalar].
+    # Reconstruct epsilon on a transported vector e^i action u from
+    # eq:YD-projective-action, and combine the two factors using
+    # eq:tensor-product.  The output is [new transversal index,scalar].
     # No eta_i formula is used by this routine.
     TransportStep := function(baseDegree, i)
         if i = 0 then return [1, RatOne]; fi;
@@ -583,8 +584,9 @@ VerifyGamma331Dim2CoefficientAndBridge := function()
         RatMul(RatDiv(RatPow(m0, 3), theta), kappa));
 
     # Algebra after the two comparison cycles.  The inputs here are precisely
-    # m_0/m_2=kappa, m_0^3=theta/kappa, and the source projective-action law
-    # m_0*m_1*m_2=theta.  The common reduction is computed, not entered.
+    # m_0/m_2=kappa, m_0^3=theta/kappa, and eq:YD-projective-action applied
+    # three times, which gives m_0*m_1*m_2=theta.  The common reduction is
+    # computed, not entered.
     formalM0 := Atom(["comparison", "m_0"]);
     formalK := Atom(["comparison", "kappa"]);
     formalTheta := RatMul(RatPow(formalM0, 3), formalK);

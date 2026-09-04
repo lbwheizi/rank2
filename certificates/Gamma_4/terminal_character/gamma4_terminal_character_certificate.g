@@ -239,7 +239,7 @@ SubstituteMonomial := function(value, key, replacement)
 end;
 
 ## Reconstruct the source expression in
-## eq:Gamma4-Y2-slant-cocycle-expression, used in
+## eq:Gamma4-Y2-slant-cocycle-expression, used in Lemma C.6,
 ## lem:Gamma4-Y2-support-value.
 Epsilon := [1, 0, 0];
 H := [0, 1, 0];

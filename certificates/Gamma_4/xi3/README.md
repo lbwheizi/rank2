@@ -1,16 +1,15 @@
 # Gamma4 Xi3 cocycle-reduction certificate
 
-`gamma4_xi3_certificate.g` is a core-only GAP 4.16 source-to-target
+`gamma4_xi3_certificate.g` is a core-only GAP 4.16.0 source-to-target
 verifier for the cocycle reduction and coefficient cancellation recorded
-in Lemmas C.4 and C.5 and equation (C.9) of the paper
+in Lemmas C.4 and C.5 and `eq:Gamma4-y3-two-coefficients` of the paper
 (`lem:Gamma4-Xi3-cocycle-reduction`,
-`lem:Gamma4-Y3-coefficient-cancellation`, and
-`eq:Gamma4-Xi3-direct`).
+`lem:Gamma4-Y3-coefficient-cancellation`).
 It first reconstructs the corrected recursive maps
 \(\varphi_1^\Phi,\varphi_2^\Phi,\varphi_3^\Phi\), including
 \(c_{12}=a(c_{W,W}\otimes\mathrm{id})a^{-1}\), constructs the eight
 nonzero coordinates of the chosen \(Y_2\)-seed, and verifies both
-coefficients in equation (C.9).
+coefficients in `eq:Gamma4-y3-two-coefficients`.
 
 For the first coefficient, it recovers \(\beta\) from the recursive
 \(y_1\)-vector, extracts \(B_1\) from the actual `c12` image, obtains
@@ -72,7 +71,7 @@ pair of coefficients, but it does not verify the simplicity criterion for
 \(Y_2\), the one-dimensionality argument used to define \(\mu_1\) and
 \(\tau_2(\varepsilon)\), or any assertion about the Cartan graph.
 
-Run from this directory with GAP 4.16:
+Run from this directory with GAP 4.16.0:
 
 ```text
 gap --bare -A -r -q --quitonbreak --norepl gamma4_xi3_certificate.g

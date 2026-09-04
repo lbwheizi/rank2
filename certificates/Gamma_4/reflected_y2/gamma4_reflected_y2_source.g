@@ -106,7 +106,7 @@ SRC_PhiSubscript := function(x, a, b)
     return answer;
 end;
 
-## Phi^a(x,y), the tensor-action correction.
+## Phi^a(x,y), the factor in eq:tensor-product.
 SRC_PhiSuperscript := function(a, x, y)
     local answer;
     answer := SRC_Phi(a, x, y);
@@ -709,9 +709,8 @@ end;
 ##
 ## This starts again from the initial induced pair.  It constructs y_1 by
 ## phi_1, applies phi_2 to w_g tensor y_1, and only afterwards identifies
-## the four multihomogeneous coordinates. 
-## The four coefficients used in Lemma
-## lem:Gamma4-z0-factorization are outputs of the recursion,
+## the four multihomogeneous coordinates.  The four coefficients used in
+## the proof of lem:Gamma4-z0-factorization are outputs of the recursion,
 ## not source data.
 #############################################################################
 
@@ -872,9 +871,9 @@ SRC_Z0Source := function()
         SRC_MonomialPolynomial(delta, 1), -1);
 
     ## Divide the last two standard-basis coordinates by the actual scalar
-    ## of (gh) acting on w. 
-## The four tensor lines used for the z_0 factorization, rather than
-## the transversal basis used internally by the induced module.
+    ## of (gh) acting on w.  This expresses the four coefficients in the
+    ## tensor lines used in eq:Gamma4-z0-factorization, rather than in the
+    ## transversal basis used internally by the induced module.
     gh := Multiply(g, h);
     actedW := SRC_ActionMatrix(w, gh);
     actedWRow := QuoInt(positionThird - 1, d1.dim) + 1;
@@ -894,7 +893,7 @@ SRC_Z0Source := function()
     ];
 
     ## Reconstruct the compact four coefficients from the independently
-    ## recovered beta, Delta4, tensor-action scalar, and c_12 quotient.
+    ## recovered beta, Delta4, eq:tensor-product scalar, and c_12 quotient.
     sigmaG := SRC_Character("S", g);
     c12Coefficient := SRC_MultiplyMonomials(
         SRC_Phi(g, Multiply(epsilon, g), h),
@@ -947,10 +946,11 @@ SRC_Z0Source := function()
 
     ## The second monomial in the fourth coefficient is expressed in the
     ## transversal basis by the source recursion.  Its quotient by the
-    ## compact projective-action expression is the following difference of
+    ## compact expression obtained from eq:YD-projective-action is the
+    ## following difference of
     ## two normalized 3-cocycle defects.  This bridges the source basis to
-  ## the fourth coefficient used for the z_0 factorization without
-## assuming that coefficient.
+    ## the fourth coefficient used in the proof of
+    ## lem:Gamma4-z0-factorization without assuming that coefficient.
     sourceFourthTerm := normalized[4][2][1];
     expectedFourthTerm := expectedCoefficients[4][2][1];
     coordinateResidual := SRC_MultiplyMonomials(sourceFourthTerm,

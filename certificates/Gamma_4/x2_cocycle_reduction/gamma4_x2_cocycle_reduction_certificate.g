@@ -300,7 +300,8 @@ if CountKind(SourceAfterProjective, "R") <> 0 then
 fi;
 
 ## Independently encode the quotient displayed immediately after the two
-## projective-action identities and compare it with the transformed source.
+## instances of eq:YD-projective-action and compare it with the transformed
+## source.
 DisplayedAfterProjective := PhiLocalAtom(H, R, R);
 DisplayedAfterProjective := AddSparse(DisplayedAfterProjective,
     PhiLocalAtom(H, U, H));

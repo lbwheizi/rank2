@@ -1,9 +1,9 @@
 # Gamma4 terminal-character certificate
 
-`gamma4_terminal_character_certificate.g` is a core-only GAP 4.16 verifier
+`gamma4_terminal_character_certificate.g` is a core-only GAP 4.16.0 verifier
 for the scalar reduction in `eq:Gamma4-Y2-slant-cocycle-expression`,
-used in `lem:Gamma4-Y2-support-value` of the paper.  In the abstract normal form
-\(\varepsilon^i h^j g^k\), it first
+used in Lemma C.6, `lem:Gamma4-Y2-support-value`, of the paper.  In the
+abstract normal form \(\varepsilon^i h^j g^k\), it first
 reconstructs the six displayed action coefficients
 \(L_a,L_p,L_{ha},L_{hy},L_{hr},L_{hY}\), then builds
 \(K,\lambda_1,\lambda_2\) and the source quotient
@@ -20,7 +20,7 @@ source-to-target preprocessing of the six action formulas; it does not
 verify the geometric choice of homogeneous vectors or the reflection
 argument in the main text.
 
-Run from this directory with GAP 4.16:
+Run from this directory with GAP 4.16.0:
 
 ```text
 gap --bare -A -r -q --quitonbreak --norepl gamma4_terminal_character_certificate.g

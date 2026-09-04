@@ -23,10 +23,10 @@ fi;
 
 # This branch has the same normalized bar chains as the two-dimensional
 # branch, but different coefficients in the three recursive paths.  The
-# following calculation reconstructs those coefficients from the projective
-# action, tensor action, the two braidings, and the defining recursion for
-# varphi_2.  It also expands every chain evaluation into atomic values
-# Phi(a,b,c), and only then derives the m_i--mu_i dictionary.
+# following calculation reconstructs those coefficients from
+# eq:YD-projective-action, eq:tensor-product, the braiding formula, and
+# eq:recursive-varphi-2.  It also expands every chain evaluation into atomic
+# values Phi(a,b,c), and only then derives the m_i--mu_i dictionary.
 
 VerifyGamma331Dim1CoefficientAndBridge := function()
     local one, e, e2, g, h, gh, eg, e2g, z,
@@ -285,8 +285,9 @@ VerifyGamma331Dim1CoefficientAndBridge := function()
     AssertGroup("degree e_2", G3Mul(degreeV1, degreeX12), commonDegree);
 
     # Generate the cyclic action from the chosen transversals.  For a vector
-    # e^i action u, the projective-action law supplies both the new index and
-    # its scalar; the target eta_i formulas are not inputs to this routine.
+    # e^i action u, eq:YD-projective-action supplies both the new index and
+    # its scalar, and eq:tensor-product combines the two transported factors.
+    # The target eta_i formulas are not inputs to this routine.
     TransportStep := function(baseDegree, i)
         if i = 0 then return [1, RatOne]; fi;
         if i = 1 then return [2, PhiSub(baseDegree, e, e)]; fi;
@@ -404,7 +405,7 @@ VerifyGamma331Dim1CoefficientAndBridge := function()
     # projections are explicit boundaries.  Together with the injectivity
     # lemma proved in the manuscript, this makes them boundaries over
     # Gamma_3.  Their evaluations then give mu_2=mu_0/kappa and
-    # theta=kappa*mu_0^3.  Together with the source projective-action law
+    # theta=kappa*mu_0^3.  Together with eq:YD-projective-action, which gives
     # mu_0*mu_1*mu_2=theta, compute mu_1 and compare it with mu_0/kappa.
     formalMu0 := Atom(["comparison", "mu_0"]);
     formalK := Atom(["comparison", "kappa"]);

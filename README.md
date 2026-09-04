@@ -43,9 +43,9 @@ main text.
 
 | Current paper reference and stable label | Program | Verified calculation |
 |---|---|---|
-| Lemmas E.1--E.2, `lem:Gamma3-32-second-adjoint-expansion` and `lem:Gamma3-32-bar-reduction`; Proposition 7.15 | [`verify_gamma3_32.g`](certificates/Gamma_3/verify_gamma3_32.g) | `(3,2)` adjoint coefficients, scalar-chain dictionary, and comparison-cycle evaluations |
-| Appendix E `(3,1)_2` coefficient block; `eq:Gamma3-common-three-path-reduction`; Proposition 7.16 | [`verify_gamma3_31_dim2.g`](certificates/Gamma_3/verify_gamma3_31_dim2.g) | shifted first adjoint, three second-adjoint paths, transported action, scalar-chain bridge, and comparison cycles |
-| Lemmas E.4--E.5, `lem:Gamma3-dim1-three-elementary-tensors` and `lem:Gamma3-dim1-chain-identification`; Proposition 7.17 | [`verify_gamma3_31_dim1.g`](certificates/Gamma_3/verify_gamma3_31_dim1.g) | one-dimensional `(3,1)` coefficient block, scalar-chain dictionary, scalar ratios, and branch identities |
+| Lemmas E.1--E.2, `lem:Gamma3-32-second-adjoint-expansion` and `lem:Gamma3-32-bar-reduction`; Proposition 7.15, `prop:Gamma3-32-X2-obstruction` | [`verify_gamma3_32.g`](certificates/Gamma_3/verify_gamma3_32.g) | `(3,2)` adjoint coefficients, scalar-chain dictionary, and comparison-cycle evaluations |
+| Lemmas E.3--E.5, `lem:Gamma3-dim2-epsilon-cubic`, `lem:Gamma3-dim2-second-adjoint-expansion`, and `lem:Gamma3-dim2-bar-reduction`; Proposition 7.16, `prop:Gamma3-dim2-X2-obstruction` | [`verify_gamma3_31_dim2.g`](certificates/Gamma_3/verify_gamma3_31_dim2.g) | shifted first adjoint, three second-adjoint paths, transported action, scalar-chain bridge, and comparison cycles |
+| Lemmas E.6--E.7, `lem:Gamma3-dim1-three-elementary-tensors` and `lem:Gamma3-dim1-chain-identification`; Proposition 7.17, `prop:Gamma3-dim1-X2-obstruction` | [`verify_gamma3_31_dim1.g`](certificates/Gamma_3/verify_gamma3_31_dim1.g) | one-dimensional `(3,1)` coefficient block, scalar-chain dictionary, scalar ratios, and branch identities |
 
 The programs now verify the coefficient-to-chain interfaces in all three
 branches.  They do not prove the homology computation or its injectivity,
@@ -61,14 +61,15 @@ recorded output is
 | Current paper reference and stable label | Program | Verified calculation |
 |---|---|---|
 | Lemma C.1, `lem:Gamma4-X2-cocycle-reduction` | [`gamma4_x2_cocycle_reduction_certificate.g`](certificates/Gamma_4/x2_cocycle_reduction/gamma4_x2_cocycle_reduction_certificate.g) | source-to-target reduction of `Xi_X/kappa_X` to six normalized cocycle defects |
-| Lemma C.2, `lem:Gamma4-z0-factorization`; Lemma C.3, `lem:Gamma4-first-adjoint`; Lemma C.7, `lem:Gamma4-R1-reflected-parameter-reduction`; (C.11) | [`gamma4_reflected_y2_certificate.g`](certificates/Gamma_4/reflected_y2/gamma4_reflected_y2_certificate.g) | recursive four-coordinate `z0` factorization, source reconstruction, and seven reflected `Theta_2,j` identities |
-| Lemma C.4, `lem:Gamma4-Xi3-cocycle-reduction`; Lemma C.5, `lem:Gamma4-Y3-coefficient-cancellation`; (C.9), `eq:Gamma4-Xi3-direct` | [`gamma4_xi3_certificate.g`](certificates/Gamma_4/xi3/gamma4_xi3_certificate.g) | independent source reconstruction and cancellation of both `Y3` coefficients |
-| `lem:Gamma4-Y2-support-value`; `eq:Gamma4-Y2-slant-cocycle-expression` | [`gamma4_terminal_character_certificate.g`](certificates/Gamma_4/terminal_character/gamma4_terminal_character_certificate.g) | terminal-root inducing-character calculation |
-| Lemma C.8, `lem:Gamma4-W-local-Deltas`, and (C.14)--(C.15) | [`gamma4_local_delta_certificate.g`](certificates/Gamma_4/local_delta/gamma4_local_delta_certificate.g) | the corrected third-adjoint recursion and the two local Delta identities for `W` |
-| Lemma C.9, `lem:Gamma4-local-Delta-transport`, and (C.16) | [`gamma4_delta_transport_certificate.g`](certificates/Gamma_4/delta_transport/gamma4_delta_transport_certificate.g) | the three displayed identities for quotients involving `Omega_01` and `Omega_10` |
+| Lemma C.2, `lem:Gamma4-z0-factorization`; Lemma C.3, `lem:Gamma4-Y2-coordinate-calculation`; Lemma C.7, `lem:Gamma4-R1-reflected-parameter-reduction`; `eq:Gamma4-Y2-H-Theta-explicit` | [`gamma4_reflected_y2_certificate.g`](certificates/Gamma_4/reflected_y2/gamma4_reflected_y2_certificate.g) | recursive four-coordinate `z0` factorization, source reconstruction, and seven reflected `Theta_2,j` identities |
+| Lemma C.4, `lem:Gamma4-Xi3-cocycle-reduction`; Lemma C.5, `lem:Gamma4-Y3-coefficient-cancellation`; `eq:Gamma4-y3-two-coefficients` | [`gamma4_xi3_certificate.g`](certificates/Gamma_4/xi3/gamma4_xi3_certificate.g) | independent source reconstruction and cancellation of both `Y3` coefficients |
+| Lemma C.6, `lem:Gamma4-Y2-support-value`; `eq:Gamma4-Y2-slant-cocycle-expression` | [`gamma4_terminal_character_certificate.g`](certificates/Gamma_4/terminal_character/gamma4_terminal_character_certificate.g) | terminal-root inducing-character calculation |
+| Lemma C.8, `lem:Gamma4-W-local-Deltas`; `eq:Gamma4-local-Delta-01`, `eq:Gamma4-local-Delta-10`, and `eq:Gamma4-local-action-coefficient-products` | [`gamma4_local_delta_certificate.g`](certificates/Gamma_4/local_delta/gamma4_local_delta_certificate.g) | the corrected third-adjoint recursion and the two local Delta identities for `W` |
+| Lemma C.9, `lem:Gamma4-local-Delta-transport`; `eq:Gamma4-Omega-local` | [`gamma4_delta_transport_certificate.g`](certificates/Gamma_4/delta_transport/gamma4_delta_transport_certificate.g) | the three displayed identities for quotients involving `Omega_01` and `Omega_10` |
 
-The local-Delta verifier reconstructs the homogeneous objects, twisted tensor
-actions, braidings, and the corrected third-adjoint recursion. It obtains all
+The local-Delta verifier reconstructs the homogeneous objects using
+`eq:tensor-product`, the braiding formula, and the corrected third-adjoint
+recursion. It obtains all
 192 nonzero binomial coordinates before checking the 19 rows used by the exact
 Laurent eliminations.
 
@@ -77,7 +78,7 @@ from the adjoint recursion and checks their factorization.  It then
 reconstructs the packet entries and compares the source and target cocycle
 expressions. The assertion that the relevant homogeneous component of the
 first adjoint object is a one-dimensional simple component is the
-mathematical input proved in Lemma `lem:Gamma4-first-adjoint`; it is not
+mathematical input proved in Lemma 5.8, `lem:Gamma4-first-adjoint`; it is not
 independently proved by the program.  The same scope distinction applies to
 the one-dimensional line used to extract `mu1` in the first `Y3` coefficient.
 
@@ -87,31 +88,29 @@ The consolidated program [`verify_T_case.g`](certificates/T/verify_T_case.g)
 checks the compatible-basis coefficient calculations in Section 6 and
 Appendix D, together with two monodromy calculations in Lemma 6.17:
 
-| Current reference | Stable label |
+| Current paper reference and stable label | Verified calculation |
 |---|---|
-| (D.1) | `eq:T-epsilon-explicit` |
-| (6.17) | `eq:T-adjoint-recursion` |
-| (6.18) | `eq:T-y3-generator` |
-| (D.2) | `eq:T-Y2-basis` |
-| (D.3) | `eq:T-phi2-table` |
-| (D.4) | `eq:T-phi3-table` |
-| (D.5) | `eq:T-Y4-homogeneous-components` |
-| (D.6) | `eq:T-Y4-Z1` |
-| (6.22) | `eq:T-R2-monodromy-cycles` |
-| (6.23) | `eq:T-R2-mixed-monodromy` |
+| `eq:T-epsilon-explicit` | coordinate formula for `epsilon_Phi(W)` |
+| `eq:T-adjoint-recursion` | input recursion; displayed `h_m` braid-loop direction checked |
+| Lemma D.1, `lem:T-Y2-homogeneous-components`; `eq:T-Y2-basis` | four displayed vectors and all 16 internal `phi_2` images |
+| Lemma D.2, `lem:T-Y3-homogeneous-components`; `eq:T-y3-generator` | displayed `y` and all 16 internal `phi_3` images |
+| Lemma D.3, `lem:T-Y4-homogeneous-components` | exact coefficient factorization and resulting vanishing of `phi_4(w_1 tensor y)` |
+| Lemma 6.17, `lem:T-reflection-cocycle-reductions`; `eq:T-R2-monodromy-cycles` and `eq:T-R2-mixed-monodromy` | two second-reflection monodromy calculations |
 
-For Lemma 6.17, the program checks only
+For Lemma 6.17, `lem:T-reflection-cocycle-reductions`, the program checks only
 `eq:T-R2-monodromy-cycles` and `eq:T-R2-mixed-monodromy`. The remaining
 reflected-parameter calculations are proved in the manuscript and are not
 part of the program.
 
 The program reconstructs the tetrahedral quandle from its four conjugation
 permutations.  It derives the coordinate formula for `epsilon_Phi(W)` from
-three projective actions and three actual braids, without assuming that this
-scalar is one.  The later compatible-basis coefficient recursion, the
-complete `phi_2` and `phi_3` tables, the unreduced fourth-adjoint
-factorization, and the second-reflection monodromy cycles are checked under
-the compatibility condition `epsilon_Phi(W)=1`.
+three applications of `eq:YD-projective-action` and three actual braids,
+without assuming that this scalar is one.  The program checks the displayed
+`h_m` braid-loop direction in `eq:T-adjoint-recursion`.  The later checks use
+`eq:T-adjoint-recursion` to generate the complete internal `phi_2` and
+`phi_3` calculations and the unreduced fourth-adjoint factorization; these
+and the second-reflection monodromy cycles are checked under the
+compatibility condition `epsilon_Phi(W)=1`.
 
 ## Reproduce all checks
 
@@ -180,9 +179,11 @@ one-dimensionality and stability of the relevant homogeneous line proved in
 the manuscript; it does not establish that categorical statement by checking
 a single coordinate.
 
-The T program derives the coordinate identity (D.1), then checks the
-displayed compatible-basis coefficient recursion, the two coefficient tables,
-the fourth-adjoint factorization, and equations (6.22)--(6.23).  It does not
+The T program derives `eq:T-epsilon-explicit`, checks the displayed `h_m`
+braid-loop direction in `eq:T-adjoint-recursion`, then uses that recursion
+for the complete internal coefficient calculations used in Lemmas D.1--D.3.
+It also checks `eq:T-R2-monodromy-cycles` and
+`eq:T-R2-mixed-monodromy`.  It does not
 prove that `epsilon_Phi(W)=1`, construct the compatible bases, derive the
 action of `x_1^{-1}` on `(W^*)_{x_1^{-1}}`, or prove the rigid-dual argument
 yielding `epsilon_Phi(W^*)=1`. These points and the categorical reflection

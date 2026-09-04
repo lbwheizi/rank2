@@ -3,7 +3,7 @@
 ## (core GAP only)
 ##
 ## The companion source engine first reconstructs all four z0 coordinates
-## from phi_1, phi_2, the tensor action, and the corrected c_12.  It checks
+## from phi_1, phi_2, eq:tensor-product, and the corrected c_12.  It checks
 ## the last-coordinate cancellation at sigma(g)=-1 and the factorization by
 ## 1-Delta4.  The verifier then checks two exact integral bridges for each
 ## of the seven
