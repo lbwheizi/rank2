@@ -141,4 +141,10 @@ run_certificate certificates/Gamma_4/reflected_y2 gamma4_reflected_y2_certificat
 
 run_certificate certificates/T verify_T_case.g verify_T_case.out
 
+run_certificate certificates/T verify_T_cohomology_reduction.g verify_T_cohomology_reduction.out
+run_certificate certificates/T verify_T_sl2_cocycle.g verify_T_sl2_cocycle.out
+run_certificate certificates/T verify_T_actual_adjoint.g verify_T_actual_adjoint.out
+run_certificate certificates/T verify_T_nichols_iterative.g verify_T_nichols_iterative.out
+run_certificate certificates/T verify_T_order2_reflections.g verify_T_order2_reflections.out
+
 printf '%s\n' 'PASS: all exact certificate suites'

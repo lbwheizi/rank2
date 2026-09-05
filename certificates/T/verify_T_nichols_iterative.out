@@ -1,0 +1,3 @@
+PASS: Nichols Hilbert coefficients = [ 1, 4, 8, 10, 8, 4, 1, 0 ]
+PASS: Nichols total dimension = 36
+PASS: verify_T_nichols_iterative.g

@@ -3,7 +3,15 @@
 # verify_T_case.g
 #
 # Exact GAP-core verifier for the finite coefficient calculations in
-# Section 6 and Appendix D of the accompanying manuscript.
+# sec:classification-T and app:T-calculations of the accompanying manuscript.
+#
+# Part I assumes dim(sigma)=1 and sigma(x1)=-1, but neither epsilon=1
+# nor the last parameter equality in eq:T-classification-G2.
+# Part II uses the constant (-1) braiding obtained in the manuscript under
+# dim(sigma)=1, sigma(x1)=-1, epsilon=1, and that last parameter equality.
+# Its higher-adjoint calculations also assume dim(rho)=1 and p^2-p+1=0.
+# The cochain equivalence and its simultaneous tensor comparison are proved
+# in lem:T-compatible-normalization, not by this coefficient verifier.
 #
 # No external GAP package and no floating-point arithmetic are used.
 # Laurent monomials in named local-cocycle and projective-representation
@@ -288,7 +296,9 @@ end;;
 
 #############################################################################
 # The tetrahedral rack and the constant (-1) coefficient table in the
-# compatible bases fixed in the manuscript.
+# compatible bases of lem:T-tetrahedral-braiding. Their construction uses
+# the last equality in eq:T-classification-G2 in addition to the original
+# hypotheses; this program checks the resulting coefficient identities.
 #
 # The rows are reconstructed from
 # Ad(x_1)=(2,4,3), Ad(x_2)=(1,3,4),
@@ -329,8 +339,9 @@ T_Check(T_ok,
 #############################################################################
 # Part I: eq:T-epsilon-explicit.
 #
-# This block does not assume epsilon_Phi(W)=1 and does not use the constant
-# (-1) coefficient table below.  It starts from
+# This block assumes dim(sigma)=1 and sigma(x1)=-1. It assumes neither
+# epsilon_Phi(W)=1 nor the last equality in eq:T-classification-G2, and
+# does not use the constant (-1) coefficient table below. It starts from
 #
 #   a_2=-x_4 action a_1,  a_3=-x_2 action a_1,
 #   a_4=-x_3 action a_1,
@@ -347,7 +358,8 @@ T_Check(T_ok,
 # two basis definitions; they are not inserted into the three targets.
 #############################################################################
 
-Print("\nPart I: reconstruct eq:T-epsilon-explicit without assuming epsilon_Phi(W)=1.\n");
+Print("\nPart I: eq:T-epsilon-explicit under dim(sigma)=1 and sigma(x1)=-1.\n");
+Print("Neither epsilon_Phi(W)=1 nor the sixth parameter equality is assumed.\n");
 
 # The carrier and definition sign for a_1,a_2,a_3,a_4.  The carrier of
 # a_1 is recorded only to make the degree list uniform.
@@ -507,11 +519,24 @@ T_Check(T_LaurentEqual(T_epsilon_derived, T_epsilon_tex_rhs),
     "eq:T-epsilon-explicit: exact Laurent identity, including the total minus sign and three sigma factors");;
 
 #############################################################################
-# Part II: the pre-existing checks below use the compatible constant (-1)
-# braiding table and therefore assume epsilon_Phi(W)=1.
+# Part II: coefficient identities after the cochain comparison proved in
+# lem:T-compatible-normalization and lem:T-tetrahedral-braiding.
+# The latter assumes dim(sigma)=1, sigma(x1)=-1, epsilon_Phi(W)=1, and
+#
+# Phi(x1*x4^-1,x1*x3^-1,x1*x2^-1) *
+# Phi(x1*x3^-1,x1*x2^-1,x1*x4^-1) *
+# Phi(x1*x2^-1,x1*x4^-1,x1*x3^-1) = 1.
+#
+# The adjoint recursion also assumes dim(rho)=1 and p=rho(x1)*sigma(z).
+# The Y2/Y3 tables and the vanishing of Y4 use p^2-p+1=0.
+# This program checks the resulting constant table and recursion; it does
+# not construct or prove the cochain equivalence from arbitrary input Phi.
 #############################################################################
 
-Print("\nPart II: existing coefficient checks under epsilon_Phi(W)=1.\n");
+Print("\nPart II: coefficient checks after the manuscript cochain comparison.\n");
+Print("Assume dim(sigma)=1, sigma(x1)=-1, epsilon_Phi(W)=1, and the sixth parameter equality.\n");
+Print("Higher adjoints also assume dim(rho)=1 and p^2-p+1=0.\n");
+Print("The cochain equivalence itself is not checked by this GAP program.\n");
 
 T_BRAID_COEFFS := List([1 .. 4],
     i -> List([1 .. 4], j -> -1));;
@@ -527,13 +552,14 @@ for T_i in [1 .. 4] do
         od;
     od;
 od;
-# For these compatible bases and the assumed value epsilon=1, one has
-# s=-1 and epsilon=s*b_23*b_42*b_34.
+# The selected constant table is consistent with sigma(x1)=-1 and
+# epsilon=1. This check does not infer existence of the compatible bases
+# from epsilon=1 alone.
 T_ok := T_ok and
     (-1) * T_BRAID_COEFFS[2][3] * T_BRAID_COEFFS[4][2] *
     T_BRAID_COEFFS[3][4] = 1;;
 T_Check(T_ok,
-    "lem:T-tetrahedral-braiding: all 64 constant-(-1) braid instances and assumed epsilon_Phi(W)=1");;
+    "lem:T-tetrahedral-braiding: 64 constant-(-1) braid instances and consistency with epsilon=1");;
 
 #############################################################################
 # Adjacent label braids and the h_m braid loop.
@@ -622,7 +648,7 @@ T_PhiOnPrefixedVector := function(prefix, a)
 end;;
 
 #############################################################################
-# Lemma D.1, lem:T-Y2-homogeneous-components, and eq:T-Y2-basis:
+# lem:T-Y2-homogeneous-components and eq:T-Y2-basis:
 # u_i and the complete internal phi_2 calculation, modulo f(p).
 #############################################################################
 
@@ -666,7 +692,7 @@ T_Check(T_ok,
     "lem:T-Y2-homogeneous-components: complete phi_2 calculation modulo p^2-p+1");;
 
 #############################################################################
-# Lemma D.2, lem:T-Y3-homogeneous-components, and eq:T-y3-generator:
+# lem:T-Y3-homogeneous-components and eq:T-y3-generator:
 # y and the complete internal phi_3 calculation, modulo f(p).
 #############################################################################
 
@@ -703,7 +729,7 @@ T_Check(T_ok,
     "lem:T-Y3-homogeneous-components: complete phi_3 calculation modulo p^2-p+1");;
 
 #############################################################################
-# Lemma D.3, lem:T-Y4-homogeneous-components:
+# lem:T-Y4-homogeneous-components:
 # exact, unreduced internal identity phi_4(w_1 tensor y)=f(p) Z_1.
 #############################################################################
 
@@ -837,4 +863,5 @@ od;
 T_Check(T_ok,
     "eq:T-R2-mixed-monodromy: eigenvalue (1-p) on all four cycles");;
 
+TLastCheckPassed:=true;;
 Print("PASS: ", T_CHECKS, " exact checks completed.\n");

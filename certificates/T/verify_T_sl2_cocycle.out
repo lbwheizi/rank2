@@ -1,0 +1,4 @@
+PASS: group associativity (24^3), normalization, cocycle identity (24^4)
+PASS: projective action (24^2*4), q=-1, epsilon=1
+PASS: nontrivial full twist and braid relation on W^3
+PASS: verify_T_sl2_cocycle.g

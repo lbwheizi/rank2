@@ -11,8 +11,11 @@ certificates/
 └── T/
 ```
 
-All calculations use exact integer or finite-ring arithmetic and require only
-GAP core. GAP 4.16.0 was used to produce the recorded output.
+All calculations require GAP core only; GAP 4.16.0 was used to produce
+the recorded output. All arithmetic is exact, using integers, rational
+numbers, Laurent monomials, and the specified polynomial quotient rings.
+The T reflection calculations realize `Q[p]/(p^2-p+1)` faithfully in GAP
+as `Q(E(6))`; this is exact field arithmetic, not numerical sampling.
 
 Stable LaTeX labels are the primary identifiers for correspondence with the
 paper. Some public program filenames retain historical appendix numbers so
@@ -84,33 +87,30 @@ the one-dimensional line used to extract `mu1` in the first `Y3` coefficient.
 
 ## T index
 
-The consolidated program [`verify_T_case.g`](certificates/T/verify_T_case.g)
-checks the compatible-basis coefficient calculations in Section 6 and
-Appendix D, together with two monodromy calculations in Lemma 6.17:
+The T directory contains the existing coefficient verifier and five
+additional GAP verifiers used in the revised T classification. The first five
+conditions in `(T-G2)` are retained; its last equality is the product of
+three specified values of `Phi` equal to one. The detailed hypotheses and
+scope of each program are recorded in [`certificates/T/README.md`](certificates/T/README.md).
 
-| Current paper reference and stable label | Verified calculation |
-|---|---|
-| `eq:T-epsilon-explicit` | coordinate formula for `epsilon_Phi(W)` |
-| `eq:T-adjoint-recursion` | input recursion; displayed `h_m` braid-loop direction checked |
-| Lemma D.1, `lem:T-Y2-homogeneous-components`; `eq:T-Y2-basis` | four displayed vectors and all 16 internal `phi_2` images |
-| Lemma D.2, `lem:T-Y3-homogeneous-components`; `eq:T-y3-generator` | displayed `y` and all 16 internal `phi_3` images |
-| Lemma D.3, `lem:T-Y4-homogeneous-components` | exact coefficient factorization and resulting vanishing of `phi_4(w_1 tensor y)` |
-| Lemma 6.17, `lem:T-reflection-cocycle-reductions`; `eq:T-R2-monodromy-cycles` and `eq:T-R2-mixed-monodromy` | two second-reflection monodromy calculations |
+| Stable paper label | Program | Verified calculation |
+|---|---|---|
+| `eq:T-epsilon-explicit` | [`verify_T_case.g`](certificates/T/verify_T_case.g) | coordinate identity without assuming the last equality in `(T-G2)` |
+| `eq:T-adjoint-recursion`, `lem:T-Y2-homogeneous-components`, `lem:T-Y3-homogeneous-components`, `lem:T-Y4-homogeneous-components` | [`verify_T_case.g`](certificates/T/verify_T_case.g) | constant-coefficient recursion, displayed basis and generator, and fourth-adjoint factorization after the comparison proved in the manuscript |
+| `eq:T-R2-monodromy-cycles`, `eq:T-R2-mixed-monodromy` | [`verify_T_case.g`](certificates/T/verify_T_case.g) | two second-reflection monodromy calculations under the same comparison |
+| `lem:T-fixed-quaternion-cocycle`, `lem:T-cocycle-two-branches` | [`verify_T_cohomology_reduction.g`](certificates/T/verify_T_cohomology_reduction.g) | fixed quaternion cocycle and exact induced-action exponents |
+| `lem:T-nontrivial-cocycle-infinite` | [`verify_T_sl2_cocycle.g`](certificates/T/verify_T_sl2_cocycle.g) | the finite sign-cocycle model and its projective action |
+| `lem:T-nontrivial-cocycle-infinite` | [`verify_T_actual_adjoint.g`](certificates/T/verify_T_actual_adjoint.g) | recursive images, including the two-dimensional third adjoint in that model |
+| `lem:T-nontrivial-cocycle-infinite` | [`verify_T_nichols_iterative.g`](certificates/T/verify_T_nichols_iterative.g) | the one-object Nichols Hilbert coefficients |
+| `lem:T-order-two-reflection-calculation` | [`verify_T_order2_reflections.g`](certificates/T/verify_T_order2_reflections.g) | four reflections, their action and rank tables, and the final action comparison |
 
-For Lemma 6.17, `lem:T-reflection-cocycle-reductions`, the program checks only
-`eq:T-R2-monodromy-cycles` and `eq:T-R2-mixed-monodromy`. The remaining
-reflected-parameter calculations are proved in the manuscript and are not
-part of the program.
-
-The program reconstructs the tetrahedral quandle from its four conjugation
-permutations.  It derives the coordinate formula for `epsilon_Phi(W)` from
-three applications of `eq:YD-projective-action` and three actual braids,
-without assuming that this scalar is one.  The program checks the displayed
-`h_m` braid-loop direction in `eq:T-adjoint-recursion`.  The later checks use
-`eq:T-adjoint-recursion` to generate the complete internal `phi_2` and
-`phi_3` calculations and the unreduced fourth-adjoint factorization; these
-and the second-reflection monodromy cycles are checked under the
-compatibility condition `epsilon_Phi(W)=1`.
+The old GAP program does not prove that `epsilon_Phi(W)=1`, the last
+equality in `(T-G2)`, or the equivalence used to compare all tensor degrees.
+Its constant-coefficient calculations use the hypotheses of
+`lem:T-tetrahedral-braiding`, including that last equality. The additional
+GAP calculations check the stated cocycle and reflection data. The
+reduction of an arbitrary input cocycle to this data and the exclusion by
+infinitely many real roots are proved in the manuscript.
 
 ## Reproduce all checks
 
@@ -118,7 +118,7 @@ Requirements:
 
 - GAP 4.16.0;
 - GAP core only;
-- a POSIX shell and `sha256sum`.
+- a POSIX shell, `sha256sum`, and `cmp`.
 
 From the repository root, run:
 
@@ -134,18 +134,21 @@ GAP_BIN=/path/to/gap GAP_ROOT=/path/to/gap-root ./verify_all.sh
 ```
 
 The script checks the root `SHA256SUMS`, every topic-level
-`CHECKSUMS.sha256`, runs all 18 suites with
+`CHECKSUMS.sha256`, runs all 23 GAP suites with
 `--bare -A -r -q --quitonbreak --norepl`, and accepts a suite only if GAP exits with
 status zero, writes nothing to standard error, and produces standard output
 that agrees byte-for-byte with the recorded output. The preliminary version
 probe is subject to the same exit-status and standard-error checks and must
-report exactly GAP 4.16.0. A successful run ends with:
+report exactly GAP 4.16.0. The 23 suites comprise the original 18 and the
+five additional T verifiers. The reflection verifier recomputes all stored
+rank and action records and compares them without rewriting repository
+files. A successful run ends with:
 
 ```text
 PASS: all exact certificate suites
 ```
 
-The certificate files themselves never call `QUIT_GAP`.  The options
+The GAP certificate files themselves never call `QUIT_GAP`.  The options
 `--quitonbreak --norepl` belong only to the fail-fast batch runner.  For an
 interactive run, first change to the certificate directory and start
 `gap --bare -A -r -q`.  Then load the certificate by its basename at `gap>`;
@@ -179,12 +182,12 @@ one-dimensionality and stability of the relevant homogeneous line proved in
 the manuscript; it does not establish that categorical statement by checking
 a single coordinate.
 
-The T program derives `eq:T-epsilon-explicit`, checks the displayed `h_m`
-braid-loop direction in `eq:T-adjoint-recursion`, then uses that recursion
-for the complete internal coefficient calculations used in Lemmas D.1--D.3.
-It also checks `eq:T-R2-monodromy-cycles` and
-`eq:T-R2-mixed-monodromy`.  It does not
-prove that `epsilon_Phi(W)=1`, construct the compatible bases, derive the
-action of `x_1^{-1}` on `(W^*)_{x_1^{-1}}`, or prove the rigid-dual argument
-yielding `epsilon_Phi(W^*)=1`. These points and the categorical reflection
-arguments remain in the paper.
+The T programs verify the finite calculations listed above. The first GAP
+identity retains its original, weaker hypotheses. The later constant-braiding
+calculations require the last equality in `(T-G2)` in addition to their
+previous hypotheses. The arbitrary-cocycle reduction, use of the same
+cochain in all tensor degrees and duals, categorical simplicity, reflection
+theory, and the infinite sequence of real roots remain written-proof inputs.
+The additional GAP programs neither assume the finite T classification nor
+infer those structural statements from a finite sample. See the T README for the
+precise correspondence.

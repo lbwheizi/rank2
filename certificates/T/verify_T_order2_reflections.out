@@ -1,0 +1,42 @@
+U and dual D projective actions verified
+Initial mixed braid relations verified
+ADJOINT U 1 D dimension 4 terms 6
+ADJOINT U 2 D dimension 4 terms 12
+ADJOINT U 3 D dimension 0 terms 0
+ADJOINT D 1 U dimension 4 terms 6
+ADJOINT D 2 U dimension 4 terms 18
+ADJOINT D 3 U dimension 1 terms 18
+ADJOINT D 4 U dimension 0 terms 0
+ADJOINT F 1 E dimension 4 terms 6
+ADJOINT F 2 E dimension 4 terms 12
+ADJOINT F 3 E dimension 0 terms 0
+ADJOINT E 1 F dimension 4 terms 6
+ADJOINT E 2 F dimension 4 terms 18
+ADJOINT E 3 F dimension 1 terms 18
+ADJOINT E 4 F dimension 0 terms 0
+ADJOINT K 1 L dimension 4 terms 4
+ADJOINT K 2 L dimension 0 terms 0
+ADJOINT L 1 K dimension 4 terms 4
+ADJOINT L 2 K dimension 4 terms 12
+ADJOINT L 3 K dimension 2 terms 24
+ADJOINT L 4 K dimension 0 terms 0
+ADJOINT M 1 N dimension 4 terms 4
+ADJOINT M 2 N dimension 0 terms 0
+ADJOINT N 1 M dimension 4 terms 4
+ADJOINT N 2 M dimension 4 terms 12
+ADJOINT N 3 M dimension 2 terms 24
+ADJOINT N 4 M dimension 0 terms 0
+Fourth pair H-actions equivalent to original
+N indices: [ 1, 2, 3, 0 ]
+N scalings: [ 1, E(3)^2, E(3), 1/3*E(3)-1/3*E(3)^2 ]
+All reflected projective actions verified, including central powers
+All reflected mixed braid relations verified
+All dual evaluation pairings verified
+ADJOINT V 1 W dimension 4 terms 4
+ADJOINT V 2 W dimension 0 terms 0
+ADJOINT W 1 V dimension 4 terms 4
+ADJOINT W 2 V dimension 4 terms 12
+ADJOINT W 3 V dimension 2 terms 24
+ADJOINT W 4 V dimension 0 terms 0
+All five rows asserted; 32 complete rank records and 27 action records match
+PASS: verify_T_order2_reflections.g

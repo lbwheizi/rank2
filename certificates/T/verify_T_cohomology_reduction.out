@@ -1,0 +1,5 @@
+[OK] Quaternion law, 512 entries, 4096 cocycle identities, and bar cycle.
+[OK] Induced-action exponent matrices over the infinite group T.
+[OK] epsilon exponents [4,1,5]; full-twist exponents [6,1,6].
+[OK] q=-1 and epsilon=1 give exactly (h,eta)=(0,1),(4,-1).
+PASS: verify_T_cohomology_reduction.g
