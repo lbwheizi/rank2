@@ -46,9 +46,9 @@ main text.
 
 | Current paper reference and stable label | Program | Verified calculation |
 |---|---|---|
-|  `lem:Gamma3-32-second-adjoint-expansion` and `lem:Gamma3-32-bar-reduction`; Proposition 7.15, `prop:Gamma3-32-X2-obstruction` | [`verify_gamma3_32.g`](certificates/Gamma_3/verify_gamma3_32.g) | `(3,2)` adjoint coefficients, scalar-chain dictionary, and comparison-cycle evaluations |
-|  `lem:Gamma3-dim2-epsilon-cubic`, `lem:Gamma3-dim2-second-adjoint-expansion`, and `lem:Gamma3-dim2-bar-reduction`; Proposition 7.16, `prop:Gamma3-dim2-X2-obstruction` | [`verify_gamma3_31_dim2.g`](certificates/Gamma_3/verify_gamma3_31_dim2.g) | shifted first adjoint, three second-adjoint paths, transported action, scalar-chain bridge, and comparison cycles |
-|  `lem:Gamma3-dim1-three-elementary-tensors` and `lem:Gamma3-dim1-chain-identification`; Proposition 7.17, `prop:Gamma3-dim1-X2-obstruction` | [`verify_gamma3_31_dim1.g`](certificates/Gamma_3/verify_gamma3_31_dim1.g) | one-dimensional `(3,1)` coefficient block, scalar-chain dictionary, scalar ratios, and branch identities |
+|  `lem:Gamma3-32-second-adjoint-expansion` and `lem:Gamma3-32-bar-reduction`;  `prop:Gamma3-32-X2-obstruction` | [`verify_gamma3_32.g`](certificates/Gamma_3/verify_gamma3_32.g) | `(3,2)` adjoint coefficients, scalar-chain dictionary, and comparison-cycle evaluations |
+|  `lem:Gamma3-dim2-epsilon-cubic`, `lem:Gamma3-dim2-second-adjoint-expansion`, and `lem:Gamma3-dim2-bar-reduction`;  `prop:Gamma3-dim2-X2-obstruction` | [`verify_gamma3_31_dim2.g`](certificates/Gamma_3/verify_gamma3_31_dim2.g) | shifted first adjoint, three second-adjoint paths, transported action, scalar-chain bridge, and comparison cycles |
+|  `lem:Gamma3-dim1-three-elementary-tensors` and `lem:Gamma3-dim1-chain-identification`;  `prop:Gamma3-dim1-X2-obstruction` | [`verify_gamma3_31_dim1.g`](certificates/Gamma_3/verify_gamma3_31_dim1.g) | one-dimensional `(3,1)` coefficient block, scalar-chain dictionary, scalar ratios, and branch identities |
 
 The programs now verify the coefficient-to-chain interfaces in all three
 branches.  They do not prove the homology computation or its injectivity,
@@ -64,8 +64,8 @@ recorded output is
 | Current paper reference and stable label | Program | Verified calculation |
 |---|---|---|
 |  `lem:Gamma4-X2-cocycle-reduction` | [`gamma4_x2_cocycle_reduction_certificate.g`](certificates/Gamma_4/x2_cocycle_reduction/gamma4_x2_cocycle_reduction_certificate.g) | source-to-target reduction of `Xi_X/kappa_X` to six normalized cocycle defects |
-|  `lem:Gamma4-z0-factorization`; Lemma C.3, `lem:Gamma4-Y2-coordinate-calculation`; Lemma C.7, `lem:Gamma4-R1-reflected-parameter-reduction`; `eq:Gamma4-Y2-H-Theta-explicit` | [`gamma4_reflected_y2_certificate.g`](certificates/Gamma_4/reflected_y2/gamma4_reflected_y2_certificate.g) | recursive four-coordinate `z0` factorization, source reconstruction, and seven reflected `Theta_2,j` identities |
-|  `lem:Gamma4-Xi3-cocycle-reduction`; Lemma C.5, `lem:Gamma4-Y3-coefficient-cancellation`; `eq:Gamma4-y3-two-coefficients` | [`gamma4_xi3_certificate.g`](certificates/Gamma_4/xi3/gamma4_xi3_certificate.g) | independent source reconstruction and cancellation of both `Y3` coefficients |
+|  `lem:Gamma4-z0-factorization`;  `lem:Gamma4-Y2-coordinate-calculation`; Lemma C.7, `lem:Gamma4-R1-reflected-parameter-reduction`; `eq:Gamma4-Y2-H-Theta-explicit` | [`gamma4_reflected_y2_certificate.g`](certificates/Gamma_4/reflected_y2/gamma4_reflected_y2_certificate.g) | recursive four-coordinate `z0` factorization, source reconstruction, and seven reflected `Theta_2,j` identities |
+|  `lem:Gamma4-Xi3-cocycle-reduction`;  `lem:Gamma4-Y3-coefficient-cancellation`; `eq:Gamma4-y3-two-coefficients` | [`gamma4_xi3_certificate.g`](certificates/Gamma_4/xi3/gamma4_xi3_certificate.g) | independent source reconstruction and cancellation of both `Y3` coefficients |
 |  `lem:Gamma4-Y2-support-value`; `eq:Gamma4-Y2-slant-cocycle-expression` | [`gamma4_terminal_character_certificate.g`](certificates/Gamma_4/terminal_character/gamma4_terminal_character_certificate.g) | terminal-root inducing-character calculation |
 |  `lem:Gamma4-W-local-Deltas`; `eq:Gamma4-local-Delta-01`, `eq:Gamma4-local-Delta-10`, and `eq:Gamma4-local-action-coefficient-products` | [`gamma4_local_delta_certificate.g`](certificates/Gamma_4/local_delta/gamma4_local_delta_certificate.g) | the corrected third-adjoint recursion and the two local Delta identities for `W` |
 |  `lem:Gamma4-local-Delta-transport`; `eq:Gamma4-Omega-local` | [`gamma4_delta_transport_certificate.g`](certificates/Gamma_4/delta_transport/gamma4_delta_transport_certificate.g) | the three displayed identities for quotients involving `Omega_01` and `Omega_10` |
