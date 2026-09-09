@@ -20,15 +20,17 @@ as `Q(E(6))`; this is exact field arithmetic, not numerical sampling.
 Stable LaTeX labels are the primary identifiers for correspondence with the
 paper. Some public program filenames retain historical appendix numbers so
 that permanent paths do not change; those numbers should not be interpreted
-as the current numbering of the paper.
+as the current numbering of the paper. Historical labels in program comments
+and diagnostic names are retained; the correspondence below uses the current
+manuscript.
 
 ## Gamma_2 index
 
 | Current paper reference and stable label | Program | Verified calculation |
 |---|---|---|
 |  `lem:first-coefficient-reduction` | [`lemma_B1_first_coefficient_reduction.g`](certificates/Gamma_2/delta_reduction/lemma_B1_first_coefficient_reduction.g) | first-adjoint Delta reduction |
-|  `lem:Omega-V-one` | [`lemma_B4_Omega_V_equals_one.g`](certificates/Gamma_2/omegaV/lemma_B4_Omega_V_equals_one.g) | `Omega_V=1` |
-|  `lem:Theta-Phi-reduction` and `lem:opposite-Theta-reduction` | [`theta_coefficient_reductions.g`](certificates/Gamma_2/theta_coefficient_reduction/theta_coefficient_reductions.g) | the two second-adjoint coefficient reductions to `Theta_Phi` |
+|  Proof of `lem:Xi-V-Omega-V` | [`lemma_B4_Omega_V_equals_one.g`](certificates/Gamma_2/omegaV/lemma_B4_Omega_V_equals_one.g) | `Omega_V=1`, used with the written identity `Xi_V=Omega_V/Phi_g(h,g)` |
+|  `lem:Theta-Phi-reduction`; `app:opposite-adjoint-cocycle-scalars` | [`theta_coefficient_reductions.g`](certificates/Gamma_2/theta_coefficient_reduction/theta_coefficient_reductions.g) | second-adjoint coefficient reductions in both orders under the stated hypotheses; the opposite reduction is also checked independently |
 |  `lem:Gamma2-G2-cocycle-reductions` | [`lemma_B12_K3_and_d4_cocycle_reductions.g`](certificates/Gamma_2/g2_propagation/lemma_B12_K3_and_d4_cocycle_reductions.g) | `K_3=1` and `d_4=lambda^3 kappa_4` |
 |  `lem:Gamma2-X3-cocycle-factor-identity` | [`lemma_B14_s_phi_equals_theta_squared.g`](certificates/Gamma_2/g2_pure_parameters/s_phi_equals_theta_squared/lemma_B14_s_phi_equals_theta_squared.g) | `s_Phi=Theta_Phi^2` |
 |  `lem:Gamma2-R2-Theta-cocycle` | [`lemma_B15_theta_after_second_reflection.g`](certificates/Gamma_2/g2_pure_parameters/theta_r2_invariance/lemma_B15_theta_after_second_reflection.g) | reflected `Theta` identity |
@@ -47,7 +49,7 @@ main text.
 | Current paper reference and stable label | Program | Verified calculation |
 |---|---|---|
 |  `lem:Gamma3-32-second-adjoint-expansion` and `lem:Gamma3-32-bar-reduction`;  `prop:Gamma3-32-X2-obstruction` | [`verify_gamma3_32.g`](certificates/Gamma_3/verify_gamma3_32.g) | `(3,2)` adjoint coefficients, scalar-chain dictionary, and comparison-cycle evaluations |
-|  `lem:Gamma3-dim2-epsilon-cubic`, `lem:Gamma3-dim2-second-adjoint-expansion`, and `lem:Gamma3-dim2-bar-reduction`;  `prop:Gamma3-dim2-X2-obstruction` | [`verify_gamma3_31_dim2.g`](certificates/Gamma_3/verify_gamma3_31_dim2.g) | shifted first adjoint, three second-adjoint paths, transported action, scalar-chain bridge, and comparison cycles |
+|  `lem:Gamma3-dim2-second-adjoint-expansion`, `eq:Gamma3-dim2-shifted-X1`, and `lem:Gamma3-dim2-bar-reduction`;  `prop:Gamma3-dim2-X2-obstruction` | [`verify_gamma3_31_dim2.g`](certificates/Gamma_3/verify_gamma3_31_dim2.g) | shifted first adjoint, three second-adjoint paths, transported action, scalar-chain bridge, and comparison cycles |
 |  `lem:Gamma3-dim1-three-elementary-tensors` and `lem:Gamma3-dim1-chain-identification`;  `prop:Gamma3-dim1-X2-obstruction` | [`verify_gamma3_31_dim1.g`](certificates/Gamma_3/verify_gamma3_31_dim1.g) | one-dimensional `(3,1)` coefficient block, scalar-chain dictionary, scalar ratios, and branch identities |
 
 The programs now verify the coefficient-to-chain interfaces in all three
@@ -66,22 +68,22 @@ recorded output is
 |  `lem:Gamma4-X2-cocycle-reduction` | [`gamma4_x2_cocycle_reduction_certificate.g`](certificates/Gamma_4/x2_cocycle_reduction/gamma4_x2_cocycle_reduction_certificate.g) | source-to-target reduction of `Xi_X/kappa_X` to six normalized cocycle defects |
 |  `lem:Gamma4-z0-factorization`;  `lem:Gamma4-Y2-coordinate-calculation`;  `lem:Gamma4-R1-reflected-parameter-reduction`; `eq:Gamma4-Y2-H-Theta-explicit` | [`gamma4_reflected_y2_certificate.g`](certificates/Gamma_4/reflected_y2/gamma4_reflected_y2_certificate.g) | recursive four-coordinate `z0` factorization, source reconstruction, and seven reflected `Theta_2,j` identities |
 |  `lem:Gamma4-Xi3-cocycle-reduction`;  `lem:Gamma4-Y3-coefficient-cancellation`; `eq:Gamma4-y3-two-coefficients` | [`gamma4_xi3_certificate.g`](certificates/Gamma_4/xi3/gamma4_xi3_certificate.g) | independent source reconstruction and cancellation of both `Y3` coefficients |
-|  `lem:Gamma4-Y2-support-value`; `eq:Gamma4-Y2-slant-cocycle-expression` | [`gamma4_terminal_character_certificate.g`](certificates/Gamma_4/terminal_character/gamma4_terminal_character_certificate.g) | terminal-root inducing-character calculation |
-|  `lem:Gamma4-W-local-Deltas`; `eq:Gamma4-local-Delta-01`, `eq:Gamma4-local-Delta-10`, and `eq:Gamma4-local-action-coefficient-products` | [`gamma4_local_delta_certificate.g`](certificates/Gamma_4/local_delta/gamma4_local_delta_certificate.g) | the corrected third-adjoint recursion and the two local Delta identities for `W` |
-|  `lem:Gamma4-local-Delta-transport`; `eq:Gamma4-Omega-local` | [`gamma4_delta_transport_certificate.g`](certificates/Gamma_4/delta_transport/gamma4_delta_transport_certificate.g) | the three displayed identities for quotients involving `Omega_01` and `Omega_10` |
+|  `lem:Gamma4-Y2-support-value`; `eq:Gamma4-Y2-slant-cocycle-expression` | [`gamma4_terminal_character_certificate.g`](certificates/Gamma_4/terminal_character/gamma4_terminal_character_certificate.g) | the value of the terminal-root inducing representation |
+|  `lem:Gamma4-W-local-Deltas`; `eq:Gamma4-local-Delta-01` and `eq:Gamma4-local-action-coefficient-products` | [`gamma4_local_delta_certificate.g`](certificates/Gamma_4/local_delta/gamma4_local_delta_certificate.g) | the third-adjoint recursion and the local `Delta_01^W=1` identity; the program also checks the opposite order |
+|  Additional check retained from an earlier draft; not used in the current proof | [`gamma4_delta_transport_certificate.g`](certificates/Gamma_4/delta_transport/gamma4_delta_transport_certificate.g) | three identities for quotients involving `Omega_01` and `Omega_10` |
 
 The local-Delta verifier reconstructs the homogeneous objects using
 `eq:tensor-product`, the braiding formula, and the corrected third-adjoint
-recursion. It obtains all
-192 nonzero binomial coordinates before checking the 19 rows used by the exact
-Laurent eliminations.
+recursion. Before imposing `Y3=0`, it obtains 192 nonzero binomial
+coordinate expressions and checks the 19 rows used by the exact Laurent
+eliminations.
 
 The reflected-`Y_2` verifier first reconstructs all four `z0` coordinates
 from the adjoint recursion and checks their factorization.  It then
 reconstructs the packet entries and compares the source and target cocycle
 expressions. The assertion that the relevant homogeneous component of the
 first adjoint object is a one-dimensional simple component is the
-mathematical input proved in Lemma 5.8, `lem:Gamma4-first-adjoint`; it is not
+mathematical input proved in `lem:Gamma4-first-adjoint`; it is not
 independently proved by the program.  The same scope distinction applies to
 the one-dimensional line used to extract `mu1` in the first `Y3` coefficient.
 
@@ -95,14 +97,14 @@ scope of each program are recorded in [`certificates/T/README.md`](certificates/
 
 | Stable paper label | Program | Verified calculation |
 |---|---|---|
-| `eq:T-epsilon-explicit` | [`verify_T_case.g`](certificates/T/verify_T_case.g) | coordinate identity without assuming the last equality in `(T-G2)` |
+| Auxiliary expansion of the invariant defined in `eq:T-epsilon-definition` | [`verify_T_case.g`](certificates/T/verify_T_case.g) | retained coordinate identity without assuming the last equality in `(T-G2)`; no separate expanded formula in the current manuscript |
 | `eq:T-adjoint-recursion`, `lem:T-Y2-homogeneous-components`, `lem:T-Y3-homogeneous-components`, `lem:T-Y4-homogeneous-components` | [`verify_T_case.g`](certificates/T/verify_T_case.g) | constant-coefficient recursion, displayed basis and generator, and fourth-adjoint factorization after the comparison proved in the manuscript |
-| `eq:T-R2-monodromy-cycles`, `eq:T-R2-mixed-monodromy` | [`verify_T_case.g`](certificates/T/verify_T_case.g) | two second-reflection monodromy calculations under the same comparison |
+| `eq:T-R2-mixed-monodromy`, `lem:T-R2-parameter-conditions` | [`verify_T_case.g`](certificates/T/verify_T_case.g) | second-reflection mixed monodromy under the same comparison; the four three-cycles are retained internally |
 | `lem:T-fixed-quaternion-cocycle`, `lem:T-cocycle-two-branches` | [`verify_T_cohomology_reduction.g`](certificates/T/verify_T_cohomology_reduction.g) | fixed quaternion cocycle and exact induced-action exponents |
-| `lem:T-nontrivial-cocycle-infinite` | [`verify_T_sl2_cocycle.g`](certificates/T/verify_T_sl2_cocycle.g) | the finite sign-cocycle model and its projective action |
-| `lem:T-nontrivial-cocycle-infinite` | [`verify_T_actual_adjoint.g`](certificates/T/verify_T_actual_adjoint.g) | recursive images, including the two-dimensional third adjoint in that model |
-| `lem:T-nontrivial-cocycle-infinite` | [`verify_T_nichols_iterative.g`](certificates/T/verify_T_nichols_iterative.g) | the one-object Nichols Hilbert coefficients |
-| `lem:T-order-two-reflection-calculation` | [`verify_T_order2_reflections.g`](certificates/T/verify_T_order2_reflections.g) | four reflections, their action and rank tables, and the final action comparison |
+| `eq:T-order-two-finite-cocycle`, `eq:T-order-two-finite-pair` | [`verify_T_sl2_cocycle.g`](certificates/T/verify_T_sl2_cocycle.g) | the finite sign-cocycle model and its projective action, with an auxiliary full-twist check |
+| `lem:T-order-two-reflection-calculation`, `eq:T-order-two-adjoint-dimensions` | [`verify_T_actual_adjoint.g`](certificates/T/verify_T_actual_adjoint.g) | initial adjoint dimensions, including the two-dimensional third adjoint, with auxiliary low-degree quantum-symmetrizer checks |
+| Auxiliary calculation; no separate manuscript label | [`verify_T_nichols_iterative.g`](certificates/T/verify_T_nichols_iterative.g) | Hilbert coefficients and dimension 36 of `B(W_0)`; not an input to the infinite-dimensionality proof |
+| `lem:T-order-two-reflection-calculation`, `lem:T-order-two-Cartan-periodicity` | [`verify_T_order2_reflections.g`](certificates/T/verify_T_order2_reflections.g) | four reflections, five rows of support/action data, four rows of adjoint dimensions, and the final action comparison used in the periodicity proof |
 
 The old GAP program does not prove that `epsilon_Phi(W)=1`, the last
 equality in `(T-G2)`, or the equivalence used to compare all tensor degrees.

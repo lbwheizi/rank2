@@ -1,9 +1,13 @@
-# Gamma4 Delta-transport certificate
+# Gamma4 Delta-transport certificate (auxiliary historical check)
 
-`gamma4_delta_transport_certificate.g` is a core-only GAP 4.16.0 verifier for
-Lemma C.9, `lem:Gamma4-local-Delta-transport`, and
-`eq:Gamma4-Omega-local`.  It checks the three normalized bar-boundary
-identities
+`gamma4_delta_transport_certificate.g` is a core-only GAP 4.16.0 verifier
+retained from an earlier version of the paper. The current manuscript no
+longer states or uses the Delta-transport lemma or its Omega formulas.
+Instead, `lem:Gamma4-global-to-local-Deltas` uses the first reflection and
+the first-adjoint simplicity criterion to obtain the local parameter for
+`Y1` from that for `W`.
+
+This auxiliary verifier checks the three normalized bar-boundary identities
 
 \[
 \frac{\Omega_{01}(g,h)}{\Omega_{10}(g,h)}=1,
@@ -13,9 +17,14 @@ identities
 \frac{\Omega_{10}(hg,h)}{\Omega_{10}(g,h)}=1.
 \]
 
-The script reconstructs the three target Laurent monomials from the displayed
-formula for \(\Phi_x\), then checks the embedded integer combinations of
-normalized (3)-cocycle boundaries coefficient by coefficient.  The data file
+Here \(\Omega_{01}(x,r)\) and \(\Omega_{10}(x,r)\) denote the two
+Laurent monomials constructed by `OmegaPair(x,r)` in the verifier. These
+symbols describe the retained calculation and are not notation used in the
+current manuscript.
+
+The script expands \(\Phi_x\) in terms of \(\Phi\) to reconstruct the
+three target Laurent monomials, then checks the embedded integer combinations
+of normalized \(3\)-cocycle boundaries coefficient by coefficient. The data file
 contains respectively 134, 810, and 770 boundary terms.
 
 Group elements are represented by abstract normal forms

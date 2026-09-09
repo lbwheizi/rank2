@@ -32,12 +32,13 @@ the source residuals and recomputes every integer boundary coefficient.
   `eq:Gamma3-32-scalar-chain-dictionary`, and
   `lem:Gamma3-32-bar-reduction`.
 - `verify_gamma3_31_dim2.g`: the \((3,1)_2\) coefficient calculation
-  in `lem:Gamma3-dim2-epsilon-cubic`,
-  `lem:Gamma3-dim2-second-adjoint-expansion`, and
+  in `lem:Gamma3-dim2-second-adjoint-expansion` and
   `lem:Gamma3-dim2-bar-reduction`, including the formulas from
   `eq:Gamma3-dim2-shifted-X1` through
   `eq:Gamma3-dim2-eta-values` and the two comparison-cycle reductions
-  leading to `eq:Gamma3-common-three-path-reduction`.
+  leading to `eq:Gamma3-common-three-path-reduction`. The action table
+  in `lem:Gamma3-dim2-normal-form`,
+  `eq:Gamma3-dim2-standard-basis`, is a written-proof input.
 - `verify_gamma3_31_dim1.g`: the \((3,1)_1\) calculation in
   `lem:Gamma3-dim1-three-elementary-tensors`, the chain identification
   in `lem:Gamma3-dim1-chain-identification`, the formulas relating
@@ -50,6 +51,12 @@ the source residuals and recomputes every integer boundary coefficient.
   component success flag.
 - `EXPECTED_OUTPUT.txt`: recorded successful output.
 - `CHECKSUMS.sha256`: SHA-256 checksums of all preceding deliverables.
+
+The cubic identity `eq:Gamma3-dim2-E-cubic` is proved in
+`lem:Gamma3-dim2-normal-form`; there is no separate
+epsilon-cubic lemma in the current manuscript. The program retains an
+auxiliary bar-chain check related to this identity, but the proof of
+the normal-form action table is given in the manuscript.
 
 ## Running the verifier
 
@@ -126,20 +133,21 @@ the three identities in `lem:Gamma3-32-bar-reduction`.
 
 ### The \((3,1)_2\) calculation
 
-`verify_gamma3_31_dim2.g` retains the original reconstruction of
+`verify_gamma3_31_dim2.g` reconstructs
 \[
 \mathsf E,\mathsf A,\mathsf B,\mathsf T_i,\mathsf M_i,
 \mathsf\Theta,\mathsf K,
 \mathsf C_{02},\mathsf C_{\mathrm{pow}}
 \]
-and of
-\(\mathsf C_{\mathrm{eigen}},\mathsf R,\mathsf R_A\). It checks all
-displayed differentials and cycles. The projected integral
+and \(\mathsf R\). It checks their displayed differentials and cycles.
+The program also retains the auxiliary chains
+\(\mathsf C_{\mathrm{eigen}},\mathsf R_A\), which are not separately
+named in the current manuscript. The projected integral
 four-chain boundaries for \(\mathsf C_{02}\) and
 \(\mathsf C_{\mathrm{pow}}\) have \(8,9\) terms; the corresponding
 \(\Gamma _3\)-chains have \(38,20\) terms.
 
-The added coefficient layer begins with the two rows of the action
+The coefficient calculation begins with the two rows of the action
 table in `eq:Gamma3-dim2-standard-basis`. Under
 \(\Delta _3=I\) and \(\rho(g)=-1\), it independently reconstructs:
 
@@ -179,7 +187,10 @@ formula, and `eq:recursive-varphi-2`. It checks:
 5. the two comparison-cycle evaluations and the common-\(\mu\)
    reduction modulo \(\kappa^3=1\).
 
-It finally checks over an exact polynomial ring that
+In the following formulas, the program variables are
+\(p=\rho(g)\), \(t=\rho(h)\tau(g)\), and
+\(\kappa=\kappa_\Phi(\varepsilon)\). It finally checks over an exact
+polynomial ring that
 \[
 \frac{m_0}{m_1}=
 \kappa\frac{1-t}{p^3t^2},\qquad

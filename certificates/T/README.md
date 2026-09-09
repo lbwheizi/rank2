@@ -3,7 +3,9 @@
 This directory contains the existing coefficient verifier and five additional
 GAP verifiers for the revised T classification. The corresponding
 arguments occur in `sec:classification-T` and `app:T-calculations` of the
-manuscript. References below use stable LaTeX labels.
+manuscript. References below use the current manuscript's LaTeX labels.
+Some check names in the GAP sources and recorded outputs retain labels from
+earlier versions; the auxiliary calculations are identified below.
 
 The revised `eq:T-classification-G2` retains its original five conditions
 and adds
@@ -61,9 +63,11 @@ rewrite source files, stored data, or recorded outputs.
 
 ## Assumptions of `verify_T_case.g`
 
-- The coordinate identity `eq:T-epsilon-explicit` assumes `dim(sigma)=1`
+- The auxiliary coordinate expansion of `epsilon_Phi(W)` assumes `dim(sigma)=1`
   and `sigma(x1)=-1`. It needs neither `epsilon_Phi(W)=1` nor the new
-  parameter equality, and it does not prove either condition.
+  parameter equality, and it does not prove either condition. The current
+  manuscript defines this scalar in `eq:T-epsilon-definition`; the expanded
+  formula is retained in the verifier and is not a separate manuscript formula.
 - The use of the constant `(-1)` table requires `dim(sigma)=1`,
   `sigma(x1)=-1`, `epsilon_Phi(W)=1`, and the new parameter equality. The
   simultaneous choice of tensor bases is supplied by
@@ -88,7 +92,7 @@ Ad(x1)=(2,4,3), Ad(x2)=(1,3,4),
 Ad(x3)=(1,4,2), Ad(x4)=(1,2,3).
 ```
 
-For `eq:T-epsilon-explicit`, it records the three basis definitions
+For this auxiliary coordinate expansion, it records the three basis definitions
 
 ```text
 a2=-x4 action a1, a3=-x2 action a1, a4=-x3 action a1
@@ -101,8 +105,8 @@ The program therefore constructs the centralizer tail `x_k^-1*x_s^2` and
 derives the corresponding quotient of local-cocycle and
 projective-representation values.  It
 then performs three actual braids beginning with `a2 tensor a3` and compares
-the accumulated Laurent monomial with the displayed right-hand side.  This
-part assumes neither `epsilon_Phi(W)=1` nor the new parameter equality
+the accumulated Laurent monomial with the comparison formula in the verifier.
+This part assumes neither `epsilon_Phi(W)=1` nor the new parameter equality
 and does not use the later constant coefficient table.
 
 The remaining checks do not use the displayed adjoint tables as source data.
@@ -133,13 +137,16 @@ Thus every comparison is exact.
 
 ## Identities checked by `verify_T_case.g`
 
-- **`eq:T-epsilon-explicit`:** the three action coefficients are generated
+- **Auxiliary coordinate expansion of `epsilon_Phi(W)`:** the three action
+  coefficients are generated
   from the tetrahedral rack, the basis definitions, and
   `eq:YD-projective-action`.  Three successive braidings are then
   accumulated.  The resulting exact Laurent monomial is compared with the
-  displayed formula, including its total minus sign, its three local-cocycle
-  quotients, and its three `sigma` factors.  The three displayed action
+  formula retained in the verifier, including its total minus sign, its three
+  local-cocycle quotients, and its three `sigma` factors. The three comparison action
   coefficients are not used as definitions of the generated coefficients.
+  This expands the invariant in `eq:T-epsilon-definition`; the current
+  proof uses that definition directly.
 - **`lem:T-Y2-homogeneous-components` and
   `eq:T-Y2-basis`:** the four displayed basis vectors and all 16 entries
   of the internal complete phi_2 calculation, reduced only modulo
@@ -152,12 +159,12 @@ Thus every comparison is exact.
   together with the assertion that the 15 ordered words of the certificate
   target Z_1 are distinct. Only after this exact factorization is checked
   does the verifier reduce modulo f(p).
-- **`eq:T-R2-monodromy-cycles` and `eq:T-R2-mixed-monodromy`:** the four
-  three-cycles are derived by applying the eight
+- **`eq:T-R2-mixed-monodromy` in `lem:T-R2-parameter-conditions`:** the four
+  internal three-cycles are derived by applying the eight
   adjacent braids to `[1,i,j,k,0]`; they are not used as the definition of
   the monodromy. The program counts six W-W crossings and one r*ell=p
-  mixed monodromy, recovers the four displayed coefficient triples of y,
-  and checks `M(y)=(1-p)y` modulo f(p).
+  mixed monodromy, groups the coefficients of y into the four corresponding
+  triples, and checks `M(y)=(1-p)y` modulo f(p).
 
 The basis and generator in `eq:T-Y2-basis` and `eq:T-y3-generator`, and
 the coefficient patterns used in the three homogeneous-component lemmas
@@ -167,7 +174,9 @@ data rather than separately labelled formulas in the manuscript. All
 left-hand sides are generated afresh from the rack and
 `eq:T-adjoint-recursion`.
 
-The original verifier retains its 15 exact checks.
+The original verifier retains its 15 exact checks. The coordinate expansion
+of epsilon and the decomposition into four three-cycles remain internal checks,
+although neither is displayed separately in the current manuscript.
 
 ## Additional GAP calculations
 
@@ -175,17 +184,18 @@ The nontrivial class has value `-1` for the new three-factor product, while
 the original five conditions hold. The finite model is
 `G_*=SL_2(3) x C_6`, with the cocycle and pair in
 `eq:T-order-two-finite-cocycle` and `eq:T-order-two-finite-pair`. Its
-third adjoint has dimension two. The files below verify the fixed cocycle
-and the finite calculations used in the proof that this class gives an
-infinite-dimensional rank-two Nichols algebra.
+third adjoint has dimension two. The files below verify the fixed cocycle,
+the finite calculations used in the proof that this class gives an
+infinite-dimensional rank-two Nichols algebra, and the auxiliary calculations
+identified in the table.
 
 | File | Exact calculation | Corresponding manuscript argument |
 | --- | --- | --- |
 | `verify_T_cohomology_reduction.g` | The 512 quaternion cocycle entries; all `8^4` cocycle identities; normalization, cyclic invariance and parity; the bar-cycle boundary and evaluation; induced-action exponents; the two possibilities under `q=-1` and `epsilon=1`. | `lem:T-fixed-quaternion-cocycle`, the cocycle evaluation in `lem:T-pullback-cocycle`, and the coefficient calculation in `lem:T-cocycle-two-branches`. |
-| `verify_T_sl2_cocycle.g` | The group law on `SL_2(3)`, all sign-cocycle identities, the four supports and induced projective action, diagonal braiding and epsilon, braid relations, and the nontrivial full twist. | The finite model in `eq:T-order-two-finite-cocycle` and `eq:T-order-two-finite-pair`, used by `lem:T-nontrivial-cocycle-infinite`. The cocycle is independent of the central `C_6` coordinate. |
-| `verify_T_actual_adjoint.g` | Restricted recursive adjoint dimensions `4,4,2,0`, a nonzero two-coordinate minor for the third adjoint, and direct quantum-symmetrizer dimensions in degrees 2, 3 and 4. | The initial row of `eq:T-order-two-adjoint-dimensions` and the two-dimensional object in `lem:T-order-two-reflection-calculation`. |
+| `verify_T_sl2_cocycle.g` | The group law on `SL_2(3)`, all sign-cocycle identities, the four supports and induced projective action, diagonal braiding and epsilon, braid relations, and the nontrivial full twist. | The finite model in `eq:T-order-two-finite-cocycle` and `eq:T-order-two-finite-pair`, to which `lem:T-order-two-finite-model` reduces the nontrivial class. The cocycle is independent of the central `C_6` coordinate; the full-twist check is auxiliary. |
+| `verify_T_actual_adjoint.g` | Restricted recursive adjoint dimensions `4,4,2,0`, a nonzero two-coordinate minor for the third adjoint, and direct quantum-symmetrizer dimensions in degrees 2, 3 and 4. | The initial row of `eq:T-order-two-adjoint-dimensions` and the two-dimensional object in `lem:T-order-two-reflection-calculation`. The direct quantum-symmetrizer calculations are auxiliary. |
 | `verify_T_nichols_iterative.g` | Iterated quantum-symmetrizer image dimensions `1,4,8,10,8,4,1,0`, with sum 36. | An auxiliary calculation of `B(W_0)` for the nontrivial finite model. This is not the dimension of `B(V_0 direct_sum W_0)` and is not the ordinary tetrahedral dimension 72. |
-| `verify_T_order2_reflections.g` | Four successive recursive adjoint and dual constructions, all five rows of the support/action and adjoint-dimension tables, projective actions, central powers, mixed braid relations, invariant dual evaluation pairings, and the final comparison of all `SL_2(3)` actions. | `lem:T-order-two-reflection-calculation`, `eq:T-order-two-reflected-pairs`, `eq:T-order-two-adjoint-dimensions`, and the finite action comparison used in `lem:T-nontrivial-cocycle-infinite`. |
+| `verify_T_order2_reflections.g` | Four successive recursive adjoint and dual constructions, all five rows of the support/action table and the four rows of the adjoint-dimension table, projective actions, central powers, mixed braid relations, invariant dual evaluation pairings, and the final comparison of all `SL_2(3)` actions. | `lem:T-order-two-reflection-calculation`, `eq:T-order-two-reflected-pairs`, `eq:T-order-two-adjoint-dimensions`, and the final action comparison used in `lem:T-order-two-Cartan-periodicity`. |
 
 The complete 512-entry quaternion table is stored in
 `q8_primitive8_cocycle_data.g`. The file
@@ -211,26 +221,31 @@ existence of reflections under the finite-dimensionality assumption, and
 the infinite sequence of real roots remain proofs in the manuscript. In
 particular, checking four reflected pairs does not by itself prove that
 all subsequent Cartan matrices repeat. That conclusion also uses the
-cochain comparison established in `lem:T-nontrivial-cocycle-infinite`.
+cochain comparison established in `lem:T-order-two-Cartan-periodicity`.
+The reduction to the fixed pair is proved in `lem:T-order-two-finite-model`,
+and `lem:T-nontrivial-cocycle-infinite` uses the resulting periodicity to
+construct infinitely many real roots.
 
 ## Scope of `verify_T_case.g`
 
 This certificate verifies only the finite coefficient calculations just
-listed. Its first part verifies the coordinate identity
-`eq:T-epsilon-explicit`; it does **not** prove that the resulting scalar is
+listed. Its first part retains an auxiliary coordinate expansion of
+`epsilon_Phi(W)`; it does **not** prove that the resulting scalar is
 one. The second part uses the hypotheses of
 `lem:T-tetrahedral-braiding`, including the new parameter equality, when
 it uses the constant `(-1)` braiding table.  The certificate does not derive the
 compatible bases, the action of `x_1^{-1}` on
 `(W^*)_{x_1^{-1}}`, or the rigid-dual identity `epsilon_Phi(W^*)=1`.
-It also does not prove the normal-form lemma for
-arbitrary b_ij, simplicity of the adjoint objects, existence or
+It also does not prove simplicity of the adjoint objects, existence or
 involutivity of reflections, standardness of the Cartan graph, the tensor
 decomposition indexed by the positive roots, or finite-dimensionality of
 a Nichols algebra. Those are mathematical arguments in the manuscript. For
-`lem:T-reflection-cocycle-reductions`, the program checks only
-`eq:T-R2-monodromy-cycles` and the coefficient calculation in
-`eq:T-R2-mixed-monodromy`. It does not check the first-reflection formulas,
-the full-twist scalar, `eq:T-R2-central-coefficient`,
-`eq:T-R2-cross-coefficient`, or the rigid-dual calculation of `s_2` and
-`epsilon_2`. These parts are proved in the manuscript.
+`lem:T-R2-parameter-conditions`, the program checks the coefficient
+calculation in `eq:T-R2-mixed-monodromy`, with the decomposition into four
+three-cycles retained internally. The first-reflection formulas in
+`lem:T-R1-parameter-conditions`, the central action on Y3 obtained from
+balancing, `eq:T-R2-cross-coefficient`, and the self-braiding and epsilon
+of W* are proved in the manuscript. Finally,
+`lem:T-reflection-cocycle-reductions` proves preservation of the last
+parameter equality under the reflected support maps; this cohomological
+argument is not a calculation performed by `verify_T_case.g`.

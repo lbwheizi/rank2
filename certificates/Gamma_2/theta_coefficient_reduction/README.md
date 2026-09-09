@@ -1,9 +1,14 @@
 # GAP certificate for the two $\Theta_\Phi$ coefficient reductions
 
-This directory corresponds to the two lemmas with LaTeX labels
-`lem:Theta-Phi-reduction` and `lem:opposite-Theta-reduction` in Appendix B.
+This directory corresponds to Lemma B.3, with LaTeX label
+`lem:Theta-Phi-reduction`, and Subsection B.5, with LaTeX label
+`app:opposite-adjoint-cocycle-scalars`, in the current paper.
 The program `theta_coefficient_reductions.g` verifies the coefficient
 reductions used in the simplicity criteria for $X_2$ and $Y_2$.
+The paper obtains the opposite reduction by interchanging $V,W$ and the
+corresponding parameters. Its separate encoding in the program is an
+additional check of this consequence, rather than a separate lemma in the
+current paper. The historical script and output filenames are retained.
 
 For the forward direction, the program constructs the left-hand side of
 
@@ -51,6 +56,8 @@ $$
 
 Thus $\Delta'=1$ and
 $\zeta^2=\Phi_g(\varepsilon,\varepsilon)$ give the opposite reduction.
+These checks establish the stated scalar reductions; the arguments relating
+them to the simplicity of the adjoint objects are given in the paper.
 
 ## Method and scope
 

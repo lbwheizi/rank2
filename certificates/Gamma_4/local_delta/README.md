@@ -1,19 +1,29 @@
 # Gamma4 local-Delta certificate
 
 `gamma4_local_delta_certificate.g` uses only core GAP 4.16.0 functions.  It
-corresponds to Lemma C.8, `lem:Gamma4-W-local-Deltas`, and the formulas
-`eq:Gamma4-local-Delta-01`, `eq:Gamma4-local-Delta-10`, and
+corresponds to `lem:Gamma4-W-local-Deltas` and the formulas
+`eq:Gamma4-local-Delta-01` and
 `eq:Gamma4-local-action-coefficient-products`.  It
 reconstructs the calculation of \(Y_3\) from the \(\Gamma _4\) group law,
 `eq:tensor-product`, the braiding formula, and the definitions of
-\(\varphi _1^\Phi,\varphi _2^\Phi,\varphi _3^\Phi\).  The program obtains
-all 192 nonzero binomial coordinates of \(Y_3\).  It then compares, in the
-same quotient orientation, the 19 coordinates used in the two integer
-certificates.  Finally, it verifies that these coordinates imply
+\(\varphi _1^\Phi,\varphi _2^\Phi,\varphi _3^\Phi\). Before imposing
+\(Y_3=0\), the program obtains 192 nonzero binomial coordinate expressions
+for the third recursive images. It then compares, in the same quotient
+orientation, the 19 expressions used in the two integer certificates.
+Under the hypotheses of `lem:Gamma4-W-local-Deltas`, the vanishing of
+these coordinates gives
 
 \[
 \Delta_{01}^W=\Delta_{10}^W=1.
 \]
+
+The current manuscript directly uses only \(\Delta_{01}^W=1\), for the
+ordered local pair \((W^{(0)},W^{(1)})\). The verifier also checks
+\(\Delta_{10}^W=1\), where \(\Delta_{10}^W\) is the Gamma_2 parameter
+for the reversed pair \((W^{(1)},W^{(0)})\). This second conclusion can
+also be deduced from the first by `eq:Gamma2-Delta-unit-loci`, which
+identifies the two conditions \(\Delta=1\) and \(\Delta'=1\).
+It does not assert that the two parameters agree for arbitrary data.
 
 The data file contains the expected Laurent quotient for each of the 19
 coordinates and the two integer coefficient vectors.  The main program

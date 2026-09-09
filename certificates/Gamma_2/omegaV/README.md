@@ -1,10 +1,15 @@
 # GAP certificate for $\Omega_V=1$
 
-This program corresponds to Lemma B.3 of the paper, with LaTeX label
-`lem:Omega-V-one`.  The script `lemma_B4_Omega_V_equals_one.g` verifies the
-formal $3$-cocycle identity
-used in the computation of the second adjoint object in the $\Gamma_2$
-setting. Group elements are written in the normal form
+The script `lemma_B4_Omega_V_equals_one.g` verifies the identity
+$\Omega_V=1$ used in the proof of Lemma B.2 of the current paper,
+with LaTeX label `lem:Xi-V-Omega-V`. The proof first establishes
+$\Xi_V=\Omega_V/\Phi_g(h,g)$ and then uses this calculation to conclude
+$\Xi_V=\Phi_g(h,g)^{-1}$. Thus the program verifies the cocycle calculation
+within that proof. The historical script and output filenames are retained;
+their numbering does not indicate the current lemma number.
+
+This identity is used in the computation of the second adjoint object in
+the $\Gamma_2$ setting. Group elements are written in the normal form
 $\varepsilon^e g^a h^b$, subject to
 
 $$

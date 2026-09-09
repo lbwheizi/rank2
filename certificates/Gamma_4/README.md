@@ -1,34 +1,40 @@
 # Gamma_4 certificates
 
 This directory contains the exact GAP certificates accompanying Appendix C
-of the paper:
+of the paper, together with an auxiliary check retained from an earlier
+version:
 
 - `x2_cocycle_reduction/` — a source-to-target verification of the
   `Xi_X/kappa_X` reduction in `lem:Gamma4-X2-cocycle-reduction`, beginning
   with the displayed definitions and ending with the six normalized
   cocycle defects;
-- `xi3/` — reconstruction of both third-adjoint coefficients in Lemma C.4,
-  `lem:Gamma4-Xi3-cocycle-reduction`, and Lemma C.5,
+- `xi3/` — reconstruction of both third-adjoint coefficients in
+  `lem:Gamma4-Xi3-cocycle-reduction` and
   `lem:Gamma4-Y3-coefficient-cancellation`, including
   `eq:Gamma4-y3-two-coefficients`: the first coefficient is recovered from
   `beta`, `B1`, `nu1`, and `mu1`, while the second is reduced to the
   eight-atom Xi_3 target and the final two-defect cancellation Xi_3 = 1;
-- `local_delta/` — the corrected third-adjoint recursion and the two local
-  Gamma_2 Delta identities for W in Lemma C.8,
-  `lem:Gamma4-W-local-Deltas`, using `eq:Gamma4-local-Delta-01`,
-  `eq:Gamma4-local-Delta-10`, and
-  `eq:Gamma4-local-action-coefficient-products`;
-- `delta_transport/` — the three displayed identities for quotients
-  involving \(\Omega_{01}\) and \(\Omega_{10}\) in Lemma C.9,
-  `lem:Gamma4-local-Delta-transport`, and `eq:Gamma4-Omega-local`;
+- `local_delta/` — the corrected third-adjoint recursion and the local
+  Gamma_2 identity `Delta_01^W=1` in
+  `lem:Gamma4-W-local-Deltas`, using `eq:Gamma4-local-Delta-01`
+  and `eq:Gamma4-local-action-coefficient-products`. Before imposing
+  `Y3=0`, the program reconstructs 192 nonzero binomial coordinate
+  expressions and checks the 19 expressions used in its two certificates.
+  It also verifies `Delta_10^W=1` for the reversed local pair; that
+  consequence follows as well from `eq:Gamma2-Delta-unit-loci`;
+- `delta_transport/` — an auxiliary check of three quotients involving
+  \(\Omega_{01}\) and \(\Omega_{10}\), retained from an earlier version.
+  The current paper does not use these identities. Its proof of
+  `lem:Gamma4-global-to-local-Deltas` instead uses the first reflection
+  and the first-adjoint simplicity criterion;
 - `terminal_character/` — reconstruction of the six action coefficients
-  used in Lemma C.6, `lem:Gamma4-Y2-support-value`, followed by the source
+  used in `lem:Gamma4-Y2-support-value`, followed by the source
   quotient in `eq:Gamma4-Y2-slant-cocycle-expression`, its reduction to the
   76-atom target, and the terminal-root self-character cancellation;
 - `reflected_y2/` — reconstruction and factorization of the four-coordinate
-  `z0` vector in Lemma C.2, `lem:Gamma4-z0-factorization`, followed by the
-  initial and reflected induced actions used in Lemma C.3,
-  `lem:Gamma4-Y2-coordinate-calculation`, and Lemma C.7,
+  `z0` vector in `lem:Gamma4-z0-factorization`, followed by the
+  initial and reflected induced actions used in
+  `lem:Gamma4-Y2-coordinate-calculation` and
   `lem:Gamma4-R1-reflected-parameter-reduction`, including
   `eq:Gamma4-Y2-H-Theta-explicit`, the corrected
   first two adjoint maps and their eight-coordinate \(Y_2\) vectors,
